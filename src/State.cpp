@@ -3,8 +3,7 @@
 #include "SDL_include.h"
 #include <State.hpp>
 
-State::State() {
-    this->quitRequested = false;
+State::State() : quitRequested(false) {
 }
 
 void State::LoadAssets() {

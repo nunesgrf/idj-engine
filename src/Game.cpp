@@ -57,10 +57,8 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
-    auto it = this->GetInstance();
-
-    while(!it.state->QuitRequested()) {
-        it.state->Update(0);
+    while(!state->QuitRequested()) {
+        state->Update(0);
         SDL_Delay(33);
     }
 }

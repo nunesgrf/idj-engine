@@ -3,7 +3,7 @@
 #include "../includes/State.hpp"
 int main(int argc, char** argv) {
 
-    Game * aux;
-    aux->Run();
+    Game aux = Game::GetInstance();
+    aux.Run();
 
 }
