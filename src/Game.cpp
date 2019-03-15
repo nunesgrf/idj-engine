@@ -35,7 +35,7 @@ Game::Game(std::string title, uint32_t width, uint32_t height) {
             std::cout << "SDL_CreateWindow_Renderer_ERROR: " << SDL_GetError() << std::endl;
             exit(-1);
         }
-        getchar();
+        this->state = new State();
     }
     else {
         std::cout << "Nullpointer exception." << std::endl << "Impossible to initialize." << std::endl << "Execution aborted." << std::endl;
@@ -44,8 +44,12 @@ Game::Game(std::string title, uint32_t width, uint32_t height) {
 }
 
 Game& Game::GetInstance() {
-    if(instance == nullptr) Game * aux = new Game("Gabriel Nunes - 16/0006597",1024,600); 
+    if(instance == nullptr) new Game("Gabriel Nunes - 16/0006597",1024,600);
     return *instance;
+}
+
+State& Game::GetState() {
+    return *(this->state);
 }
 
 SDL_Renderer* Game::GetRenderer() {
@@ -53,10 +57,16 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
+    auto it = this->GetInstance();
 
+    while(!it.state->QuitRequested()) {
+        it.state->Update(0);
+        SDL_Delay(33);
+    }
 }
 
 Game::~Game() {
+    delete this->state;
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();
