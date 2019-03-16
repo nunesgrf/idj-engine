@@ -4,9 +4,9 @@
 #include <State.hpp>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg") {  
-    music.Open("assets/audio/stageState.ogg");
+State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg"), music("assets/audio/uzumaki.ogg") {  
     music.Play();
+    std::cout << "jumbo" << std::endl;
 }
 
 void State::LoadAssets() {

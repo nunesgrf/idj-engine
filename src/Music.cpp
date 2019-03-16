@@ -28,7 +28,6 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(std::string file) {
-
     this->music = Mix_LoadMUS(file.c_str());
 
     if(this->music == nullptr) {
