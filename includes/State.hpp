@@ -1,10 +1,12 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "Sprite.hpp"
+
 class State {
 
     private:
-        //Sprite bg;
+        Sprite bg;
         //Music music;
         bool quitRequested;
 

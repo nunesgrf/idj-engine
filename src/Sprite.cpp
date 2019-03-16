@@ -16,10 +16,10 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Open(std::string file) {
-    Game aux = Game::GetInstance();
+    Game * aux = &Game::GetInstance();
 
     if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    this->texture = IMG_LoadTexture(aux.GetRenderer(),file.c_str());
+    this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
 
     if(this->texture != nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
@@ -37,14 +37,14 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 
 void Sprite::Render(int x, int y) {
     SDL_Rect dstrect;
-    Game aux = Game::GetInstance();
+    Game * aux = &Game::GetInstance();
 
     dstrect.x = x;
     dstrect.y = y;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;
 
-    SDL_RenderCopy(aux.GetRenderer(),this->texture,&this->clipRect,&dstrect);
+    SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
 }
 
 int Sprite::GetWidth() {
