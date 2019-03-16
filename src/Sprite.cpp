@@ -26,6 +26,8 @@ void Sprite::Open(std::string file) {
         exit(-2);
     }
     SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
+
+    this->SetClip(0,0,this->width,this->height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -41,8 +43,8 @@ void Sprite::Render(int x, int y) {
 
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = clipRect.w;
-    dstrect.h = clipRect.h;
+    dstrect.w = this->clipRect.w;
+    dstrect.h = this->clipRect.h;
 
     SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
 }
