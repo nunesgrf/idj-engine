@@ -4,11 +4,12 @@
 #include <State.hpp>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg") {
+State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg") {  
+    music.Open("assets/audio/stageState.ogg");
+    music.Play();
 }
 
 void State::LoadAssets() {
-
 }
 
 void State::Render() {
