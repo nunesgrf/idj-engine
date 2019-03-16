@@ -4,7 +4,7 @@
 #include <State.hpp>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("../assets/img/ocean.jpg") {
+State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg") {
 }
 
 void State::LoadAssets() {

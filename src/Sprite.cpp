@@ -7,6 +7,7 @@ Sprite::Sprite() {
 }
 
 Sprite::Sprite(std::string file) {
+    
     this->texture = nullptr;
     this->Open(file);
 }
@@ -21,10 +22,11 @@ void Sprite::Open(std::string file) {
     if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
     this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
 
-    if(this->texture != nullptr) {
+    if(this->texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
         exit(-2);
     }
+
     SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
 
     this->SetClip(0,0,this->width,this->height);
