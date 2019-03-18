@@ -45,7 +45,6 @@ Game::Game(std::string title, uint32_t width, uint32_t height) {
 
 Game& Game::GetInstance() {
     if(instance == nullptr) new Game("Gabriel Nunes - 16/0006597",1024,600);
-    //std::cout << "instance == nullptr? " << (instance == nullptr) << std::endl;
     return *instance;
 }
 
