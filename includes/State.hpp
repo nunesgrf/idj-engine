@@ -2,12 +2,13 @@
 #define STATE_H
 
 #include "Sprite.hpp"
+#include "Music.hpp"
 
 class State {
 
     private:
         Sprite bg;
-        //Music music;
+        Music music;
         bool quitRequested;
 
     public:

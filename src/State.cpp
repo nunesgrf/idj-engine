@@ -4,11 +4,11 @@
 #include <State.hpp>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg") {
+State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg"), music("assets/audio/uzumaki.ogg") {  
+    music.Play();
 }
 
 void State::LoadAssets() {
-
 }
 
 void State::Render() {
