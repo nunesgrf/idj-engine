@@ -8,6 +8,10 @@ State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets
     music.Play();
 }
 
+State::~State() {
+    this->objectArray.clear();
+}
+
 void State::LoadAssets() {
 }
 
@@ -21,4 +25,12 @@ void State::Update(float dt) {
 
 bool State::QuitRequested() {
     return this->quitRequested;
+}
+
+void State::Input() {
+
+}
+
+void State::AddObject(int mouseX, int mouseY) {
+
 }

@@ -3,6 +3,9 @@
 
 #include "Sprite.hpp"
 #include "Music.hpp"
+#include "GameObject.hpp"
+#include <vector>
+#include <memory>
 
 class State {
 
@@ -10,9 +13,14 @@ class State {
         Sprite bg;
         Music music;
         bool quitRequested;
+        std::vector<std::unique_ptr<GameObject>> objectArray;
+
+        void Input();
+        void AddObject(int,int);
 
     public:
         State();
+        ~State();
         bool QuitRequested();
         void LoadAssets();
         void Update(float);

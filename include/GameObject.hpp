@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+class Component;
+
 class GameObject{
     private:
         std::vector<Component*> components;

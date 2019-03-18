@@ -6,6 +6,7 @@ GameObject::GameObject(): isDead(false) {
 GameObject::~GameObject() {
     for(int i = this->components.size()-1; i >= 0; i--) {
         delete this->components.at(i);
+        this->components.pop_back();
     }
 }
 
