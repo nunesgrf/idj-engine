@@ -1,8 +1,8 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
-#include "../includes/SDL_include.h"
-#include "../includes/Game.hpp"
+#include "../include/SDL_include.h"
+#include "../include/Game.hpp"
 #include <iostream>
 
 Game* Game::instance;

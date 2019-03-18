@@ -4,7 +4,7 @@ SRCS	   = $(shell find src -name '*.cpp')
 OBJ   = $(addprefix obj/,$(notdir $(SRCS:%.cpp=%.o))) 
 LIBS	 = 
 INCS	 = 
-CXXINCS  = -I"includes/" -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer 
+CXXINCS  = -I"include/" -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer 
 BIN   = idj-engine
 CXXFLAGS = $(CXXINCS) -std=c++11 -g3 -ggdb3
 CFLAGS   = $(INCS) -std=c11 -ggdb3

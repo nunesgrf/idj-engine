@@ -1,10 +1,10 @@
 #define INCLUDE_SDL
 
 #include "SDL_include.h"
-#include <State.hpp>
+#include "State.hpp"
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/uzumaki.jpg"), music("assets/audio/uzumaki.ogg") {  
+State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets/audio/stageState.ogg") {  
     music.Play();
 }
 

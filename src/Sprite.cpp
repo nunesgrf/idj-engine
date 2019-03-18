@@ -1,5 +1,5 @@
-#include "../includes/Sprite.hpp"
-#include "../includes/Game.hpp"
+#include "../include/Sprite.hpp"
+#include "../include/Game.hpp"
 #include <iostream>
 
 Sprite::Sprite() {
