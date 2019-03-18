@@ -2,11 +2,10 @@
 #include "../include/Game.hpp"
 #include <iostream>
 
-Sprite::Sprite() {
-    this->texture = nullptr;
+Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
 }
 
-Sprite::Sprite(std::string file) {
+Sprite::Sprite(GameObject& associated, std::string file): Component(associated), texture(nullptr) {
     
     this->texture = nullptr;
     this->Open(file);
@@ -39,6 +38,10 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     this->clipRect.h = h;
 }
 
+void Sprite::Render() {
+
+}
+
 void Sprite::Render(int x, int y) {
     SDL_Rect dstrect;
     Game * aux = &Game::GetInstance();
@@ -61,4 +64,11 @@ int Sprite::GetHeight() {
 
 bool Sprite::IsOpen() {
     return this->texture != nullptr;
+}
+
+bool Sprite::Is(std::string type) {
+    return type == "Sprite";
+}
+
+void Sprite::Update(float dt) {
 }

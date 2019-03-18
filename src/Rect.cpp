@@ -2,3 +2,7 @@
 
 Rect::Rect(): x(0), y(0), w(0), h(0) {
 }
+
+bool Rect::Contains(float a, float b) {
+    return true;
+} 

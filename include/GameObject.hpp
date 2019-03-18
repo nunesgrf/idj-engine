@@ -5,12 +5,13 @@
 #include "Component.hpp"
 #include <vector>
 #include <string>
+#include <memory>
 
 class Component;
 
 class GameObject{
     private:
-        std::vector<Component*> components;
+        std::vector<std::unique_ptr<Component>> components;
         bool isDead;
 
     public:

@@ -1,23 +1,22 @@
 #include "../include/GameObject.hpp"
 
+#include <algorithm>
+
 GameObject::GameObject(): isDead(false) {
 };
 
 GameObject::~GameObject() {
-    for(int i = this->components.size()-1; i >= 0; i--) {
-        delete this->components.at(i);
-        this->components.pop_back();
-    }
+    this->components.clear();
 }
 
 void GameObject::Update(float dt) {
-    for(auto a : this->components) {
+    for(auto &a : this->components) {
         a->Update(dt);
     }
 }
 
 void GameObject::Render() {
-    for(auto a : this->components) {
+    for(auto &a : this->components) {
         a->Render();
     }
 }
@@ -35,10 +34,19 @@ void GameObject::AddComponent(Component* cpt) {
 }
 
 void GameObject::RemoveComponent(Component* cpt) {
-    // to implement
+    auto it = this->components.begin();
+    bool keepGoing = true;
+
+    while(it != this->components.end() and keepGoing) {
+        if(it->get() == cpt) keepGoing = false;
+        it++;
+    }
+    if(it != this->components.end()) this->components.erase(it);
 }
 
 Component* GameObject::GetComponent(std::string type) {
-    // to implement
+    for(int i = 0; i < this->components.size(); i++) {
+        if(this->components[i]->Is(type)) return this->components[i].get();      
+    }
     return nullptr;
 }
