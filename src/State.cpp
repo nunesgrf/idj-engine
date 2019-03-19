@@ -6,10 +6,22 @@
 #include "Face.hpp"
 #include "Vec2.hpp"
 #include "State.hpp"
+#include "Sound.hpp"
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets/audio/stageState.ogg") {  
-    music.Play();
+State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
+	std::string background_file = "assets/img/ocean.jpg";
+	
+	GameObject* go = new GameObject();
+	Sprite* sprite = new Sprite(*go,background_file);
+    
+	go->box.x = 0;
+	go->box.y = 0;
+
+	go->AddComponent(sprite);
+	
+	this->objectArray.emplace_back(go);
+	music.Play();
 }
 
 State::~State() {
@@ -20,7 +32,9 @@ void State::LoadAssets() {
 }
 
 void State::Render() {
-    this->bg.Render(0,0);
+	for(auto &a : this->objectArray) {
+		a->Render();
+	}
 }
 
 void State::Update(float dt) {
@@ -32,10 +46,22 @@ bool State::QuitRequested() {
 }
 
 void State::AddObject(int mouseX, int mouseY) {
-    std::string file = "assets/img/penguinface.png";
-    GameObject * enemy = new GameObject();
-    //Sprite* image = new Sprite(enemy,file);
-    this->objectArray.emplace_back(enemy);
+    std::string img = "assets/img/penguinface.png";
+	std::string snd = "assets/igm/boom.wav";
+
+    GameObject* go = new GameObject();
+	Sprite* sprite = new Sprite(*go,img);
+	Sound* sound = new Sound(*go,snd);
+	Face* face = new Face(*go);
+
+	go->box.x = mouseX;
+	go->box.y = mouseY;
+
+	go->AddComponent(sprite);
+	go->AddComponent(sound);
+	go->AddComponent(face);
+
+    this->objectArray.emplace_back(go);
 }
 
 void State::Input() {

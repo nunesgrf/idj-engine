@@ -1,7 +1,6 @@
 #include "../include/Face.hpp"
 
-Face::Face(GameObject& associated): Component(associated) {
-    this->hitpoints = 30;
+Face::Face(GameObject& associated): Component(associated), hitpoints(30) {
 }
 
 void Face::Damage(int damage) {
