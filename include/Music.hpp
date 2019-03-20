@@ -3,7 +3,7 @@
 
 #define INCLUDE_SDL_MIXER
 
-#include "../include/SDL_include.h"
+#include "SDL_include.h"
 #include <string>
 
 class Music {

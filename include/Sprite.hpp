@@ -24,7 +24,6 @@ class Sprite : public Component {
         void Open(std::string);
         void SetClip(int,int,int,int);
         void Render();
-        void Render(int,int);
         int GetWidth();
         int GetHeight();
         bool IsOpen();

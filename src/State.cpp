@@ -21,7 +21,7 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 	go->AddComponent(sprite);
 	
 	this->objectArray.emplace_back(go);
-	music.Play();
+	//music.Play();
 }
 
 State::~State() {
@@ -38,7 +38,16 @@ void State::Render() {
 }
 
 void State::Update(float dt) {
-    this->quitRequested = SDL_QuitRequested();
+    //this->quitRequested = SDL_QuitRequested();
+	this->Input();
+	for(int i = 0; i < this->objectArray.size(); i++) {
+		this->objectArray[i]->Update(dt);
+	}
+	for(int i = 0; i < this->objectArray.size(); i++) {
+		if(this->objectArray[i]->IsDead()) {
+			this->objectArray.erase(this->objectArray.begin()+i);
+		}
+	}
 }
 
 bool State::QuitRequested() {
@@ -56,6 +65,8 @@ void State::AddObject(int mouseX, int mouseY) {
 
 	go->box.x = mouseX;
 	go->box.y = mouseY;
+	go->box.w = sprite->GetWidth();
+	go->box.h = sprite->GetHeight();
 
 	go->AddComponent(sprite);
 	go->AddComponent(sound);
@@ -65,7 +76,8 @@ void State::AddObject(int mouseX, int mouseY) {
 }
 
 void State::Input() {
-	/*SDL_Event event;
+
+	SDL_Event event;
 	int mouseX, mouseY;
 
 	// Obtenha as coordenadas do mouse
@@ -113,6 +125,6 @@ void State::Input() {
 				Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
 				AddObject((int)objPos.x, (int)objPos.y);
 			}
-		}*/
+		}
 	}
 }

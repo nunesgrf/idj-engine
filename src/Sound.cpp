@@ -1,10 +1,12 @@
 #include "../include/Sound.hpp"
 
-Sound::Sound(GameObject& associated): Component(associated) {
+#include "../include/Resources.hpp"
+
+Sound::Sound(GameObject& associated): Component(associated), channel(-1) {
     this->chunk = nullptr;  
 }
 
-Sound::Sound(GameObject& associated, std::string file): Component(associated) {
+Sound::Sound(GameObject& associated, std::string file): Component(associated), channel(-1), chunk(nullptr) {
     this->Open(file);
 }
 
@@ -17,19 +19,12 @@ void Sound::Stop() {
 }
 
 void Sound::Open(std::string file) {
-    try {
-        Mix_LoadWAV(file.c_str());
-    }
-    catch(...) { 
-        // think about what to do 
-        this->chunk = nullptr;
-    }
+    this->chunk = Resources::GetSound(file); 
 }
 
 Sound::~Sound() {
-    if(this->chunk != nullptr) {
+    if(this->channel != -1) {
         Mix_HaltChannel(this->channel);
-        Mix_FreeChunk(this->chunk);
     }
 }
 
@@ -40,5 +35,5 @@ void Sound::Render() {
 }
 
 bool Sound::Is(std::string type) {
-    return type == "Sound";
+    return type == std::string("Sound");
 }
