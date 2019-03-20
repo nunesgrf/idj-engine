@@ -21,7 +21,7 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 	go->AddComponent(sprite);
 	
 	this->objectArray.emplace_back(go);
-	//music.Play();
+	music.Play();
 }
 
 State::~State() {
@@ -56,7 +56,7 @@ bool State::QuitRequested() {
 
 void State::AddObject(int mouseX, int mouseY) {
     std::string img = "assets/img/penguinface.png";
-	std::string snd = "assets/igm/boom.wav";
+	std::string snd = "assets/audio/boom.wav";
 
     GameObject* go = new GameObject();
 	Sprite* sprite = new Sprite(*go,img);

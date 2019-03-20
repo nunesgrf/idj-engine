@@ -1,6 +1,7 @@
 #include "../include/Sound.hpp"
 
 #include "../include/Resources.hpp"
+#include <iostream>
 
 Sound::Sound(GameObject& associated): Component(associated), channel(-1) {
     this->chunk = nullptr;  
@@ -15,7 +16,9 @@ void Sound::Play(int times) {
 }
 
 void Sound::Stop() {
-    if(this->chunk != nullptr) Mix_HaltChannel(this->channel);
+    if((this->chunk != nullptr) && (this->channel = -1))  {
+        Mix_HaltChannel(this->channel);
+    }
 }
 
 void Sound::Open(std::string file) {
@@ -23,9 +26,6 @@ void Sound::Open(std::string file) {
 }
 
 Sound::~Sound() {
-    if(this->channel != -1) {
-        Mix_HaltChannel(this->channel);
-    }
 }
 
 void Sound::Update(float dt) {
