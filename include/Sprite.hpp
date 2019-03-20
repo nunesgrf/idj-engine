@@ -4,11 +4,12 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
-
+#include "GameObject.hpp"
+#include "Component.hpp"
 #include "SDL_include.h"
 #include <string>
 
-class Sprite {
+class Sprite : public Component {
 
     private:
         SDL_Texture* texture;
@@ -17,14 +18,16 @@ class Sprite {
         int height;
 
     public:
-        Sprite();
-        Sprite(std::string);
+        Sprite(GameObject&);
+        Sprite(GameObject&,std::string);
         ~Sprite();
         void Open(std::string);
-        void SetClip(int x, int y, int w, int h);
-        void Render(int x, int y);
+        void SetClip(int,int,int,int);
+        void Render();
         int GetWidth();
         int GetHeight();
         bool IsOpen();
+        bool Is(std::string);
+        void Update(float);
 };
 #endif 
