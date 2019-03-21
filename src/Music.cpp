@@ -1,5 +1,6 @@
 #include "../include/Music.hpp"
 
+#include "../include/Resources.hpp"
 #include <iostream>
 
 Music::Music() {
@@ -28,8 +29,8 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(std::string file) {
-    this->music = Mix_LoadMUS(file.c_str());
-
+    //this->music = Mix_LoadMUS(file.c_str());
+    this->music = Resources::GetMusic(file);
     if(this->music == nullptr) {
         std::cout << "NullPointer_Music_Error: " << SDL_GetError() << std::endl;
         exit(-32);
@@ -41,8 +42,8 @@ bool Music::IsOpen() {
 }
 
 Music::~Music() {
-    if(this->music != nullptr) {
+    /*if(this->music != nullptr) {
         this->Stop();
         Mix_FreeMusic(this->music);
-    }
+    }*/
 }

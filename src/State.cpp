@@ -6,6 +6,7 @@
 #include "Face.hpp"
 #include "Vec2.hpp"
 #include "State.hpp"
+#include "Sprite.hpp"
 #include "Sound.hpp"
 #include <iostream>
 
