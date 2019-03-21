@@ -37,10 +37,17 @@ int& TileMap::At(int x, int y, int z) {
 
 void TileMap::Render() {
 
+    for(int i = 0; i < this->mapDepth; i++) {
+        this->RenderLayer(i, this->associated.box.x,this->associated.box.y);
+    }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
-
+    for(int i = 0; i < this->mapHeight; i++) {
+        for(int j = 0; j < this->mapWidth; j++) {
+            this->tileSet->RenderTile(this->At(i,j,layer),this->tileSet->GetTileWidth(), this->tileSet->GetTileHeight());
+        }
+    }
 }
 
 int TileMap::GetWidth() {
@@ -53,4 +60,11 @@ int TileMap::GetHeight() {
 
 int TileMap::GetDepth() {
     return this->mapDepth;
+}
+
+bool TileMap::Is(std::string type) {
+    return type == std::string("TileMap");
+}
+
+void TileMap::Update(float dt) {
 }

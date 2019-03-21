@@ -3,6 +3,8 @@
 #define PI 3.14159265359
 
 #include "SDL_include.h"
+#include "TileMap.hpp"
+#include "TileSet.hpp"
 #include "Face.hpp"
 #include "Vec2.hpp"
 #include "State.hpp"
@@ -22,7 +24,19 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 	go->AddComponent(sprite);
 	
 	this->objectArray.emplace_back(go);
+
+	std::string tile_file = "assets/img/tileset.png";
+	std::string map_file = "assets/map/tileMap.txt";
+	GameObject * tile_go = new GameObject();
+	TileSet * tileset = new TileSet(*go,64,64,tile_file);
+	TileMap * tilemap = new TileMap(*go,map_file,tileset);
+
+	tile_go->AddComponent(tilemap);
+	
+	this->objectArray.emplace_back(tile_go);
+
 	music.Play();
+
 }
 
 State::~State() {
