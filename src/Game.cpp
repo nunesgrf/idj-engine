@@ -3,6 +3,7 @@
 
 #include "../include/SDL_include.h"
 #include "../include/Game.hpp"
+#include "../include/InputManager.hpp"
 #include <iostream>
 
 Game* Game::instance;
@@ -57,8 +58,11 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
+    InputManager * inputManager = &InputManager::GetInstance();
+
     while(!this->state->QuitRequested()) {     
         this->state->Render();
+        inputManager->Update();
         this->state->Update(0.0);
         SDL_RenderPresent(this->renderer);  
         SDL_Delay(33);

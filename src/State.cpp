@@ -3,6 +3,7 @@
 #define PI 3.14159265359
 
 #include "SDL_include.h"
+#include "InputManager.hpp"
 #include "TileMap.hpp"
 #include "TileSet.hpp"
 #include "Face.hpp"
@@ -51,8 +52,16 @@ void State::Render() {
 }
 
 void State::Update(float dt) {
-    //this->quitRequested = SDL_QuitRequested();
-	this->Input();
+	InputManager& inputManager = InputManager::GetInstance();
+	this->quitRequested = inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY);
+	int mouseX = inputManager.GetMouseX();
+	int mouseY = inputManager.GetMouseY();
+
+	if(inputManager.KeyPress(SPACE_KEY)) {
+		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
+		AddObject((int)mouseX, (int)mouseY);
+	}
+	//this->Input();
 	for(int i = 0; i < this->objectArray.size(); i++) {
 		this->objectArray[i]->Update(dt);
 	}
@@ -88,9 +97,9 @@ void State::AddObject(int mouseX, int mouseY) {
     this->objectArray.emplace_back(go);
 }
 
-void State::Input() {
-
-	SDL_Event event;
+void State::Input() {	
+	
+	/*SDL_Event event;
 	int mouseX, mouseY;
 
 	// Obtenha as coordenadas do mouse
@@ -139,5 +148,5 @@ void State::Input() {
 				AddObject((int)objPos.x, (int)objPos.y);
 			}
 		}
-	}
+	}*/
 }

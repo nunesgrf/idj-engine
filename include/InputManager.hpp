@@ -7,6 +7,7 @@
 #define DOWN_ARROW_KEY    SDLK_DOWN
 #define ESCAPE_KEY        SDLK_ESCAPE
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+#define SPACE_KEY         SDLK_SPACE
 
 #include <unordered_map>
 
@@ -21,7 +22,6 @@ class InputManager {
         int mouseX;
         int mouseY;
         InputManager();
-        ~InputManager();
     
     public:
         void Update();
@@ -35,5 +35,6 @@ class InputManager {
         int GetMouseY();
         bool QuitRequested();
         static InputManager& GetInstance();
+        ~InputManager();
 };
 #endif 

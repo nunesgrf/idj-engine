@@ -19,12 +19,13 @@ InputManager::InputManager(): updateCounter(0), quitRequested(false), mouseX(0),
 void InputManager::Update() {
     SDL_Event event;
 	int mouseX, mouseY;
-
+    
 	// Obtenha as coordenadas do mouse
 	SDL_GetMouseState(&mouseX, &mouseY);
 
     this->quitRequested = false;
 
+    updateCounter++;
 	// SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
 	while (SDL_PollEvent(&event)) {
         if(event.type == SDL_QUIT) this->quitRequested = true;
@@ -36,7 +37,7 @@ void InputManager::Update() {
             else {
                 this->mouseState[(int)event.button.button] = false;
             }
-            this->mouseUpdate[(int)event.button.button]++;
+            this->mouseUpdate[(int)event.button.button] = updateCounter;
         }
         else if(event.type == SDL_KEYDOWN || (event.type == SDL_KEYUP) && (bool)event.key.repeat) {
             if(event.type == SDL_KEYDOWN) {
@@ -45,7 +46,7 @@ void InputManager::Update() {
             else {
                 this->keyState[event.key.keysym.sym] = false;
             }
-            this->keyUpdate[event.key.keysym.sym]++;
+            this->keyUpdate[event.key.keysym.sym] = updateCounter;
         }
     }
 }
