@@ -8,10 +8,10 @@ TileSet::TileSet(GameObject& go, int tileWidth, int tileHeight, std::string file
 }
 
 void TileSet::RenderTile(unsigned index, float x, float y) {
-    if(index >=0 && index < rows*columns) {
+    if(index < rows*columns) {
         int a = this->tileWidth*(index%this->columns);
         int b = this->tileHeight*(index/this->columns);
-        this->tileSet.SetClip(a,b,this->tileHeight,this->tileWidth);
+        this->tileSet.SetClip(a,b,this->tileWidth,this->tileHeight);
         tileSet.Render(x,y);
     }
 }

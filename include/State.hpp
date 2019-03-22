@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "TileSet.hpp"
 #include "Sprite.hpp"
 #include "Music.hpp"
 #include "GameObject.hpp"
@@ -10,6 +11,7 @@
 class State {
 
     private:
+        TileSet* tileSet;
         Music music;
         bool quitRequested;
         std::vector<std::unique_ptr<GameObject>> objectArray;

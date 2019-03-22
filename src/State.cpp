@@ -25,11 +25,9 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 	
 	this->objectArray.emplace_back(go);
 
-	std::string tile_file = "assets/img/tileset.png";
-	std::string map_file = "assets/map/tileMap.txt";
 	GameObject * tile_go = new GameObject();
-	TileSet * tileset = new TileSet(*go,64,64,tile_file);
-	TileMap * tilemap = new TileMap(*go,map_file,tileset);
+	this->tileSet = new TileSet(*tile_go,64,64,"assets/img/tileset.png");
+	TileMap * tilemap = new TileMap(*tile_go,"assets/map/tileMap.txt",tileSet);
 
 	tile_go->AddComponent(tilemap);
 	

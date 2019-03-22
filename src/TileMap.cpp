@@ -31,7 +31,7 @@ void TileMap::SetTileSet(TileSet* tileSet) {
 }
 
 int& TileMap::At(int x, int y, int z) {
-    int index = x + (y * this->mapWidth) + (z * this->mapWidth * mapHeight);
+    int index = x + (y * this->mapWidth) + (z * this->mapWidth * this->mapHeight);
     return this->tileMatrix[index];
 }
 
@@ -43,9 +43,9 @@ void TileMap::Render() {
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
-    for(int i = 0; i < this->mapHeight; i++) {
-        for(int j = 0; j < this->mapWidth; j++) {
-            this->tileSet->RenderTile(this->At(i,j,layer),this->tileSet->GetTileWidth(), this->tileSet->GetTileHeight());
+    for(int i = 0; i < this->mapWidth; i++) {
+        for(int j = 0; j < this->mapHeight; j++) {
+            this->tileSet->RenderTile((unsigned)this->At(i,j,layer),i*this->tileSet->GetTileWidth(), j*this->tileSet->GetTileHeight());
         }
     }
 }
