@@ -65,6 +65,14 @@ void Game::Run() {
     } 
 }
 
+float Game::GetDeltaTime() {
+    return this->dt;
+}
+
+void Game::CalculateDeltaTime() {
+
+}
+
 Game::~Game() {
     delete this->state;
     SDL_DestroyRenderer(this->renderer);

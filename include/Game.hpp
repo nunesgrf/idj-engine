@@ -14,9 +14,13 @@ class Game {
         SDL_Window*  window;
         SDL_Renderer* renderer;
         State* state;
+        int frameStart;
+        float dt;
+        void CalculateDeltaTime();
         Game(std::string, uint32_t, uint32_t);
 
     public:
+        float GetDeltaTime();
         static Game& GetInstance();
         SDL_Renderer* GetRenderer();
         State& GetState();
