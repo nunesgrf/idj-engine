@@ -11,8 +11,8 @@ class Camera {
     public:
         static Vec2 speed;
         static Vec2 pos;
-        void Follow(GameObject * newFocus);
-        void Update(float dt);
-        void Unfollow();
+        static void Follow(GameObject * newFocus);
+        static void Update(float dt);
+        static void Unfollow();
 };
 #endif 

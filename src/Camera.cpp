@@ -9,7 +9,7 @@
 
 GameObject* Camera::focus;
 Vec2 Camera::pos = Vec2();
-Vec2 Camera::speed = Vec2(0,0);
+Vec2 Camera::speed = Vec2(300,300);
 
 void Camera::Follow(GameObject* newFocus) {
     focus = newFocus;

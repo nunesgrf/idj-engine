@@ -38,7 +38,7 @@ void InputManager::Update() {
             }
             this->mouseUpdate[(int)event.button.button] = updateCounter;
         }
-        else if(event.type == SDL_KEYDOWN || (event.type == SDL_KEYUP) && (bool)event.key.repeat) {
+        else if(event.type == SDL_KEYDOWN || (event.type == SDL_KEYUP) && (bool)!event.key.repeat) {
             if(event.type == SDL_KEYDOWN) {
                 this->keyState[event.key.keysym.sym] = true;
             } 

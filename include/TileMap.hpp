@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#define PARALLAX 1
+
 class TileMap : public Component {
     private:
         std::vector<int> tileMatrix;

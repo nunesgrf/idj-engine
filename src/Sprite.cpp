@@ -1,5 +1,6 @@
 #include "../include/Sprite.hpp"
 
+#include "Camera.hpp"
 #include "../include/Resources.hpp"
 #include "../include/Game.hpp"
 #include <iostream>
@@ -54,7 +55,7 @@ void Sprite::Render(int x, int y) {
 }
 
 void Sprite::Render() {
-    this->Render(this->associated.box.x,this->associated.box.y);
+    this->Render(this->associated.box.x-Camera::pos.x,this->associated.box.y-Camera::pos.y);
 }
 
 int Sprite::GetWidth() {

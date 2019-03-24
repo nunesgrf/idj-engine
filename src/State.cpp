@@ -3,6 +3,7 @@
 #define PI 3.14159265359
 
 #include "SDL_include.h"
+#include "CameraFollower.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
 #include "TileMap.hpp"
@@ -19,12 +20,14 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 	
 	GameObject* go = new GameObject();
 	Sprite* sprite = new Sprite(*go,background_file);
+	CameraFollower *cf = new CameraFollower(*go);
     
 	go->box.x = 0;
 	go->box.y = 0;
 
 	go->AddComponent(sprite);
-	
+	go->AddComponent(cf);
+
 	this->objectArray.emplace_back(go);
 
 	GameObject * tile_go = new GameObject();
@@ -53,9 +56,10 @@ void State::Render() {
 }
 
 void State::Update(float dt) {
-	Camera camera;
-	camera.Update(dt);
+	
 	InputManager& inputManager = InputManager::GetInstance();
+
+	Camera::Update(dt);
 	this->quitRequested = inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY);
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
@@ -88,8 +92,8 @@ void State::AddObject(int mouseX, int mouseY) {
 	Sound* sound = new Sound(*go,snd);
 	Face* face = new Face(*go);
 
-	go->box.x = mouseX;
-	go->box.y = mouseY;
+	go->box.x = mouseX + Camera::pos.x - go->box.w/2;
+	go->box.y = mouseY + Camera::pos.y - go->box.h/2;
 	go->box.w = sprite->GetWidth();
 	go->box.h = sprite->GetHeight();
 

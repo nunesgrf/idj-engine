@@ -3,6 +3,7 @@
 #define INCLUDE_SDL
 
 #include "SDL_include.h"
+#include "Camera.hpp"
 #include "Sound.hpp"
 #include "InputManager.hpp"
 #include <iostream>
@@ -27,7 +28,7 @@ void Face::Update(float dt) {
     auto test = inputManager.MousePress(LEFT_MOUSE_BUTTON);
     std::cout << test << std::endl;
     if(test){
-        if(this->associated.box.Contains({(float)inputManager.GetMouseX(),(float)inputManager.GetMouseY()})) {
+        if(this->associated.box.Contains({(float)inputManager.GetMouseX()+Camera::pos.x,(float)inputManager.GetMouseY()+Camera::pos.y})) {
             this->Damage(std::rand() % 10 + 10);
         }
     }

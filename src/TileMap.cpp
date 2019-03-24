@@ -1,5 +1,6 @@
 #include "../include/TileMap.hpp"
 
+#include "Camera.hpp"
 #include <fstream>
 #include <iostream>
 
@@ -36,7 +37,9 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::Render() {
-
+    associated.box.x = Camera::pos.x;
+	associated.box.y = Camera::pos.y;
+	std::cout << associated.box.x << " " << associated.box.y << std::endl;
     for(int i = 0; i < this->mapDepth; i++) {
         this->RenderLayer(i, this->associated.box.x,this->associated.box.y);
     }
@@ -45,7 +48,9 @@ void TileMap::Render() {
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
     for(int i = 0; i < this->mapWidth; i++) {
         for(int j = 0; j < this->mapHeight; j++) {
-            this->tileSet->RenderTile((unsigned)this->At(i,j,layer),i*this->tileSet->GetTileWidth(), j*this->tileSet->GetTileHeight());
+            auto y = j*this->tileSet->GetTileHeight()-cameraY-Camera::pos.y*layer*PARALLAX;
+            auto x = i*this->tileSet->GetTileWidth()-cameraX-Camera::pos.x*layer*PARALLAX;
+            this->tileSet->RenderTile((unsigned)this->At(i,j,layer),x,y);
         }
     }
 }
