@@ -3,6 +3,7 @@
 #define PI 3.14159265359
 
 #include "SDL_include.h"
+#include "Camera.hpp"
 #include "InputManager.hpp"
 #include "TileMap.hpp"
 #include "TileSet.hpp"
@@ -52,16 +53,18 @@ void State::Render() {
 }
 
 void State::Update(float dt) {
+	Camera camera;
+	camera.Update(dt);
 	InputManager& inputManager = InputManager::GetInstance();
 	this->quitRequested = inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY);
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
 
 	if(inputManager.KeyPress(SPACE_KEY)) {
+		
 		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-		AddObject((int)mouseX, (int)mouseY);
+		AddObject((int)objPos.x, (int)objPos.y);
 	}
-	//this->Input();
 	for(int i = 0; i < this->objectArray.size(); i++) {
 		this->objectArray[i]->Update(dt);
 	}

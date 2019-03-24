@@ -16,10 +16,14 @@ class Game {
         State* state;
         int frameStart;
         float dt;
+        int width;
+        int height;
         void CalculateDeltaTime();
         Game(std::string, uint32_t, uint32_t);
 
     public:
+        int GetWidth();
+        int GetHeight();
         float GetDeltaTime();
         static Game& GetInstance();
         SDL_Renderer* GetRenderer();

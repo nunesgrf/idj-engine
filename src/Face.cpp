@@ -1,6 +1,11 @@
 #include "../include/Face.hpp"
 
+#define INCLUDE_SDL
+
+#include "SDL_include.h"
 #include "Sound.hpp"
+#include "InputManager.hpp"
+#include <iostream>
 
 Face::Face(GameObject& associated): Component(associated), hitpoints(30) {
 }
@@ -16,6 +21,16 @@ void Face::Damage(int damage) {
 }
 
 void Face::Update(float dt) {
+    
+    InputManager& inputManager = InputManager::GetInstance();
+    
+    auto test = inputManager.MousePress(LEFT_MOUSE_BUTTON);
+    std::cout << test << std::endl;
+    if(test){
+        if(this->associated.box.Contains({(float)inputManager.GetMouseX(),(float)inputManager.GetMouseY()})) {
+            this->Damage(std::rand() % 10 + 10);
+        }
+    }
 }
 
 void Face::Render() {

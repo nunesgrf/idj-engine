@@ -8,7 +8,7 @@
 
 Game* Game::instance;
 
-Game::Game(std::string title, uint32_t width, uint32_t height) {
+Game::Game(std::string title, uint32_t width, uint32_t height): dt(0), frameStart(0), width(width), height(height) {
     if(this->instance == nullptr) {
         this->instance = this;
         
@@ -60,10 +60,11 @@ SDL_Renderer* Game::GetRenderer() {
 void Game::Run() {
     InputManager * inputManager = &InputManager::GetInstance();
 
-    while(!this->state->QuitRequested()) {     
+    while(!this->state->QuitRequested()) { 
+        this->CalculateDeltaTime();    
         this->state->Render();
         inputManager->Update();
-        this->state->Update(0.0);
+        this->state->Update(this->dt);
         SDL_RenderPresent(this->renderer);  
         SDL_Delay(33);
     } 
@@ -74,7 +75,17 @@ float Game::GetDeltaTime() {
 }
 
 void Game::CalculateDeltaTime() {
+    int time = SDL_GetTicks();
+    this->dt = (time - this->frameStart)/1000.0f;
+    this->frameStart = time;
+}
 
+int Game::GetHeight() {
+    return this->height;
+}
+
+int Game::GetWidth() {
+    return this->width;
 }
 
 Game::~Game() {

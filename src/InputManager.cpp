@@ -3,6 +3,7 @@
 #define INCLUDE_SDL
 
 #include "../include/SDL_include.h"
+#include <iostream>
 
 InputManager& InputManager::GetInstance() {
     static InputManager toReturn;
@@ -18,11 +19,9 @@ InputManager::InputManager(): updateCounter(0), quitRequested(false), mouseX(0),
 
 void InputManager::Update() {
     SDL_Event event;
-	int mouseX, mouseY;
     
 	// Obtenha as coordenadas do mouse
 	SDL_GetMouseState(&mouseX, &mouseY);
-
     this->quitRequested = false;
 
     updateCounter++;
