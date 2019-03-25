@@ -13,7 +13,7 @@ class Alien : public Component {
                 enum ActionType {MOVE, SHOOT};
                 Vec2 pos;
                 ActionType type;
-                Action(ActionType type, float x, float y);
+                Action(ActionType type, float x, float y): type(type), pos({(int)x,(int)y}) {}
         };
         Vec2 speed;
         int hp;

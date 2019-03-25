@@ -7,6 +7,7 @@
 #include "Camera.hpp"
 #include "InputManager.hpp"
 #include "TileMap.hpp"
+#include "Alien.hpp"
 #include "TileSet.hpp"
 #include "Face.hpp"
 #include "Vec2.hpp"
@@ -15,13 +16,14 @@
 #include "Sound.hpp"
 #include <iostream>
 
-State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
+
+State::State() : quitRequested(false), music("assets/audio/stageState.ogg"), started(false) {
 	std::string background_file = "assets/img/ocean.jpg";
 	
 	GameObject* go = new GameObject();
 	Sprite* sprite = new Sprite(*go,background_file);
 	CameraFollower *cf = new CameraFollower(*go);
-    
+    Alien* alien = new Alien(*go,0);
 	go->box.x = 0;
 	go->box.y = 0;
 
@@ -67,7 +69,7 @@ void State::Update(float dt) {
 	if(inputManager.KeyPress(SPACE_KEY)) {
 		
 		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-		AddObject((int)objPos.x, (int)objPos.y);
+		//AddObject((int)objPos.x, (int)objPos.y);
 	}
 	for(int i = 0; i < this->objectArray.size(); i++) {
 		this->objectArray[i]->Update(dt);
@@ -83,7 +85,29 @@ bool State::QuitRequested() {
     return this->quitRequested;
 }
 
-void State::AddObject(int mouseX, int mouseY) {
+void State::Start() {
+	this->LoadAssets();
+	for(int i = 0; i < this->objectArray.size(); i++) {
+		this->objectArray[i]->Start();
+	}
+	this->started = true;
+}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
+	std::shared_ptr<GameObject> ptr = std::shared_ptr<GameObject>(go);
+	this->objectArray.push_back(ptr);
+	
+	if(this->started) ptr->Start();
+	return ptr;
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
+	for(auto &a : this->objectArray) {
+		if(a.get() == go) return std::weak_ptr<GameObject>(a);
+	}
+	return std::weak_ptr<GameObject>();
+}
+/*void State::AddObject(int mouseX, int mouseY) {
     std::string img = "assets/img/penguinface.png";
 	std::string snd = "assets/audio/boom.wav";
 
@@ -102,7 +126,7 @@ void State::AddObject(int mouseX, int mouseY) {
 	go->AddComponent(face);
 
     this->objectArray.emplace_back(go);
-}
+}*/
 
 void State::Input() {	
 	

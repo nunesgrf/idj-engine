@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-GameObject::GameObject(): isDead(false) {
+GameObject::GameObject(): isDead(false), started(false) {
 };
 
 GameObject::~GameObject() {
@@ -31,6 +31,9 @@ void GameObject::RequestDelete() {
 
 void GameObject::AddComponent(Component* cpt) {
     this->components.emplace_back(cpt);
+    if(started) {
+        cpt->Start();
+    }
 }
 
 void GameObject::RemoveComponent(Component* cpt) {
@@ -42,6 +45,13 @@ void GameObject::RemoveComponent(Component* cpt) {
         it++;
     }
     if(it != this->components.end()) this->components.erase(it);
+}
+
+void GameObject::Start() {
+    for(auto &a : this->components) {
+        a->Start();
+    }
+    this->started = true;
 }
 
 Component* GameObject::GetComponent(std::string type) {

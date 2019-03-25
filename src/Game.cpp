@@ -59,6 +59,7 @@ SDL_Renderer* Game::GetRenderer() {
 
 void Game::Run() {
     InputManager * inputManager = &InputManager::GetInstance();
+    this->state->Start();
 
     while(!this->state->QuitRequested()) { 
         this->CalculateDeltaTime();    

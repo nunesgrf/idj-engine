@@ -18,7 +18,7 @@ class State {
         std::vector<std::shared_ptr<GameObject>> objectArray;
 
         void Input();
-        void AddObject(int,int);
+        //void AddObject(int,int);
 
     public:
         State();
