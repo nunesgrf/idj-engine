@@ -1,24 +1,28 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
+#define INFINITE_REPEATS -1
+#define FADEOUT_DEFAULT 1500
+#define MIX_MUSIC Mix_Music
+
 #define INCLUDE_SDL_MIXER
 
-#include "../include/SDL_include.h"
+#include "SDL_include.h"
 #include <string>
 
 class Music {
+    
     private:
-        Mix_Music* music;
+        MIX_MUSIC* music;
 
     public:
         Music();
-        Music(std::string);
+        Music(std::string file);
         ~Music();
-        void Play(int = -1);
-        void Stop(int = 1500);
-        void Open(std::string);
+        void Play(int times = INFINITE_REPEATS);
+        void Stop(int msToStop = FADEOUT_DEFAULT);
+        void Open(std::string file);
         bool IsOpen();
-
 };
 
 #endif 

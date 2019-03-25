@@ -2,63 +2,57 @@
 #include "../include/Game.hpp"
 #include <iostream>
 
-Sprite::Sprite() {
-    this->texture = nullptr;
-}
+#define START_X 0
+#define START_Y 0
+#define ERROR_SPRITE -222
+
+Sprite::Sprite(): texture(nullptr) {}
 
 Sprite::Sprite(std::string file) {
-    
-    this->texture = nullptr;
-    this->Open(file);
+    Sprite();
+    Open(file);
 }
 
 Sprite::~Sprite() {
-    if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
+    if(texture != nullptr) SDL_DestroyTexture(texture);
 }
 
 void Sprite::Open(std::string file) {
-    Game * aux = &Game::GetInstance();
+    Game &game = Game::GetInstance();
 
-    if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
+    if(texture != nullptr) SDL_DestroyTexture(texture);
+    texture = IMG_LoadTexture(game.GetRenderer(),file.c_str());
 
-    if(this->texture == nullptr) {
+    if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
-        exit(-2);
+        exit(ERROR_SPRITE);
     }
 
-    SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
+    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
 
-    this->SetClip(0,0,this->width,this->height);
+    SetClip(START_X,START_Y,width,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    this->clipRect.x = x;
-    this->clipRect.y = y;
-    this->clipRect.w = w;
-    this->clipRect.h = h;
+    clipRect = {x,y,w,h};
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect dstrect;
-    Game * aux = &Game::GetInstance();
+    RECT dstrect;
+    Game &game = Game::GetInstance();
 
-    dstrect.x = x;
-    dstrect.y = y;
-    dstrect.w = this->clipRect.w;
-    dstrect.h = this->clipRect.h;
-
-    SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
+    dstrect = {x,y,clipRect.w,clipRect.h};
+    SDL_RenderCopy(game.GetRenderer(),texture,&clipRect,&dstrect);
 }
 
 int Sprite::GetWidth() {
-    return this->width;
+    return width;
 }
 
 int Sprite::GetHeight() {
-    return this->height;
+    return height;
 }
 
 bool Sprite::IsOpen() {
-    return this->texture != nullptr;
+    return texture != nullptr;
 }

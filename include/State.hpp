@@ -15,7 +15,7 @@ class State {
         State();
         bool QuitRequested();
         void LoadAssets();
-        void Update(float);
+        void Update(float dt);
         void Render();
 };
 #endif
