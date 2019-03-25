@@ -7,6 +7,7 @@
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "SDL_include.h"
+#include "Vec2.hpp"
 #include <string>
 
 class Sprite : public Component {
@@ -16,6 +17,7 @@ class Sprite : public Component {
         SDL_Rect clipRect;
         int width;
         int height;
+        Vec2 scale;
 
     public:
         Sprite(GameObject&);
@@ -30,5 +32,7 @@ class Sprite : public Component {
         bool IsOpen();
         bool Is(std::string);
         void Update(float);
+        Vec2 GetScale();
+        void SetScaleX(float scaleX, float scaleY);
 };
 #endif 

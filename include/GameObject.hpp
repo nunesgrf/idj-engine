@@ -15,9 +15,11 @@ class GameObject{
         bool isDead;
 
     public:
+        bool started;
+
         GameObject();
         ~GameObject();
-
+        void Start();
         void Update(float);
         void Render();
         bool IsDead();
