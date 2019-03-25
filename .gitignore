@@ -1,3 +1,5 @@
 *.o
 idj-engine
 *.json
+.vscode
+vscode

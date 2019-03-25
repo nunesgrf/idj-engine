@@ -1,5 +1,9 @@
 #define INCLUDE_SDL
 
+#define ZERO 0
+#define BACKGROUND "assets/img/ocean.jpg"
+#define STAGE_MUSIC "assets/audio/stageState.ogg"
+
 #define PI 3.14159265359
 
 #include "SDL_include.h"
@@ -9,8 +13,8 @@
 #include "Sound.hpp"
 #include <iostream>
 
-State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
-	std::string background_file = "assets/img/ocean.jpg";
+State::State() : quitRequested(false), music(STAGE_MUSIC) {
+	std::string background_file = BACKGROUND;
 	
 	GameObject* go = new GameObject();
 	Sprite* sprite = new Sprite(*go,background_file);
