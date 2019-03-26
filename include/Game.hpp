@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#define WINDOW SDL_Window
+#define RENDERER SDL_Renderer
+
 #define INCLUDE_SDL
 
 #include "SDL_include.h"
@@ -11,10 +14,10 @@ class Game {
     
     private:
         static Game* instance;
-        SDL_Window*  window;
-        SDL_Renderer* renderer;
+        WINDOW*  window;
+        RENDERER* renderer;
         State* state;
-        Game(std::string, uint32_t, uint32_t);
+        Game(std::string, int width, int height);
 
     public:
         static Game& GetInstance();

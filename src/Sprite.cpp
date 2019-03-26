@@ -1,5 +1,5 @@
-#include "../include/Sprite.hpp"
-#include "../include/Game.hpp"
+#include "Sprite.hpp"
+#include "Game.hpp"
 #include <iostream>
 
 #define START_X 0
@@ -17,10 +17,10 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Open(std::string file) {
-    Game * aux = &Game::GetInstance();
+    Game &game = Game::GetInstance();
 
     if(texture != nullptr) SDL_DestroyTexture(texture);
-    texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
+    texture = IMG_LoadTexture(game.GetRenderer(),file.c_str());
 
     if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
@@ -38,10 +38,10 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 
 void Sprite::Render() {
     RECT dstrect;
-    Game * aux = &Game::GetInstance();
+    Game &game = Game::GetInstance();
 
     dstrect ={(int)associated.box.x,(int)associated.box.y,clipRect.w,clipRect.h};
-    SDL_RenderCopy(aux->GetRenderer(),texture,&clipRect,&dstrect);
+    SDL_RenderCopy(game.GetRenderer(),texture,&clipRect,&dstrect);
 }
 
 int Sprite::GetWidth() {

@@ -31,6 +31,6 @@ class Sprite : public Component {
         int GetHeight();
         bool IsOpen();
         bool Is(std::string file);
-        void Update(float);
+        void Update(float dt);
 };
 #endif 

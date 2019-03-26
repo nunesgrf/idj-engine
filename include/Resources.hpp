@@ -1,6 +1,8 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
+#define MIX_CHUNK Mix_Chunk
+
 #define INCLUDE_SDL_MIXER
 
 #include "SDL_include.h"
@@ -9,10 +11,10 @@
 
 class Resources {
     private:
-        static std::unordered_map<std::string,Mix_Chunk*> soundTable;
+        static std::unordered_map<std::string,MIX_CHUNK*> soundTable;
 
     public:
-        static Mix_Chunk* GetSound(std::string);
+        static MIX_CHUNK* GetSound(std::string file);
         static void ClearSounds();
 };
 #endif

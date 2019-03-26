@@ -1,22 +1,23 @@
-#include "../include/Resources.hpp"
+#include "Resources.hpp"
 
+#define RESOURCE_ERROR -444
 #include <iostream>
 
-std::unordered_map<std::string,Mix_Chunk*> Resources::soundTable;
+std::unordered_map<std::string,MIX_CHUNK*> Resources::soundTable;
 
-Mix_Chunk* Resources::GetSound(std::string file) {
+MIX_CHUNK* Resources::GetSound(std::string file) {
     auto it = soundTable.find(file);
     
     if(it == soundTable.end()) {
-        Mix_Chunk* aux_chunk;
+        MIX_CHUNK* aux_chunk;
         try {
             aux_chunk = Mix_LoadWAV(file.c_str());
         } 
         catch(...) { 
             std::cout << "MixLoadWAV_ERROR: " << SDL_GetError() << std::endl;
-            exit(-4);
+            exit(RESOURCE_ERROR);
         }
-        std::pair<std::string,Mix_Chunk*> toInsert(file,aux_chunk);
+        std::pair<std::string,MIX_CHUNK*> toInsert(file,aux_chunk);
         soundTable.insert(toInsert);
         return aux_chunk;
     }

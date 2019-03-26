@@ -1,26 +1,23 @@
-#include "../include/Face.hpp"
+#include "Face.hpp"
+
+#define NO_HITPOINTS 0
 
 #include "Sound.hpp"
 
-Face::Face(GameObject& associated): Component(associated), hitpoints(30) {
-}
+Face::Face(GameObject& associated): Component(associated), hitpoints(30) {}
 
 void Face::Damage(int damage) {
-    this->hitpoints -= damage;
-    if(this->hitpoints <= 0) {
-        this->associated.RequestDelete();
-        Sound * sound = (Sound*)this->associated.GetComponent("Sound");
-        if(sound->Is("Sound")) sound->Play(0);
-        
+    hitpoints -= damage;
+    if(hitpoints <= NO_HITPOINTS) {
+        associated.RequestDelete();
+        Sound * sound = (Sound*)associated.GetComponent("Sound");
+        if(sound->Is("Sound")) sound->Play(0);       
     }
-}
-
-void Face::Update(float dt) {
-}
-
-void Face::Render() {
 }
 
 bool Face::Is(std::string type) {
     return type == std::string("Face");
 }
+
+void Face::Render() {}
+void Face::Update(float dt) {}

@@ -1,52 +1,51 @@
-#include "../include/GameObject.hpp"
+#include "GameObject.hpp"
 
 #include <algorithm>
 
-GameObject::GameObject(): isDead(false) {
-};
+GameObject::GameObject(): isDead(false) {}
 
 GameObject::~GameObject() {
-    this->components.clear();
+    components.clear();
 }
 
 void GameObject::Update(float dt) {
-    for(auto &a : this->components) {
-        a->Update(dt);
+    for(auto &cpt : components) {
+        cpt->Update(dt);
     }
 }
 
 void GameObject::Render() {
-    for(auto &a : this->components) {
-        a->Render();
+    for(auto &cpt : components) {
+        cpt->Render();
     }
 }
 
 bool GameObject::IsDead() {
-    return this->isDead;
+    return isDead;
 }
 
 void GameObject::RequestDelete() {
-    this->isDead = true;
+    isDead = true;
 }
 
 void GameObject::AddComponent(Component* cpt) {
-    this->components.emplace_back(cpt);
+    components.emplace_back(cpt);
 }
 
 void GameObject::RemoveComponent(Component* cpt) {
-    auto it = this->components.begin();
+    auto it = components.begin();
     bool keepGoing = true;
 
-    while(it != this->components.end() and keepGoing) {
+    while(it != components.end() and keepGoing) {
         if(it->get() == cpt) keepGoing = false;
         it++;
     }
-    if(it != this->components.end()) this->components.erase(it);
+    if(it != components.end()) components.erase(it);
 }
 
 Component* GameObject::GetComponent(std::string type) {
-    for(int i = 0; i < this->components.size(); i++) {
-        if(this->components[i]->Is(type)) return this->components[i].get();      
+    for(int i = 0; i < components.size(); i++) {
+        if(components[i]->Is(type)) return components[i].get();      
     }
     return nullptr;
 }

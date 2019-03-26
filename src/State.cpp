@@ -1,15 +1,18 @@
+#include "State.hpp"
+
 #define INCLUDE_SDL
 
+#define PI 3.14159265359
 #define ZERO 0
 #define BACKGROUND "assets/img/ocean.jpg"
 #define STAGE_MUSIC "assets/audio/stageState.ogg"
+#define PENGUIN_FACE "assets/img/penguinface.png"
+#define BOOM "assets/audio/boom.wav"
 
-#define PI 3.14159265359
 
 #include "SDL_include.h"
 #include "Face.hpp"
 #include "Vec2.hpp"
-#include "State.hpp"
 #include "Sound.hpp"
 #include <iostream>
 
@@ -24,51 +27,48 @@ State::State() : quitRequested(false), music(STAGE_MUSIC) {
 
 	go->AddComponent(sprite);
 	
-	this->objectArray.emplace_back(go);
+	objectArray.emplace_back(go);
 	music.Play();
 }
 
 State::~State() {
-    this->objectArray.clear();
+    objectArray.clear();
 }
 
 void State::LoadAssets() {
 }
 
 void State::Render() {
-	for(auto &a : this->objectArray) {
-		a->Render();
+	for(auto &object : objectArray) {
+		object->Render();
 	}
 }
 
 void State::Update(float dt) {
-    //this->quitRequested = SDL_QuitRequested();
-	this->Input();
-	for(int i = 0; i < this->objectArray.size(); i++) {
-		this->objectArray[i]->Update(dt);
+    
+	Input();
+	for(int i = 0; i < objectArray.size(); i++) {
+		objectArray[i]->Update(dt);
 	}
-	for(int i = 0; i < this->objectArray.size(); i++) {
-		if(this->objectArray[i]->IsDead()) {
-			this->objectArray.erase(this->objectArray.begin()+i);
+	for(int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i]->IsDead()) {
+			objectArray.erase(objectArray.begin()+i);
 		}
 	}
 }
 
 bool State::QuitRequested() {
-    return this->quitRequested;
+    return quitRequested;
 }
 
 void State::AddObject(int mouseX, int mouseY) {
-    std::string img = "assets/img/penguinface.png";
-	std::string snd = "assets/audio/boom.wav";
-
     GameObject* go = new GameObject();
-	Sprite* sprite = new Sprite(*go,img);
-	Sound* sound = new Sound(*go,snd);
+	Sprite* sprite = new Sprite(*go,PENGUIN_FACE);
+	Sound* sound = new Sound(*go,BOOM);
 	Face* face = new Face(*go);
 
-	go->box.x = mouseX;
-	go->box.y = mouseY;
+	go->box.x = mouseX - sprite->GetWidth()/2;
+	go->box.y = mouseY - sprite->GetHeight()/2;
 	go->box.w = sprite->GetWidth();
 	go->box.h = sprite->GetHeight();
 
@@ -76,7 +76,7 @@ void State::AddObject(int mouseX, int mouseY) {
 	go->AddComponent(sound);
 	go->AddComponent(face);
 
-    this->objectArray.emplace_back(go);
+    objectArray.emplace_back(go);
 }
 
 void State::Input() {
