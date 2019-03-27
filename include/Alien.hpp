@@ -1,6 +1,8 @@
 #ifndef ALIEN_H
 #define ALIEN_H
 
+#define OBJECT_SPEED 100
+
 #include "Component.hpp"
 #include "Vec2.hpp"
 #include <queue>
@@ -16,6 +18,7 @@ class Alien : public Component {
                 Action(ActionType type, float x, float y): type(type), pos({(int)x,(int)y}) {}
         };
         Vec2 speed;
+        //int speed;
         int hp;
         std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;

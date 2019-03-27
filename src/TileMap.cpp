@@ -39,7 +39,6 @@ int& TileMap::At(int x, int y, int z) {
 void TileMap::Render() {
     associated.box.x = Camera::pos.x;
 	associated.box.y = Camera::pos.y;
-	std::cout << associated.box.x << " " << associated.box.y << std::endl;
     for(int i = 0; i < this->mapDepth; i++) {
         this->RenderLayer(i, this->associated.box.x,this->associated.box.y);
     }
@@ -73,3 +72,5 @@ bool TileMap::Is(std::string type) {
 
 void TileMap::Update(float dt) {
 }
+
+void TileMap::Start() {}

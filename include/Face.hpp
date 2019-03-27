@@ -11,6 +11,7 @@ class Face : public Component {
 
     public:
         Face(GameObject&);
+        void Start();
         void Damage(int);
         void Update(float);
         void Render();

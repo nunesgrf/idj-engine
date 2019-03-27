@@ -23,7 +23,6 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg"), sta
 	GameObject* go = new GameObject();
 	Sprite* sprite = new Sprite(*go,background_file);
 	CameraFollower *cf = new CameraFollower(*go);
-    Alien* alien = new Alien(*go,0);
 	go->box.x = 0;
 	go->box.y = 0;
 
@@ -32,13 +31,20 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg"), sta
 
 	this->objectArray.emplace_back(go);
 
-	GameObject * tile_go = new GameObject();
+	GameObject* tile_go = new GameObject();
 	this->tileSet = new TileSet(*tile_go,64,64,"assets/img/tileset.png");
 	TileMap * tilemap = new TileMap(*tile_go,"assets/map/tileMap.txt",tileSet);
 
 	tile_go->AddComponent(tilemap);
-	
 	this->objectArray.emplace_back(tile_go);
+
+	GameObject* alien_go = new GameObject();
+	alien_go->box.x = 512;
+	alien_go->box.y = 300;
+	Alien* alien = new Alien(*alien_go,0);
+	alien_go->AddComponent(alien);
+
+	this->objectArray.emplace_back(alien_go);
 
 	music.Play();
 
@@ -66,11 +72,11 @@ void State::Update(float dt) {
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
 
-	if(inputManager.KeyPress(SPACE_KEY)) {
+	/*if(inputManager.KeyPress(SPACE_KEY)) {
 		
 		Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
 		//AddObject((int)objPos.x, (int)objPos.y);
-	}
+	}*/
 	for(int i = 0; i < this->objectArray.size(); i++) {
 		this->objectArray[i]->Update(dt);
 	}

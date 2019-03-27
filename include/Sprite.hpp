@@ -23,6 +23,7 @@ class Sprite : public Component {
         Sprite(GameObject&);
         Sprite(GameObject&,std::string);
         ~Sprite();
+        void Start();
         void Open(std::string);
         void SetClip(int,int,int,int);
         void Render();

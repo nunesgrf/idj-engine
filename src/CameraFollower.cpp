@@ -17,3 +17,5 @@ bool CameraFollower::Is(std::string type) {
 void CameraFollower::Render() {
 
 }
+
+void CameraFollower::Start() {}
