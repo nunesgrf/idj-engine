@@ -2,12 +2,12 @@
 
 #include <cmath>
 
-Vec2::Vec2(int x, int y): x(x), y(y) {
+Vec2::Vec2(float x, float y): x(x), y(y) {
 }
 
 Vec2 Vec2::GetRotated(float theta) {
     float x1 = this->x*cos(theta) - this->y*sin(theta);
-    float y1 = this->y*cos(theta) + this->x*sin(theta);
+    float y1 = this->y*cos(theta) - this->x*sin(theta);
 
     return Vec2(x1,y1);
 }
@@ -32,6 +32,10 @@ void Vec2::operator=(Vec2 other) {
     y = other.y;
 }
 
+Vec2 Vec2::operator*(float a) {
+    return escalar(a);
+}
+
 void Vec2::operator*=(Vec2 that) {
     this->x = x*that.x;
     this->y = y*that.y;
@@ -48,9 +52,13 @@ float Vec2::ToAngle(Vec2 v){
 }
 
 float Vec2::distance(Vec2 that) {
-    return std::sqrt(std::pow((this->x-that.x),2) + std::pow((this->y-that.y),2));
+    return (*this - that).Mag();
 }
 
 float Vec2::InclX() {
-    return atan2(y, x);
+    return -atan2(y, x);
+}
+
+Vec2 Vec2::escalar(float a) {
+    return Vec2(x*a,y*a);
 }

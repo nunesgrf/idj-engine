@@ -65,7 +65,7 @@ void Game::Run() {
         this->CalculateDeltaTime();    
         this->state->Render();
         inputManager->Update();
-        this->state->Update(this->dt);
+        this->state->Update(GetDeltaTime());
         SDL_RenderPresent(this->renderer);  
         SDL_Delay(33);
     } 

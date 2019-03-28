@@ -12,12 +12,11 @@ bool Rect::Contains(std::list<float> clebinho) {
 } 
 
 Rect Rect::sumVec2(Vec2 vec) {
-    return Rect(x-vec.x,y-vec.y,w,h);
+    return Rect(x+vec.x,y+vec.y,w,h);
 }
 
 Vec2 Rect::Center() {
-    std::cout << x-w/2 << " " << y-h/2 << std::endl;
-    return Vec2(x-w/2,y-h/2);
+    return Vec2(x+w/2,y+h/2);
 }
 
 Rect Rect::operator+=(Vec2 v) {
