@@ -6,8 +6,7 @@
 
 Music::Music(): music(nullptr) {}
 
-Music::Music(std::string file) {
-    Music();
+Music::Music(std::string file): Music() {
     Open(file);
 }
 

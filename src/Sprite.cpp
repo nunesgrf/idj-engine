@@ -8,8 +8,7 @@
 
 Sprite::Sprite(): texture(nullptr) {}
 
-Sprite::Sprite(std::string file) {
-    Sprite();
+Sprite::Sprite(std::string file): Sprite() {
     Open(file);
 }
 
