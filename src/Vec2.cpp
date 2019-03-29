@@ -36,6 +36,10 @@ Vec2 Vec2::operator*(float a) {
     return escalar(a);
 }
 
+void Vec2::operator+=(Vec2 that) {
+    *this = *this+that;
+}
+
 void Vec2::operator*=(Vec2 that) {
     this->x = x*that.x;
     this->y = y*that.y;

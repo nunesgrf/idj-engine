@@ -1,6 +1,6 @@
 #include "../include/Rect.hpp"
 #include <iostream>
-Rect::Rect(int x,int y, int w,int h): x(x), y(y), w(w), h(h) {}
+Rect::Rect(float x,float y, float w,float h): x(x), y(y), w(w), h(h) {}
 
 bool Rect::Contains(std::list<float> clebinho) {
     // mudar!
@@ -21,4 +21,21 @@ Vec2 Rect::Center() {
 
 Rect Rect::operator+=(Vec2 v) {
     return *this = sumVec2(v);
+}
+
+void Rect::operator=(Vec2 that) {
+    x = that.x;
+    y = that.y;
+}
+
+Vec2 Rect::operator-(Vec2 that) {
+    return Vec2(x-that.x,y-that.y);
+
+}
+void Rect::operator-=(Vec2 that) {
+    *this = *this - that;
+}
+
+Vec2 Rect::CenterOffset() {
+    return Vec2(w/2,h/2);
 }

@@ -41,7 +41,7 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg"), sta
 	GameObject* alien_go = new GameObject();
 	alien_go->box.x = 512;
 	alien_go->box.y = 300;
-	Alien* alien = new Alien(*alien_go,0);
+	Alien* alien = new Alien(*alien_go,6);
 	alien_go->AddComponent(alien);
 
 	this->objectArray.emplace_back(alien_go);

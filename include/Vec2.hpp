@@ -15,6 +15,7 @@ class Vec2 {
         Vec2 operator-(const Vec2 other);
         Vec2 operator*(const Vec2 other);
         void operator=(Vec2 other);
+        void operator +=(Vec2 that);
         void operator*=(Vec2 other);
         Vec2 operator*(float a);
         float distance(Vec2 that);
