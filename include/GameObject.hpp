@@ -16,7 +16,7 @@ class GameObject{
 
     public:
         bool started;
-
+        double angleDeg;
         GameObject();
         ~GameObject();
         void Start();

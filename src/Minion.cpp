@@ -2,12 +2,16 @@
 
 #define SPRITE_MINION "assets/img/minion.png"
 #define SPRITE_BULLET_1 "assets/img/minionbullet1.png"
+#define MINION_ROTATION -15 
+
 #include "Sprite.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
 
 Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
     Sprite * sprite = new Sprite(associated,SPRITE_MINION);
+    auto a = random_float_in_range(1,1.5);
+    sprite->SetScale(a,a);
     this->associated.AddComponent(sprite);
 
     auto initial = Vec2(200,0).GetRotated(arc);
@@ -22,6 +26,8 @@ void Minion::Update(float dt) {
     
     this->associated.box = move + alienCenter.box.Center();
     this->associated.box -= associated.box.CenterOffset();
+
+    associated.angleDeg += MINION_ROTATION;
 }
 
 bool Minion::Is(std::string type) {
@@ -50,5 +56,8 @@ void Minion::Shoot(Vec2 target) {
 
     
 } 
+float Minion::random_float_in_range(float a, float b) {
+    return a + (b - a)*(rand()/(float)RAND_MAX);
+}
 void Minion::Render() {}
 void Minion::Start() {}

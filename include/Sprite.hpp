@@ -34,6 +34,6 @@ class Sprite : public Component {
         bool Is(std::string);
         void Update(float);
         Vec2 GetScale();
-        void SetScaleX(float scaleX, float scaleY);
+        void SetScale(float scaleX, float scaleY);
 };
 #endif 

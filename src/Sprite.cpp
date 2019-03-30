@@ -12,6 +12,7 @@ Sprite::Sprite(GameObject& associated, std::string file): Component(associated),
     
     this->texture = nullptr;
     this->Open(file);
+    scale = Vec2(1,1);
 }
 
 Sprite::~Sprite() {
@@ -49,10 +50,10 @@ void Sprite::Render(int x, int y) {
 
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = this->clipRect.w;
-    dstrect.h = this->clipRect.h;
+    dstrect.w = this->clipRect.w*scale.x;
+    dstrect.h = this->clipRect.h*scale.y;
 
-    SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
+    SDL_RenderCopyEx(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect,this->associated.angleDeg,nullptr,SDL_FLIP_NONE);
 }
 
 void Sprite::Render() {
@@ -63,11 +64,11 @@ void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return this->width;
+    return this->width*scale.x;
 }
 
 int Sprite::GetHeight() {
-    return this->height;
+    return this->height*scale.y;
 }
 
 bool Sprite::IsOpen() {
@@ -78,5 +79,21 @@ bool Sprite::Is(std::string type) {
     return type == std::string("Sprite");
 }
 
+void Sprite::SetScale(float scaleX, float scaleY) {
+    if(scale.x <= 0) scaleX = scale.x;
+    if(scale.y <= 0) scaleY = scale.y;
+
+    //associated.box.w = width*scaleX;
+    associated.box.x = associated.box.Center().x - associated.box.w/2;
+
+    //associated.box.h = height*scaleY;
+    associated.box.y = associated.box.Center().y - associated.box.x/2;
+
+    scale = {scaleX,scaleY};
+}
+
+Vec2 Sprite::GetScale() {
+    return scale;
+}
 void Sprite::Update(float dt) {
 }

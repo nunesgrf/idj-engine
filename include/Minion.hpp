@@ -20,5 +20,6 @@ class Minion : public Component {
         void Render();
         bool Is(std::string type);
         void Shoot(Vec2 target);
+        float random_float_in_range(float a, float b);
 };
 #endif

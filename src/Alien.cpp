@@ -6,7 +6,9 @@
 #include "Camera.hpp"
 #include <iostream>
 #include <cstdlib>
+
 #define PI 3.1419
+#define ALIEN_ROTATION 1
 
 #include "Game.hpp"
 #include "GameObject.hpp"
@@ -80,6 +82,7 @@ void Alien::Update(float dt) {
             taskQueue.pop();
         }
     }
+    this->associated.angleDeg += ALIEN_ROTATION;
     if(hp <= 0) associated.RequestDelete();
        
 }
