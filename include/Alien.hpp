@@ -18,7 +18,6 @@ class Alien : public Component {
                 Action(ActionType type, float x, float y): type(type), pos({(int)x,(int)y}) {}
         };
         Vec2 speed;
-        //int speed;
         int hp;
         std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
@@ -30,5 +29,6 @@ class Alien : public Component {
         void Update(float dt);
         void Render();
         bool Is(std::string type);
+        int ClosestMinion(Vec2 target);
 };
 #endif

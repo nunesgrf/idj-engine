@@ -44,7 +44,6 @@ void Alien::Update(float dt) {
         this->taskQueue.push(action);
     }
     else if(inputManager.MousePress(RIGHT_MOUSE_NUTTON)) {
-        std::cout << "x: " << x << " y: " << y << std::endl;
         Action action(Action::MOVE,x,y);
         this->taskQueue.push(action);
     }
@@ -73,6 +72,11 @@ void Alien::Update(float dt) {
             }
         }
         else {
+            std::cout << "Atirar em " << "x: " << x << " y: " << y << std::endl;
+
+            const std::shared_ptr<GameObject> &ptr = minionArray[ClosestMinion(action.pos)].lock();
+            auto minion = (Minion*)ptr->GetComponent("Minion");
+            minion->Shoot(action.pos);
             taskQueue.pop();
         }
     }
@@ -85,6 +89,11 @@ void Alien::Render() {}
 bool Alien::Is(std::string type) {
     return type == std::string("Alien");
 }
+
+int Alien::ClosestMinion(Vec2 target) {
+    return 0;
+}
+
 Alien::~Alien() {
     this->minionArray.clear();
 }
