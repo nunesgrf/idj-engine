@@ -27,6 +27,7 @@ class GameObject{
         void AddComponent(Component*);
         void RemoveComponent(Component*);
         Component* GetComponent(std::string);
+        virtual void NotifyCollision(GameObject& other);
 
         Rect box;        
 };

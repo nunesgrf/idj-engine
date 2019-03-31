@@ -18,10 +18,14 @@ class Sprite : public Component {
         int width;
         int height;
         Vec2 scale;
+        int frameCount;
+        int currentFrame;
+        float timeElapsed;
+        float frameTime;
 
     public:
         Sprite(GameObject&);
-        Sprite(GameObject&,std::string);
+        Sprite(GameObject&,std::string, int frameCount = 1, float frameTime = 1);
         ~Sprite();
         void Start();
         void Open(std::string);
@@ -35,5 +39,8 @@ class Sprite : public Component {
         void Update(float);
         Vec2 GetScale();
         void SetScale(float scaleX, float scaleY);
+        void SetFrame(int frame);
+        void SetFrameCount(int frameCount);
+        void SetFrameTime(float frameTime);
 };
 #endif 

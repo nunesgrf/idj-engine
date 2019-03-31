@@ -8,7 +8,7 @@
 Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
 }
 
-Sprite::Sprite(GameObject& associated, std::string file): Component(associated), texture(nullptr) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Component(associated), texture(nullptr), frameCount(frameCount),frameTime(frameTime), timeElapsed(0) {
     
     this->texture = nullptr;
     this->Open(file);
@@ -96,4 +96,17 @@ Vec2 Sprite::GetScale() {
     return scale;
 }
 void Sprite::Update(float dt) {
+    timeElapsed += dt;
+    if(timeElapsed >= frameTime) {
+        if(++currentFrame >= frameCount) currentFrame = 0;
+        SetFrame(currentFrame);
+        timeElapsed = 0;
+    }
 }
+
+void Sprite::SetFrame(int frame) {
+    currentFrame = frame;
+    
+}
+void Sprite::SetFrameCount(int frameCount) {}
+void Sprite::SetFrameTime(float frameTime) {}
