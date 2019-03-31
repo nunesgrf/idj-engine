@@ -10,6 +10,8 @@ class Vec2 {
         float Mag();
         float ToAngle(Vec2 other);
         float InclX();
+        float IncX2();
+        Vec2 RotateDeg(float angle);
         Vec2 escalar(float a);
         Vec2 operator+(const Vec2 other);
         Vec2 operator-(const Vec2 other);

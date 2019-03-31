@@ -36,21 +36,21 @@ bool Minion::Is(std::string type) {
 
 void Minion::Shoot(Vec2 target) {
  
-    /*float angle = target.AngleX(associated.box.Center()).x;
-    GameObject* go = new GameObject();
-    go->box.x = associated.box.Center().x;
-    go->box.y = associated.box.Center().y;
-    Bullet * bullet = new Bullet(*go,angle,400,10,2000,SPRITE_BULLET_1);
+    /*GameObject* go = new GameObject();
+    go->box = associated.box.Center();
+    float angle = (target - associated.box.Center()).IncX2()*(180.0f/PI);
+    
+    Bullet * bullet = new Bullet(*go,angle,300,20,1000,SPRITE_BULLET_1);
+
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);*/
-
     GameObject* go = new GameObject();
     go->box.x = associated.box.Center().x;
     go->box.y = associated.box.Center().y;
     
     Vec2 minionCenter = this->associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,2000,SPRITE_BULLET_1);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,300,SPRITE_BULLET_1);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 

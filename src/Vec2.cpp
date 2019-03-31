@@ -66,3 +66,12 @@ float Vec2::InclX() {
 Vec2 Vec2::escalar(float a) {
     return Vec2(x*a,y*a);
 }
+
+float Vec2::IncX2() {
+    return atan2(y, x);
+}
+
+Vec2 Vec2::RotateDeg(float angle) {
+    auto ang = (float)angle*(M_PI/180.0f);
+    return Vec2(x*cos(angle)-y*sin(angle),y*cos(angle)+x*sin(angle));
+}

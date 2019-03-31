@@ -94,7 +94,17 @@ bool Alien::Is(std::string type) {
 }
 
 int Alien::ClosestMinion(Vec2 target) {
-    return 0;
+
+    int index = 0;
+    auto closest = 100000000000000000000000.0f;
+    for(int i = 0; i < minionArray.size(); i++) {
+        float dist = ((minionArray[i].lock())->box.Center() - target).Mag();
+        if(closest > dist) {
+            closest = dist;
+            index = i;
+        }
+    }
+    return index;
 }
 
 Alien::~Alien() {
