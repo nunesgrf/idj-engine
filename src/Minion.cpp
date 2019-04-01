@@ -2,6 +2,8 @@
 
 #define SPRITE_MINION "assets/img/minion.png"
 #define SPRITE_BULLET_1 "assets/img/minionbullet1.png"
+#define SPRITE_BULLET_2 "assets/img/minionbullet2.png"
+#define TEST "assets/img/miniondeath.png"
 #define MINION_ROTATION -15 
 
 #include "Sprite.hpp"
@@ -50,7 +52,7 @@ void Minion::Shoot(Vec2 target) {
     
     Vec2 minionCenter = this->associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,300,SPRITE_BULLET_1);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,300,SPRITE_BULLET_2,3,0.1);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 

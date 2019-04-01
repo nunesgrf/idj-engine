@@ -8,7 +8,7 @@
 Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
 }
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Component(associated), texture(nullptr), frameCount(frameCount),frameTime(frameTime), timeElapsed(0) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Component(associated), texture(nullptr), frameCount(frameCount),frameTime(frameTime), timeElapsed(0), currentFrame(0) {
     
     this->texture = nullptr;
     this->Open(file);
@@ -34,7 +34,7 @@ void Sprite::Open(std::string file) {
     SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
     associated.box.w = width;
     associated.box.h = height;
-    this->SetClip(0,0,this->width,this->height);
+    this->SetClip(currentFrame,0,this->width/frameCount,this->height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -64,7 +64,7 @@ void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return this->width*scale.x;
+    return (this->width*scale.x)/frameCount;
 }
 
 int Sprite::GetHeight() {
@@ -97,6 +97,7 @@ Vec2 Sprite::GetScale() {
 }
 void Sprite::Update(float dt) {
     timeElapsed += dt;
+    if(frameTime >= 1.2) std::cout << timeElapsed << " " << frameTime << std::endl;
     if(timeElapsed >= frameTime) {
         if(++currentFrame >= frameCount) currentFrame = 0;
         SetFrame(currentFrame);
@@ -106,7 +107,14 @@ void Sprite::Update(float dt) {
 
 void Sprite::SetFrame(int frame) {
     currentFrame = frame;
-    
+    SetClip(frame*GetWidth(), 0, clipRect.w, clipRect.h);
 }
-void Sprite::SetFrameCount(int frameCount) {}
-void Sprite::SetFrameTime(float frameTime) {}
+void Sprite::SetFrameCount(int framecount) {
+    frameCount = framecount;
+    associated.box.w = GetWidth();
+    SetClip(0,clipRect.y,GetWidth(),clipRect.h);
+  
+}
+void Sprite::SetFrameTime(float frametime) {
+    frameTime = frametime;
+}

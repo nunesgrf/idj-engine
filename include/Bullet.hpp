@@ -13,7 +13,7 @@ class Bullet : public Component {
     
     public:
         bool targetsPlayer;
-        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite);
+        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime);
         void Start();
         void Update(float dt);
         bool Is(std::string type);

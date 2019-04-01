@@ -74,8 +74,6 @@ void Alien::Update(float dt) {
             }
         }
         else {
-            std::cout << "Atirar em " << "x: " << x << " y: " << y << std::endl;
-
             const std::shared_ptr<GameObject> &ptr = minionArray[ClosestMinion(action.pos)].lock();
             auto minion = (Minion*)ptr->GetComponent("Minion");
             minion->Shoot(action.pos);

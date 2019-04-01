@@ -2,8 +2,9 @@
 
 #include "Sprite.hpp"
 
-Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite): Component(associated) {
-    Sprite * img = new Sprite(associated,sprite);
+Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime): Component(associated) {
+    Sprite * img = new Sprite(associated,sprite,frameCount,frameTime);
+    img->SetScale(1,1);
     this->associated.AddComponent(img);
     this->associated.angleDeg = angle*(180.0/M_PI);
     this->speed = Vec2(velocidade,0).RotateDeg(angle);
