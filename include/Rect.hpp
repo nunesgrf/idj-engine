@@ -12,8 +12,9 @@ class Rect {
         Rect sumVec2(Vec2 vec);
         Vec2 Center();
         Vec2 CenterOffset();
-        Vec2 operator-(Vec2 that);
-        Rect operator+=(Vec2 v);
+        Rect operator-(Vec2 that);
+        Rect operator+(Vec2 that);
+        void operator+=(Vec2 that);
         void operator=(Vec2 that);
         void operator-=(Vec2 that);
 };

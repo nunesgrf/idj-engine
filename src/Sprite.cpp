@@ -9,39 +9,37 @@ Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) 
 }
 
 Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Component(associated), texture(nullptr), frameCount(frameCount),frameTime(frameTime), timeElapsed(0), currentFrame(0) {
-    
-    this->texture = nullptr;
-    this->Open(file);
+    Open(file);
     scale = Vec2(1,1);
 }
 
 Sprite::~Sprite() {
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
+    //if(texture != nullptr) SDL_DestroyTexture(texture);
     // think about it
 }
 
 void Sprite::Open(std::string file) {
     //Game * aux = &Game::GetInstance();
 
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    //this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
-    this->texture = Resources::GetImage(file);
-    if(this->texture == nullptr) {
+    //if(texture != nullptr) SDL_DestroyTexture(texture);
+    //texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
+    texture = Resources::GetImage(file);
+    if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
         exit(-2);
     }
 
-    SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
-    associated.box.w = width;
-    associated.box.h = height;
-    this->SetClip(currentFrame,0,this->width/frameCount,this->height);
+    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
+    associated.box.w = GetWidth();
+    associated.box.h = GetHeight();
+    SetClip(0,0,width/frameCount,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    this->clipRect.x = x;
-    this->clipRect.y = y;
-    this->clipRect.w = w;
-    this->clipRect.h = h;
+    clipRect.x = x;
+    clipRect.y = y;
+    clipRect.w = w;
+    clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y) {
@@ -50,29 +48,29 @@ void Sprite::Render(int x, int y) {
 
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = this->clipRect.w*scale.x;
-    dstrect.h = this->clipRect.h*scale.y;
+    dstrect.w = clipRect.w*scale.x;
+    dstrect.h = clipRect.h*scale.y;
 
-    SDL_RenderCopyEx(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect,this->associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    SDL_RenderCopyEx(aux->GetRenderer(),texture,&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
 }
 
 void Sprite::Render() {
-    this->Render(this->associated.box.x-Camera::pos.x,this->associated.box.y-Camera::pos.y);
+    Render(associated.box.x-Camera::pos.x,associated.box.y-Camera::pos.y);
 }
 
 void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return (this->width*scale.x)/frameCount;
+    return (int)(width*scale.x)/frameCount;
 }
 
 int Sprite::GetHeight() {
-    return this->height*scale.y;
+    return (int)height*scale.y;
 }
 
 bool Sprite::IsOpen() {
-    return this->texture != nullptr;
+    return texture != nullptr;
 }
 
 bool Sprite::Is(std::string type) {
@@ -97,7 +95,6 @@ Vec2 Sprite::GetScale() {
 }
 void Sprite::Update(float dt) {
     timeElapsed += dt;
-    if(frameTime >= 1.2) std::cout << timeElapsed << " " << frameTime << std::endl;
     if(timeElapsed >= frameTime) {
         if(++currentFrame >= frameCount) currentFrame = 0;
         SetFrame(currentFrame);

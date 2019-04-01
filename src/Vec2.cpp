@@ -7,7 +7,7 @@ Vec2::Vec2(float x, float y): x(x), y(y) {
 
 Vec2 Vec2::GetRotated(float theta) {
     float x1 = this->x*cos(theta) - this->y*sin(theta);
-    float y1 = this->y*cos(theta) - this->x*sin(theta);
+    float y1 = this->y*cos(theta) + this->x*sin(theta);
 
     return Vec2(x1,y1);
 }
@@ -60,7 +60,7 @@ float Vec2::distance(Vec2 that) {
 }
 
 float Vec2::InclX() {
-    return -atan2(y, x);
+    return atan2(y, x);
 }
 
 Vec2 Vec2::escalar(float a) {

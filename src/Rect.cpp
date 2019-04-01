@@ -19,8 +19,11 @@ Vec2 Rect::Center() {
     return Vec2(x+w/2,y+h/2);
 }
 
-Rect Rect::operator+=(Vec2 v) {
-    return *this = sumVec2(v);
+Rect Rect::operator+(Vec2 that) {
+    return Rect(x+that.x,y+that.y,w,h);
+}
+void Rect::operator+=(Vec2 that) {
+    *this = *this + that;
 }
 
 void Rect::operator=(Vec2 that) {
@@ -28,8 +31,8 @@ void Rect::operator=(Vec2 that) {
     y = that.y;
 }
 
-Vec2 Rect::operator-(Vec2 that) {
-    return Vec2(x-that.x,y-that.y);
+Rect Rect::operator-(Vec2 that) {
+    return Rect(x-that.x,y-that.y,w,h);
 
 }
 void Rect::operator-=(Vec2 that) {
