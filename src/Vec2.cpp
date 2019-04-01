@@ -6,8 +6,8 @@ Vec2::Vec2(float x, float y): x(x), y(y) {
 }
 
 Vec2 Vec2::GetRotated(float theta) {
-    float x1 = this->x*cos(theta) - this->y*sin(theta);
-    float y1 = this->y*cos(theta) - this->x*sin(theta);
+    float x1 = x*cos(theta) - y*sin(theta);
+    float y1 = y*cos(theta) + x*sin(theta);
 
     return Vec2(x1,y1);
 }
@@ -16,15 +16,19 @@ float Vec2::Mag() {
     return std::sqrt((float)std::pow(x,2) + (float)std::pow(y,2));
 }
 Vec2 Vec2::operator+(const Vec2 other) {
-    return Vec2(this->x+other.x,this->y+other.y);
+    return Vec2(x+other.x,y+other.y);
 }
 
 Vec2 Vec2::operator-(const Vec2 other) {
-    return Vec2(this->x-other.x,this->y-other.y);
+    return Vec2(x-other.x,y-other.y);
 }
 
 Vec2 Vec2::operator*(const Vec2 other) {
-    return Vec2(this->x*other.x,this->y*other.y);
+    return Vec2(x*other.x,y*other.y);
+}
+
+Vec2 Vec2::operator/(Vec2 that) {
+    return Vec2(x/that.x,y/that.y);
 }
 
 void Vec2::operator=(Vec2 other) {
@@ -41,8 +45,8 @@ void Vec2::operator+=(Vec2 that) {
 }
 
 void Vec2::operator*=(Vec2 that) {
-    this->x = x*that.x;
-    this->y = y*that.y;
+    x = x*that.x;
+    y = y*that.y;
 }
 
 Vec2 Vec2::AngleX(Vec2 v){
@@ -60,15 +64,11 @@ float Vec2::distance(Vec2 that) {
 }
 
 float Vec2::InclX() {
-    return -atan2(y, x);
+    return atan2(y, x);
 }
 
 Vec2 Vec2::escalar(float a) {
     return Vec2(x*a,y*a);
-}
-
-float Vec2::IncX2() {
-    return atan2(y, x);
 }
 
 Vec2 Vec2::RotateDeg(float angle) {

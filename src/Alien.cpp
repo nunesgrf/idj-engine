@@ -1,33 +1,29 @@
 #include "Alien.hpp"
 
+#define ALIEN_ROTATION 1
+#define SPRITE_ALIEN "assets/img/alien.png"
+
 #include "Sprite.hpp"
 #include "Rect.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
-#include <iostream>
-#include <cstdlib>
-
-#define PI 3.1419
-#define ALIEN_ROTATION 1
-
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include "Minion.hpp"
+#include <cstdlib>
 
 Alien::Alien(GameObject& associated, int nMinions):Component(associated), hp(50), speed({100,100})  {
-
-    Sprite* sprite = new Sprite(associated,"assets/img/alien.png"); //vazamento de memória;
-    this->associated.AddComponent(sprite);
-    this->minionArray.resize(nMinions);
+    Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
+    associated.AddComponent(alien_sprite);
+    minionArray.resize(nMinions);
 }
 
 void Alien::Start() {
-
     Game &game = Game::GetInstance();
     for(int i = 0; i < minionArray.size(); i++) {
         GameObject* minion_go = new GameObject();
 
-        float setor = (2*i*PI)/minionArray.size();
+        float setor = (2*i*M_PI)/minionArray.size();
         Minion * minion = new Minion(*minion_go,game.GetState().GetObjectPtr(&associated),setor);
         minion_go->AddComponent(minion);
 
@@ -43,16 +39,16 @@ void Alien::Update(float dt) {
 
     if(inputManager.MousePress(LEFT_MOUSE_BUTTON)) {
         Action action(Action::SHOOT,x,y);
-        this->taskQueue.push(action);
+        taskQueue.push(action);
     }
     else if(inputManager.MousePress(RIGHT_MOUSE_NUTTON)) {
         Action action(Action::MOVE,x,y);
-        this->taskQueue.push(action);
+        taskQueue.push(action);
     }
-    if(not this->taskQueue.empty()) {
+    if(not taskQueue.empty()) {
 
-        auto alienCenter = this->associated.box.Center();
-        auto action = this->taskQueue.front();
+        Vec2 alienCenter = associated.box.Center();
+        Action action = taskQueue.front();
 
         if(action.type == Action::MOVE) {
             
@@ -74,20 +70,16 @@ void Alien::Update(float dt) {
             }
         }
         else {
-            std::cout << "Atirar em " << "x: " << x << " y: " << y << std::endl;
-
             const std::shared_ptr<GameObject> &ptr = minionArray[ClosestMinion(action.pos)].lock();
             auto minion = (Minion*)ptr->GetComponent("Minion");
             minion->Shoot(action.pos);
             taskQueue.pop();
         }
     }
-    this->associated.angleDeg += ALIEN_ROTATION;
+    associated.angleDeg += ALIEN_ROTATION;
     if(hp <= 0) associated.RequestDelete();
        
 }
-
-void Alien::Render() {}
 
 bool Alien::Is(std::string type) {
     return type == std::string("Alien");
@@ -96,7 +88,7 @@ bool Alien::Is(std::string type) {
 int Alien::ClosestMinion(Vec2 target) {
 
     int index = 0;
-    auto closest = 100000000000000000000000.0f;
+    auto closest = INFINITY;
     for(int i = 0; i < minionArray.size(); i++) {
         float dist = ((minionArray[i].lock())->box.Center() - target).Mag();
         if(closest > dist) {
@@ -108,6 +100,8 @@ int Alien::ClosestMinion(Vec2 target) {
 }
 
 Alien::~Alien() {
-    this->minionArray.clear();
+    minionArray.clear();
 }
+
+void Alien::Render() {}
 

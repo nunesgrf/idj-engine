@@ -1,23 +1,22 @@
 #include "Bullet.hpp"
 
-#include "Sprite.hpp"
+#define NO_DISTANCE_LEFT 0
 
 Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite): Component(associated) {
-    Sprite * img = new Sprite(associated,sprite);
-    this->associated.AddComponent(img);
-    this->associated.angleDeg = angle*(180.0/M_PI);
-    this->speed = Vec2(velocidade,0).RotateDeg(angle);
+    Sprite* bullet_sprite = new Sprite(associated,sprite);
+    associated.AddComponent(bullet_sprite);
+    associated.angleDeg = angle*(180.0/M_PI);
+    speed = Vec2(velocidade,0).RotateDeg(angle);
     
-    this->distanceLeft = maxDistance; 
-    
+    distanceLeft = maxDistance;  
 }
 
 void Bullet::Update(float dt) {
     auto move = speed*dt;
     distanceLeft -= (speed*dt).Mag();
 
-    this->associated.box += move;
-    if(distanceLeft <= 0) associated.RequestDelete();
+    associated.box += move;
+    if(distanceLeft <= NO_DISTANCE_LEFT) associated.RequestDelete();
 }
 
 bool Bullet::Is(std::string type) {

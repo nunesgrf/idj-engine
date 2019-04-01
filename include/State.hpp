@@ -17,15 +17,12 @@ class State {
         bool started;
         std::vector<std::shared_ptr<GameObject>> objectArray;
 
-        void Input();
-        //void AddObject(int,int);
-
     public:
         State();
         ~State();
         bool QuitRequested();
         void LoadAssets();
-        void Update(float);
+        void Update(float dt);
         void Render();
         void Start();
         std::weak_ptr<GameObject> AddObject(GameObject* go);

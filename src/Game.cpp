@@ -8,7 +8,7 @@
 
 Game* Game::instance;
 
-Game::Game(std::string title, uint32_t width, uint32_t height): dt(0), frameStart(0), width(width), height(height) {
+Game::Game(std::string title, int width, int height): dt(0), frameStart(0), width(width), height(height) {
     if(this->instance == nullptr) {
         this->instance = this;
         

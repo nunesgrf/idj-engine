@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../include/Game.hpp"
-#include "../include/State.hpp"
+#include "Game.hpp"
+#include "State.hpp"
 int main(int argc, char** argv) {
 
     Game aux = Game::GetInstance();

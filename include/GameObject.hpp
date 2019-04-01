@@ -20,13 +20,13 @@ class GameObject{
         GameObject();
         ~GameObject();
         void Start();
-        void Update(float);
+        void Update(float dt);
         void Render();
         bool IsDead();
         void RequestDelete();
-        void AddComponent(Component*);
-        void RemoveComponent(Component*);
-        Component* GetComponent(std::string);
+        void AddComponent(Component* cpt);
+        void RemoveComponent(Component* cpt);
+        Component* GetComponent(std::string type);
 
         Rect box;        
 };

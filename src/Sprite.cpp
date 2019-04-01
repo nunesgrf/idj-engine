@@ -8,71 +8,55 @@
 Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
 }
 
-Sprite::Sprite(GameObject& associated, std::string file): Component(associated), texture(nullptr) {
-    
-    this->texture = nullptr;
-    this->Open(file);
+Sprite::Sprite(GameObject& associated, std::string file): Sprite(associated) {
+    Open(file);
     scale = Vec2(1,1);
 }
 
-Sprite::~Sprite() {
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    // think about it
-}
+Sprite::~Sprite() {}
 
 void Sprite::Open(std::string file) {
-    //Game * aux = &Game::GetInstance();
-
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    //this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
-    this->texture = Resources::GetImage(file);
-    if(this->texture == nullptr) {
+    texture = Resources::GetImage(file);
+    if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
         exit(-2);
     }
 
-    SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
+    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
     associated.box.w = width;
     associated.box.h = height;
-    this->SetClip(0,0,this->width,this->height);
+    SetClip(0,0,width,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    this->clipRect.x = x;
-    this->clipRect.y = y;
-    this->clipRect.w = w;
-    this->clipRect.h = h;
+    clipRect = {x,y,w,h};
 }
 
 void Sprite::Render(int x, int y) {
     SDL_Rect dstrect;
     Game * aux = &Game::GetInstance();
 
-    dstrect.x = x;
-    dstrect.y = y;
-    dstrect.w = this->clipRect.w*scale.x;
-    dstrect.h = this->clipRect.h*scale.y;
-
-    SDL_RenderCopyEx(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect,this->associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    dstrect = {x, y, clipRect.w*scale.x, clipRect.h*scale.y};
+    SDL_RenderCopyEx(aux->GetRenderer(),texture,&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
 }
 
 void Sprite::Render() {
-    this->Render(this->associated.box.x-Camera::pos.x,this->associated.box.y-Camera::pos.y);
+    Render(associated.box.x-Camera::pos.x,associated.box.y-Camera::pos.y);
 }
 
 void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return this->width*scale.x;
+    return width*scale.x;
 }
 
 int Sprite::GetHeight() {
-    return this->height*scale.y;
+    return height*scale.y;
 }
 
 bool Sprite::IsOpen() {
-    return this->texture != nullptr;
+    return texture != nullptr;
 }
 
 bool Sprite::Is(std::string type) {
@@ -83,11 +67,8 @@ void Sprite::SetScale(float scaleX, float scaleY) {
     if(scale.x <= 0) scaleX = scale.x;
     if(scale.y <= 0) scaleY = scale.y;
 
-    //associated.box.w = width*scaleX;
-    associated.box.x = associated.box.Center().x - associated.box.w/2;
-
-    //associated.box.h = height*scaleY;
-    associated.box.y = associated.box.Center().y - associated.box.x/2;
+    associated.box.x = associated.box.Center().x - associated.box.CenterOffset().x;
+    associated.box.y = associated.box.Center().y - associated.box.CenterOffset().y;
 
     scale = {scaleX,scaleY};
 }

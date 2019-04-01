@@ -3,6 +3,8 @@
 
 #define INCLUDE_SDL_MIXER
 
+#define ONE_REPEAT 1
+
 #include "SDL_include.h"
 #include "Component.hpp"
 #include "GameObject.hpp"
@@ -14,16 +16,16 @@ class Sound : public Component {
         int channel;
     
     public:
-        Sound(GameObject&);
-        Sound(GameObject&,std::string);
+        Sound(GameObject& associated);
+        Sound(GameObject& associated,std::string file);
         ~Sound();
         void Start();
-        void Play(int = 1);
+        void Play(int = ONE_REPEAT);
         void Stop();
-        void Open(std::string);
+        void Open(std::string file);
         bool IsOpen();
-        void Update(float);
+        void Update(float dt);
         void Render();
-        bool Is(std::string); // Is this right?
+        bool Is(std::string type); 
 };
 #endif 

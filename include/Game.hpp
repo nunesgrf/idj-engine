@@ -3,6 +3,10 @@
 
 #define INCLUDE_SDL
 
+#define DEFAULT_NAME "Gabriel Nunes - 16/0006597"
+#define DEFAULT_WIDTH 1024
+#define DEFAULT_HEIGHT 600
+
 #include "SDL_include.h"
 #include "State.hpp"
 #include <string>
@@ -19,7 +23,7 @@ class Game {
         int width;
         int height;
         void CalculateDeltaTime();
-        Game(std::string, uint32_t, uint32_t);
+        Game(std::string name = DEFAULT_NAME, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT);
 
     public:
         int GetWidth();
