@@ -4,6 +4,8 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
+#define DEFAULT 1
+
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "SDL_include.h"
@@ -17,11 +19,16 @@ class Sprite : public Component {
         SDL_Rect clipRect;
         int width;
         int height;
+        int currentFrame;
+        int frameCount;
+        float frameTime;
+        float timeElapsed;
+
         Vec2 scale;
 
     public:
-        Sprite(GameObject& associated);
-        Sprite(GameObject& associated,std::string file);
+        Sprite(GameObject& associated, int frameCount, float frameTime);
+        Sprite(GameObject& associated,std::string file,int frameCount = DEFAULT, float frameTime = DEFAULT);
         ~Sprite();
         void Start();
         void Open(std::string file);
@@ -35,5 +42,8 @@ class Sprite : public Component {
         void Update(float dt);
         Vec2 GetScale();
         void SetScale(float scaleX, float scaleY);
+        void SetFrame(int frame);
+        void SetFrameCount(int frameCount);
+        void SetFrameTime(float frameTime);
 };
 #endif 

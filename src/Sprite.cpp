@@ -5,12 +5,10 @@
 #include "../include/Game.hpp"
 #include <iostream>
 
-Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
-}
+Sprite::Sprite(GameObject& associated, int frameCount, float frameTime): Component(associated), texture(nullptr), scale({1,1}), frameCount(frameCount), frameTime(frameTime), timeElapsed(0), currentFrame(0) {}
 
-Sprite::Sprite(GameObject& associated, std::string file): Sprite(associated) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Sprite(associated, frameCount, frameTime) {
     Open(file);
-    scale = Vec2(1,1);
 }
 
 Sprite::~Sprite() {}
@@ -48,7 +46,7 @@ void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return width*scale.x;
+    return (width*scale.x)/frameCount;
 }
 
 int Sprite::GetHeight() {
@@ -76,5 +74,30 @@ void Sprite::SetScale(float scaleX, float scaleY) {
 Vec2 Sprite::GetScale() {
     return scale;
 }
+
 void Sprite::Update(float dt) {
+    timeElapsed += dt;
+    if(timeElapsed > frameTime) {
+        currentFrame++;
+        if(currentFrame >= frameCount) currentFrame = 0;
+        SetFrame(currentFrame);
+        timeElapsed = 0;
+    }
 }
+
+void Sprite::SetFrame(int frame) {
+    currentFrame = frame;
+    SetClip(frame*GetWidth(),0, clipRect.w, clipRect.h);
+}
+
+void Sprite::SetFrameCount(int frameCount) {
+    Sprite::frameCount = frameCount;
+    associated.box.w = GetWidth();
+    associated.box.h = GetHeight();
+    SetClip(0, clipRect.y, GetWidth(),clipRect.h);
+}
+
+void Sprite::SetFrameTime(float frameTime) {
+    Sprite::frameTime = frameTime;
+}
+
