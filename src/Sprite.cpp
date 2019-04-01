@@ -23,7 +23,7 @@ void Sprite::Open(std::string file) {
     SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
     associated.box.w = width;
     associated.box.h = height;
-    SetClip(0,0,width,height);
+    SetClip(currentFrame,0,width/frameCount,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -46,7 +46,7 @@ void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    return (width*scale.x)/frameCount;
+    return (width/frameCount)*scale.x;
 }
 
 int Sprite::GetHeight() {
@@ -77,17 +77,16 @@ Vec2 Sprite::GetScale() {
 
 void Sprite::Update(float dt) {
     timeElapsed += dt;
-    if(timeElapsed > frameTime) {
+    if(timeElapsed >= frameTime) {
         currentFrame++;
-        if(currentFrame >= frameCount) currentFrame = 0;
         SetFrame(currentFrame);
         timeElapsed = 0;
     }
 }
 
 void Sprite::SetFrame(int frame) {
-    currentFrame = frame;
-    SetClip(frame*GetWidth(),0, clipRect.w, clipRect.h);
+    currentFrame = frame < frameCount? frame : 0;
+    SetClip(currentFrame*width/frameCount,0, width/frameCount, clipRect.h);
 }
 
 void Sprite::SetFrameCount(int frameCount) {

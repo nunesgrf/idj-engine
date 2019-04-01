@@ -2,8 +2,8 @@
 
 #define NO_DISTANCE_LEFT 0
 
-Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite): Component(associated) {
-    Sprite* bullet_sprite = new Sprite(associated,sprite);
+Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime): Component(associated) {
+    Sprite* bullet_sprite = new Sprite(associated,sprite,frameCount,frameTime);
     associated.AddComponent(bullet_sprite);
     associated.angleDeg = angle*(180.0/M_PI);
     speed = Vec2(velocidade,0).RotateDeg(angle);
