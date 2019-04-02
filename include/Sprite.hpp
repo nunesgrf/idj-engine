@@ -27,7 +27,7 @@ class Sprite : public Component {
         Vec2 scale;
 
     public:
-        Sprite(GameObject& associated, int frameCount, float frameTime);
+        Sprite(GameObject& associated, int frameCount = DEFAULT, float frameTime = DEFAULT);
         Sprite(GameObject& associated,std::string file,int frameCount = DEFAULT, float frameTime = DEFAULT);
         ~Sprite();
         void Start();

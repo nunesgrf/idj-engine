@@ -14,6 +14,7 @@
 #include "State.hpp"
 #include "Sprite.hpp"
 #include "Sound.hpp"
+#include "PenguinBody.hpp"
 #include <iostream>
 
 
@@ -46,6 +47,15 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg"), sta
 
 	objectArray.emplace_back(alien_go);
 
+	GameObject* penguin_go = new GameObject();
+	penguin_go->box.x = 704;
+	penguin_go->box.y = 640;
+	PenguinBody* penguin = new PenguinBody(*penguin_go);
+	penguin_go->AddComponent(penguin);
+
+	objectArray.emplace_back(penguin_go);
+
+	Camera::Follow(penguin_go);
 	music.Play();
 
 }

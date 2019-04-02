@@ -34,8 +34,8 @@ void Camera::Update(float dt) {
         if(right) pos.x += speed.x * dt;
     }
     else {
-        pos.x = focus->box.x - Game::GetInstance().GetWidth()/2;
-        pos.y = focus->box.y - Game::GetInstance().GetHeight()/2;
+        pos.x = focus->box.x +focus->box.CenterOffset().x - Game::GetInstance().GetWidth()/2;
+        pos.y = focus->box.y +focus->box.CenterOffset().y - Game::GetInstance().GetHeight()/2;
     }
     
 }

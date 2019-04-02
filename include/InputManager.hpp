@@ -1,6 +1,10 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#define KEY_W SDLK_w
+#define KEY_S SDLK_s
+#define KEY_A SDLK_a
+#define KEY_D SDLK_d
 #define LEFT_ARROW_KEY    SDLK_LEFT
 #define RIGHT_ARROW_KEY   SDLK_RIGHT
 #define UP_ARROW_KEY      SDLK_UP
