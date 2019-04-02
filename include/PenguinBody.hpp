@@ -1,10 +1,11 @@
 #ifndef PENGUINBODY_H
 #define PENGUINBODY_H
 
-#define ACCELETATION 50
+#define FRICTION 1
+#define ACCELETATION 100
 #define ANGULAR_SPEED 100
-#define MAX_SPEED 20
-
+#define MAX_SPEED_REVERSE -5
+#define MAX_SPEED_FOWARD 30
 #include "Vec2.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"

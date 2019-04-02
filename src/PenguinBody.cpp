@@ -31,11 +31,11 @@ void PenguinBody::Start() {
 void PenguinBody::Update(float dt) {
     InputManager &inputManager = InputManager::GetInstance();
 
-    if(inputManager.IsKeyDown(KEY_W) and MAX_SPEED > linearSpeed) {
-        linearSpeed = (linearSpeed + ACCELETATION*dt) < MAX_SPEED ? (linearSpeed + ACCELETATION*dt) : MAX_SPEED; 
+    if(inputManager.IsKeyDown(KEY_W) and MAX_SPEED_FOWARD > linearSpeed) {
+        linearSpeed = (linearSpeed + ACCELETATION*dt) < MAX_SPEED_FOWARD ? (linearSpeed + ACCELETATION*dt) : MAX_SPEED_FOWARD; 
     }
-    if(inputManager.IsKeyDown(KEY_S) and -MAX_SPEED < linearSpeed) {
-        linearSpeed = (linearSpeed - ACCELETATION*dt) > -MAX_SPEED ? (linearSpeed - ACCELETATION*dt) : -MAX_SPEED;
+    if(inputManager.IsKeyDown(KEY_S) and MAX_SPEED_REVERSE < linearSpeed) {
+        linearSpeed = (linearSpeed - ACCELETATION*dt) > MAX_SPEED_REVERSE ? (linearSpeed - ACCELETATION*dt) : MAX_SPEED_REVERSE;
     }
     
     if(inputManager.IsKeyDown(KEY_A)) {
@@ -45,7 +45,9 @@ void PenguinBody::Update(float dt) {
         angle += ANGULAR_SPEED*dt;
     }
     
-
+    if(linearSpeed > 2) linearSpeed -= FRICTION;
+    else if(linearSpeed < 2) linearSpeed += FRICTION;
+    
     if(hp <= 0) {
         Camera::Unfollow();
         associated.RequestDelete();
@@ -53,9 +55,7 @@ void PenguinBody::Update(float dt) {
 
     }
     associated.angleDeg = angle;
-    speed.x = std::cos(angle)*linearSpeed;
-    speed.y = std::sin(angle)*linearSpeed;
-    std::cout << "x: " << speed.x << " y: " << speed.y << std::endl;
+    speed = Vec2(linearSpeed,0).RotateDeg(angle);
     associated.box += speed;
     (*pcannon.lock()).box.x = associated.box.x;
     (*pcannon.lock()).box.y = associated.box.y;

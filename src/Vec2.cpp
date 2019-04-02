@@ -73,5 +73,5 @@ Vec2 Vec2::escalar(float a) {
 
 Vec2 Vec2::RotateDeg(float angle) {
     auto ang = (float)angle*(M_PI/180.0f);
-    return Vec2(x*cos(angle)-y*sin(angle),y*cos(angle)+x*sin(angle));
+    return Vec2(x*cos(ang)-y*sin(ang),y*cos(ang)+x*sin(ang));
 }

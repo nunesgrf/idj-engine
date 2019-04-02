@@ -6,7 +6,7 @@ Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage
     Sprite* bullet_sprite = new Sprite(associated,sprite,frameCount,frameTime);
     associated.AddComponent(bullet_sprite);
     associated.angleDeg = angle*(180.0/M_PI);
-    speed = Vec2(velocidade,0).RotateDeg(angle);
+    speed = Vec2(velocidade,0).GetRotated(angle);
     
     distanceLeft = maxDistance;  
 }
