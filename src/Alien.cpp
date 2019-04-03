@@ -1,6 +1,6 @@
 #include "Alien.hpp"
 
-#define ALIEN_ROTATION 100
+#define ALIEN_ROTATION -100
 #define SPRITE_ALIEN "assets/img/alien.png"
 
 #include "Sprite.hpp"
