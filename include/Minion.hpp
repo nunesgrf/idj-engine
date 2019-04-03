@@ -2,7 +2,7 @@
 #define MINION_H
 
 #define PI 3.14159265359
-#define ANGULAR_SPEED PI/2
+#define ANGULAR_SPEED 1
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "Vec2.hpp"

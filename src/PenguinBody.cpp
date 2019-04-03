@@ -11,11 +11,13 @@
 #include <cmath>
 
 PenguinBody* PenguinBody::player;
+GameObject* PenguinBody::go;
 
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
     associated.AddComponent(pbody_sprite);
     player = this;
+    PenguinBody::go = &associated;
 }
 
 PenguinBody::~PenguinBody() {
@@ -25,6 +27,7 @@ PenguinBody::~PenguinBody() {
 void PenguinBody::Start() {
     GameObject* cannon_go = new GameObject();
     PenguinCannon* cannon = new PenguinCannon(*cannon_go,Game::GetInstance().GetState().GetObjectPtr(&associated));
+    cannon_go->AddComponent(cannon);
     pcannon = Game::GetInstance().GetState().AddObject(cannon_go);
 }
 
@@ -45,8 +48,8 @@ void PenguinBody::Update(float dt) {
         angle += ANGULAR_SPEED*dt;
     }
     
-    if(linearSpeed > 2) linearSpeed -= FRICTION;
-    else if(linearSpeed < 2) linearSpeed += FRICTION;
+    if(linearSpeed > 2) linearSpeed -= FRICTION * dt;
+    else if(linearSpeed < 2) linearSpeed += FRICTION * dt;
     
     if(hp <= 0) {
         Camera::Unfollow();
@@ -55,10 +58,10 @@ void PenguinBody::Update(float dt) {
 
     }
     associated.angleDeg = angle;
-    speed = Vec2(linearSpeed,0).RotateDeg(angle);
+    speed = Vec2(linearSpeed * dt,0).RotateDeg(angle);
     associated.box += speed;
-    (*pcannon.lock()).box.x = associated.box.x;
-    (*pcannon.lock()).box.y = associated.box.y;
+    /*(*pcannon.lock()).box.x = associated.box.x;
+    (*pcannon.lock()).box.y = associated.box.y;*/
 
 }
 

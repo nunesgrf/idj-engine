@@ -1,6 +1,6 @@
 #include "Alien.hpp"
 
-#define ALIEN_ROTATION 1
+#define ALIEN_ROTATION 100
 #define SPRITE_ALIEN "assets/img/alien.png"
 
 #include "Sprite.hpp"
@@ -76,7 +76,7 @@ void Alien::Update(float dt) {
             taskQueue.pop();
         }
     }
-    associated.angleDeg += ALIEN_ROTATION;
+    associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) associated.RequestDelete();
        
 }

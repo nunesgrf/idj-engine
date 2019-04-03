@@ -1,11 +1,11 @@
 #ifndef PENGUINBODY_H
 #define PENGUINBODY_H
 
-#define FRICTION 1
-#define ACCELETATION 100
+#define FRICTION 10
+#define ACCELETATION 400
 #define ANGULAR_SPEED 100
-#define MAX_SPEED_REVERSE -5
-#define MAX_SPEED_FOWARD 30
+#define MAX_SPEED_REVERSE -100
+#define MAX_SPEED_FOWARD 400
 #include "Vec2.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
@@ -22,6 +22,7 @@ class PenguinBody : public Component {
     
     public:
         static PenguinBody* player;
+        static GameObject* go;
 
         PenguinBody(GameObject& associated);
         ~PenguinBody();

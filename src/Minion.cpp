@@ -4,7 +4,7 @@
 #define SPRITE_BULLET_1 "assets/img/minionbullet1.png"
 #define SPRITE_BULLET_2 "assets/img/minionbullet2.png"
 #define TEST "assets/img/penguinbullet.png"
-#define MINION_ROTATION -15 
+#define MINION_ROTATION -400
 
 #include "Sprite.hpp"
 #include "Bullet.hpp"
@@ -22,14 +22,14 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
 
 void Minion::Update(float dt) {
  
-    arc += ANGULAR_SPEED*0.033;
+    arc += ANGULAR_SPEED*dt;
     Vec2 move = {200,0};
     move = move.GetRotated(arc);
     
     associated.box = move + alienCenter.box.Center();
     associated.box -= associated.box.CenterOffset();
 
-    associated.angleDeg += MINION_ROTATION;
+    associated.angleDeg += MINION_ROTATION*dt;
 }
 
 bool Minion::Is(std::string type) {

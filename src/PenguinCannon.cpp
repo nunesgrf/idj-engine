@@ -1,6 +1,11 @@
 #include "PenguinCannon.hpp"
 
 #define SPRITE_PCANNON "assets/img/cubngun.png"
+
+#include "Vec2.hpp"
+#include "Camera.hpp"
+#include "InputManager.hpp"
+#include "Game.hpp"
 #include "Sprite.hpp"
 #include "PenguinBody.hpp"
 
@@ -10,8 +15,17 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
 }
 
 void PenguinCannon::Update(float dt) {
-    if(PenguinBody::player != nullptr) {
+    InputManager &im = InputManager::GetInstance(); 
 
+    if(PenguinBody::player != nullptr) {
+        associated.box.x = PenguinBody::go->box.x + (PenguinBody::go->box.CenterOffset().x - associated.box.CenterOffset().x);
+        associated.box.y = PenguinBody::go->box.y + (PenguinBody::go->box.CenterOffset().y - associated.box.CenterOffset().y);
+
+        Vec2 mousePos(im.GetMouseX() + Camera::pos.x, im.GetMouseY() + Camera::pos.y);
+        Vec2 cannonCenter = associated.box.Center();
+
+        auto angle = (mousePos - cannonCenter).InclX();
+        associated.angleDeg = angle*180/M_PI;
     }
     else associated.RequestDelete();
 }
