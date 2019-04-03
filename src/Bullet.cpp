@@ -1,5 +1,6 @@
 #include "Bullet.hpp"
 #include "Collider.hpp"
+#include "Alien.hpp"
 
 #define NO_DISTANCE_LEFT 0
 
@@ -32,7 +33,8 @@ int Bullet::GetDamage() {
 }
 
 void Bullet::NotifyCollision(GameObject& that) {
-    
+    Alien* alien = (Alien*)that.GetComponent("Alien");
+    if(alien) associated.RequestDelete();
 }
 
 void Bullet::Start() {}

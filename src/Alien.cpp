@@ -3,6 +3,7 @@
 #define ALIEN_ROTATION -100
 #define SPRITE_ALIEN "assets/img/alien.png"
 
+#include "Bullet.hpp"
 #include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Rect.hpp"
@@ -104,7 +105,8 @@ int Alien::ClosestMinion(Vec2 target) {
 }
 
 void Alien::NotifyCollision(GameObject& that) {
-    
+    Bullet* bullet = (Bullet*)that.GetComponent("Bullet");
+    if(bullet) hp -= bullet->GetDamage(); 
 }
 
 Alien::~Alien() {
