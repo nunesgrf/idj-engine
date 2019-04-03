@@ -55,3 +55,13 @@ void Rect::operator*=(Vec2 that) {
 void Rect::operator/=(Vec2 that) {
     *this = *this / that;
 }
+
+void Rect::SetCenter(Vec2 pos) {
+    x = pos.x - w/2;
+    y = pos.y - h/2;
+}
+
+void Rect::SetSameCenterAs(Rect that) {
+    SetCenter({that.Center().x, that.Center().y});
+}
+

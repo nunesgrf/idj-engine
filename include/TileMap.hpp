@@ -30,5 +30,6 @@ class TileMap : public Component {
         int GetDepth();
         bool Is(std::string type);
         void Update(float dt);
+        void NotifyCollision(GameObject& that);
 };
 #endif 

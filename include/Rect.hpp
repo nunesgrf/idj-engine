@@ -11,6 +11,8 @@ class Rect {
         bool Contains(std::vector<float>);
         Vec2 Center();
         Vec2 CenterOffset();
+        void SetCenter(Vec2 pos);
+        void SetSameCenterAs(Rect that);
         Rect operator+(Vec2 that);
         Rect operator/(Vec2 that);
         Rect operator*(Vec2 that);

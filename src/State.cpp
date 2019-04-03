@@ -1,8 +1,8 @@
 #define INCLUDE_SDL
 
-#define PI 3.14159265359
-
 #include "SDL_include.h"
+#include "Collider.hpp"
+#include "Collision.h"
 #include "CameraFollower.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
@@ -85,6 +85,21 @@ void State::Update(float dt) {
 	for(int i = 0; i < objectArray.size(); i++) {
 		objectArray[i]->Update(dt);
 	}
+
+	for(int i = 0; i < objectArray.size(); i++) {
+
+			for(int j = i+1; j < objectArray.size(); j++) {
+
+				Collider* cA = (Collider*) objectArray[i]->GetComponent("Collider");
+				Collider* cB = (Collider*) objectArray[j]->GetComponent("Collider");
+
+				if(cA and cB) {
+					//Collision::IsColliding(cA->box,cB->box,)
+				}
+			}
+
+	}
+
 	for(int i = 0; i < objectArray.size(); i++) {
 		if(objectArray[i]->IsDead()) {
 			objectArray.erase(objectArray.begin()+i);

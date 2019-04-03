@@ -12,5 +12,9 @@ bool CameraFollower::Is(std::string type) {
     return type == std::string("CameraFollower");
 }
 
+void CameraFollower::NotifyCollision(GameObject& that) {
+    
+}
+
 void CameraFollower::Render() {}
 void CameraFollower::Start() {}

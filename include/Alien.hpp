@@ -31,5 +31,6 @@ class Alien : public Component {
         void Render();
         bool Is(std::string type);
         int ClosestMinion(Vec2 target);
+        void NotifyCollision(GameObject& that);
 };
 #endif

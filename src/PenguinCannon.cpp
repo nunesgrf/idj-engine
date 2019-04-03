@@ -9,10 +9,14 @@
 #include "Game.hpp"
 #include "Sprite.hpp"
 #include "PenguinBody.hpp"
+#include "Collider.hpp"
 #include <iostream>
 
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody): Component(associated), angle(0), pbody(penguinBody) {
     Sprite* pcannon_sprite = new Sprite(associated,SPRITE_PCANNON);
+    Collider* col = new Collider(associated);
+
+    associated.AddComponent(col);
     associated.AddComponent(pcannon_sprite);
 }
 
@@ -62,6 +66,10 @@ void PenguinCannon::Shoot() {
 
 bool PenguinCannon::Is(std::string type) {
     return type == std::string("PenguinCannon");
+}
+
+void PenguinCannon::NotifyCollision(GameObject& that) {
+    
 }
 
 void PenguinCannon::Render() {}

@@ -19,5 +19,6 @@ class Bullet : public Component {
         bool Is(std::string type);
         int GetDamage();
         void Render();
+        void NotifyCollision(GameObject& that);
 };
 #endif

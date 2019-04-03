@@ -17,6 +17,7 @@ class GameObject{
     public:
         bool started;
         double angleDeg;
+
         GameObject();
         ~GameObject();
         void Start();
@@ -27,6 +28,8 @@ class GameObject{
         void AddComponent(Component* cpt);
         void RemoveComponent(Component* cpt);
         Component* GetComponent(std::string type);
+        void NotifyCollision(GameObject& that);
+        
 
         Rect box;        
 };

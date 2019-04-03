@@ -21,5 +21,6 @@ class Minion : public Component {
         bool Is(std::string type);
         void Shoot(Vec2 target);
         float random_float_in_range(float a, float b);
+        void NotifyCollision(GameObject& that);
 };
 #endif

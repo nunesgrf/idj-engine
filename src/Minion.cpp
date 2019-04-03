@@ -6,12 +6,17 @@
 #define TEST "assets/img/penguinbullet.png"
 #define MINION_ROTATION -400
 
+#include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
 
 Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
     Sprite * sprite = new Sprite(associated,SPRITE_MINION);
+    Collider* col = new Collider(associated);
+
+    associated.AddComponent(col);
+
     float scl = random_float_in_range(1,1.5);
     sprite->SetScale(scl,scl);
     associated.AddComponent(sprite);
@@ -52,5 +57,10 @@ void Minion::Shoot(Vec2 target) {
 float Minion::random_float_in_range(float a, float b) {
     return a + (b - a)*(rand()/(float)RAND_MAX);
 }
+
+void Minion::NotifyCollision(GameObject& that) {
+    
+}
+
 void Minion::Render() {}
 void Minion::Start() {}

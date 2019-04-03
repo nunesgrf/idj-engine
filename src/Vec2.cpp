@@ -15,19 +15,19 @@ Vec2 Vec2::GetRotated(float theta) {
 float Vec2::Mag() {
     return std::sqrt((float)std::pow(x,2) + (float)std::pow(y,2));
 }
-Vec2 Vec2::operator+(const Vec2 other) {
+Vec2 Vec2::operator+(Vec2 other) const {
     return Vec2(x+other.x,y+other.y);
 }
 
-Vec2 Vec2::operator-(const Vec2 other) {
+Vec2 Vec2::operator-(Vec2 other) const {
     return Vec2(x-other.x,y-other.y);
 }
 
-Vec2 Vec2::operator*(const Vec2 other) {
+Vec2 Vec2::operator*(Vec2 other) const {
     return Vec2(x*other.x,y*other.y);
 }
 
-Vec2 Vec2::operator/(Vec2 that) {
+Vec2 Vec2::operator/(Vec2 that) const {
     return Vec2(x/that.x,y/that.y);
 }
 
@@ -74,5 +74,4 @@ Vec2 Vec2::escalar(float a) {
 Vec2 Vec2::RotateDeg(float angle) {
     auto ang = (float)angle*(M_PI/180.0f);
     return Vec2(x*cos(ang)-y*sin(ang),y*cos(ang)+x*sin(ang));
-
 }

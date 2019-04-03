@@ -7,6 +7,7 @@
 #include "InputManager.hpp"
 #include "PenguinCannon.hpp"
 #include "Sprite.hpp"
+#include "Collider.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -15,6 +16,9 @@ GameObject* PenguinBody::go;
 
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
+    Collider* col = new Collider(associated);
+
+    associated.AddComponent(col);
     associated.AddComponent(pbody_sprite);
     player = this;
     PenguinBody::go = &associated;
@@ -67,6 +71,10 @@ void PenguinBody::Update(float dt) {
 
 bool PenguinBody::Is(std::string type) {
     return type == std::string("PenguinBody");
+}
+
+void PenguinBody::NotifyCollision(GameObject& that) {
+    
 }
 
 void PenguinBody::Render() {}

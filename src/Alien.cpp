@@ -3,6 +3,7 @@
 #define ALIEN_ROTATION -100
 #define SPRITE_ALIEN "assets/img/alien.png"
 
+#include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Rect.hpp"
 #include "InputManager.hpp"
@@ -14,6 +15,9 @@
 
 Alien::Alien(GameObject& associated, int nMinions):Component(associated), hp(50), speed({100,100})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
+    Collider* col = new Collider(associated);
+
+    associated.AddComponent(col);
     associated.AddComponent(alien_sprite);
     minionArray.resize(nMinions);
 }
@@ -97,6 +101,10 @@ int Alien::ClosestMinion(Vec2 target) {
         }
     }
     return index;
+}
+
+void Alien::NotifyCollision(GameObject& that) {
+    
 }
 
 Alien::~Alien() {
