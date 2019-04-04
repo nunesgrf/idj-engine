@@ -14,7 +14,7 @@
 #include "Minion.hpp"
 #include <cstdlib>
 
-Alien::Alien(GameObject& associated, int nMinions):Component(associated), hp(50), speed({100,100})  {
+Alien::Alien(GameObject& associated, int nMinions):Component(associated), Enemy(100), speed({100,100})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
     Collider* col = new Collider(associated);
 
@@ -113,5 +113,6 @@ Alien::~Alien() {
     minionArray.clear();
 }
 
-void Alien::Render() {}
+void Alien::Render() {
+}
 

@@ -11,9 +11,9 @@
 #include "Bullet.hpp"
 #include "Game.hpp"
 
-Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
+Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), Enemy(20), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
     Sprite * sprite = new Sprite(associated,SPRITE_MINION);
-    Collider* col = new Collider(associated);
+    Collider* col = new Collider(associated,sprite->GetScale());
 
     associated.AddComponent(col);
 
@@ -21,20 +21,22 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
     sprite->SetScale(scl,scl);
     associated.AddComponent(sprite);
 
-    Vec2 initial = Vec2(200,0).GetRotated(arc);
+    Vec2 initial = Vec2(100,0).GetRotated(arc);
     associated.box += initial;
 }
 
 void Minion::Update(float dt) {
  
     arc += ANGULAR_SPEED*dt;
-    Vec2 move = {200,0};
+    Vec2 move = {150,0};
     move = move.GetRotated(arc);
     
     associated.box = move + alienCenter.box.Center();
     associated.box -= associated.box.CenterOffset();
 
     associated.angleDeg += MINION_ROTATION*dt;
+
+    if(hp < 0) associated.RequestDelete();
 }
 
 bool Minion::Is(std::string type) {
@@ -59,7 +61,8 @@ float Minion::random_float_in_range(float a, float b) {
 }
 
 void Minion::NotifyCollision(GameObject& that) {
-    
+    Bullet* bullet = (Bullet*)that.GetComponent("Bullet");
+    if(bullet) hp -= bullet->GetDamage(); 
 }
 
 void Minion::Render() {}

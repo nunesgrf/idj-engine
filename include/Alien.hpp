@@ -5,11 +5,12 @@
 
 #include "Sprite.hpp"
 #include "Component.hpp"
+#include "Enemy.hpp"
 #include "Vec2.hpp"
 #include <queue>
 #include <vector>
 
-class Alien : public Component {
+class Alien : public Component, public Enemy{
     private:
         class Action {
             public:
@@ -19,7 +20,6 @@ class Alien : public Component {
                 Action(ActionType type, float x, float y): type(type), pos({(float)x,(float)y}) {}
         };
         Vec2 speed;
-        int hp;
         std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
             

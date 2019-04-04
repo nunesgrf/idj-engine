@@ -44,23 +44,13 @@ void PenguinCannon::Shoot() {
     Vec2 offset = Vec2(associated.box.w/2.0,0).GetRotated(angle);
     std::cout << offset.x << " " << offset.y << std::endl;
 
-    Bullet* bullet = new Bullet(*snowball_go,angle,400,10,500,SPRITE_SNOWBALL,4,0.3);
+    Bullet* bullet = new Bullet(*snowball_go,angle,1000,10,500,SPRITE_SNOWBALL,4,0.3);
     snowball_go->AddComponent(bullet);
 
     snowball_go->box.x = associated.box.Center().x  + offset.x;
     snowball_go->box.y = associated.box.Center().y - snowball_go->box.h/2.0 + offset.y;
 
     Game::GetInstance().GetState().AddObject(snowball_go);
-
-    /*float angle = associated.angleDeg*(M_PI/180);
-    GameObject* snowball_go = new GameObject();
-    
-    snowball_go->box.x = //PenguinBody::go->box.x + associated.box.w;
-    snowball_go->box.y = //PenguinBody::go->box.y;
-
-    Bullet* bullet = new Bullet(*snowball_go,angle,400,10,500,SPRITE_SNOWBALL,4,0.3);
-    snowball_go->AddComponent(bullet);
-    Game::GetInstance().GetState().AddObject(snowball_go);*/
 
 }
 

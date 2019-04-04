@@ -1,6 +1,7 @@
 #include "../include/GameObject.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 GameObject::GameObject(): isDead(false), started(false), angleDeg(0) {};
 
@@ -9,9 +10,11 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Update(float dt) {
+    std::reverse(components.begin(), components.end());
     for(auto &a : components) {
         a->Update(dt);
     }
+    std::reverse(components.begin(), components.end());
 }
 
 void GameObject::Render() {

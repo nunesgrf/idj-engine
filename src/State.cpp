@@ -82,7 +82,8 @@ void State::Update(float dt) {
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
 	
-	for(int i = 0; i < objectArray.size(); i++) {
+	int limit = objectArray.size();
+	for(int i = 0; i < limit; i++) {
 		objectArray[i]->Update(dt);
 	}
 
