@@ -95,7 +95,7 @@ void State::Update(float dt) {
 				Collider* cB = (Collider*) objectArray[j]->GetComponent("Collider");
 
 				if(cA and cB) {
-					if(Collision::IsColliding(cA->box,cB->box,objectArray[i]->angleDeg*(180.0f/M_PI),objectArray[j]->angleDeg*(180.0f/M_PI))) {
+					if(Collision::IsColliding(cA->box,cB->box,objectArray[i]->angleDeg*(M_PI/180.0f),objectArray[j]->angleDeg*(M_PI/180.0f))) {
 						objectArray[i]->NotifyCollision(*objectArray[j]);
 						objectArray[j]->NotifyCollision(*objectArray[i]);
 					}

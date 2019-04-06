@@ -10,7 +10,7 @@
 #include "Vec2.hpp"
 #include <memory>
 
-class Minion : public Component, public Enemy {
+class Minion : public Component {
     private:
         GameObject& alienCenter;
         float arc;

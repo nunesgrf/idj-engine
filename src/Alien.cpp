@@ -16,9 +16,10 @@
 
 Alien::Alien(GameObject& associated, int nMinions):Component(associated), Enemy(100), speed({100,100})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
-    Collider* col = new Collider(associated);
 
+    Collider* col = new Collider(associated,alien_sprite->GetScale());
     associated.AddComponent(col);
+
     associated.AddComponent(alien_sprite);
     minionArray.resize(nMinions);
 }
@@ -77,7 +78,9 @@ void Alien::Update(float dt) {
         else {
             const std::shared_ptr<GameObject> &ptr = minionArray[ClosestMinion(action.pos)].lock();
             auto minion = (Minion*)ptr->GetComponent("Minion");
-            minion->Shoot(action.pos);
+            if(minion != nullptr) {
+                minion->Shoot(action.pos);
+            }
             taskQueue.pop();
         }
     }

@@ -19,7 +19,7 @@ void Collider::Update(float dt) {
     copy.y = aux.Center().y - copy.h/2;
 
     box = aux + offset.RotateDeg(associated.angleDeg);
-}
+}	
 
 void Collider::SetScale(Vec2 scale) {
     this->scale = scale;

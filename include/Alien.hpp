@@ -10,7 +10,7 @@
 #include <queue>
 #include <vector>
 
-class Alien : public Component, public Enemy{
+class Alien : public Component, public Enemy {
     private:
         class Action {
             public:

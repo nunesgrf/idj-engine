@@ -17,9 +17,9 @@ GameObject* PenguinBody::go;
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
     Collider* col = new Collider(associated);
-
     associated.AddComponent(col);
     associated.AddComponent(pbody_sprite);
+    
     player = this;
     PenguinBody::go = &associated;
 }
@@ -52,8 +52,8 @@ void PenguinBody::Update(float dt) {
         angle += ANGULAR_SPEED*dt;
     }
     
-    if(linearSpeed > 2) linearSpeed -= FRICTION * dt;
-    else if(linearSpeed < 2) linearSpeed += FRICTION * dt;
+    //if(linearSpeed > 2) linearSpeed -= FRICTION * dt;
+    //else if(linearSpeed < 2) linearSpeed += FRICTION * dt;
     
     if(hp <= 0) {
         Camera::Unfollow();

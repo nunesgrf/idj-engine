@@ -6,37 +6,45 @@
 #define TEST "assets/img/penguinbullet.png"
 #define MINION_ROTATION -400
 
+#include "Alien.hpp"
 #include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
+#include <iostream>
 
-Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), Enemy(20), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
+Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,float arcOffsetDeg): Component(associated), alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg) {
     Sprite * sprite = new Sprite(associated,SPRITE_MINION);
-    Collider* col = new Collider(associated,sprite->GetScale());
+    
+    float scl = random_float_in_range(1.1,1.5);
+    sprite->SetScale(scl,scl);
 
+    Collider* col = new Collider(associated,sprite->GetScale());
     associated.AddComponent(col);
 
-    float scl = random_float_in_range(1,1.5);
-    sprite->SetScale(scl,scl);
     associated.AddComponent(sprite);
 
-    Vec2 initial = Vec2(100,0).GetRotated(arc);
+    Vec2 initial = Vec2(200,0).GetRotated(arc);
     associated.box += initial;
+
 }
 
 void Minion::Update(float dt) {
- 
+    
+    auto aCenterPtr = Game::GetInstance().GetState().GetObjectPtr(&alienCenter);
+
+
+    if(aCenterPtr.lock() == nullptr) {
+        associated.RequestDelete();
+    }
     arc += ANGULAR_SPEED*dt;
-    Vec2 move = {150,0};
+    Vec2 move = {200,0};
     move = move.GetRotated(arc);
     
     associated.box = move + alienCenter.box.Center();
     associated.box -= associated.box.CenterOffset();
 
-    associated.angleDeg += MINION_ROTATION*dt;
-
-    if(hp < 0) associated.RequestDelete();
+    associated.angleDeg = arc*(180.0f/M_PI);
 }
 
 bool Minion::Is(std::string type) {
@@ -50,7 +58,7 @@ void Minion::Shoot(Vec2 target) {
     
     Vec2 minionCenter = associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,2000,SPRITE_BULLET_2,3,0.03);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),200,10,2000,SPRITE_BULLET_2,3,0.03, true);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 
@@ -61,8 +69,8 @@ float Minion::random_float_in_range(float a, float b) {
 }
 
 void Minion::NotifyCollision(GameObject& that) {
-    Bullet* bullet = (Bullet*)that.GetComponent("Bullet");
-    if(bullet) hp -= bullet->GetDamage(); 
+    auto a = (Bullet*)that.GetComponent("Bullet");
+    if(a) std::cout << "alien" << std::endl;
 }
 
 void Minion::Render() {}

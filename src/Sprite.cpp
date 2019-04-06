@@ -46,7 +46,6 @@ void Sprite::Start() {
     
 }
 int Sprite::GetWidth() {
-    //return (width/frameCount)*scale.x;
     return (scale.x*width)/frameCount;
 }
 
@@ -68,6 +67,9 @@ void Sprite::SetScale(float scaleX, float scaleY) {
 
     associated.box.x = associated.box.Center().x - associated.box.CenterOffset().x;
     associated.box.y = associated.box.Center().y - associated.box.CenterOffset().y;
+
+    associated.box.w = GetWidth();
+    associated.box.h = GetHeight();
 
     scale = {scaleX,scaleY};
 }
