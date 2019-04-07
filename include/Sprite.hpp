@@ -4,11 +4,13 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 
+#define NOT_SELF_DESTRUCTIBLE 0
 #define DEFAULT 1
 
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "SDL_include.h"
+#include "Timer.hpp"
 #include "Vec2.hpp"
 #include <string>
 
@@ -23,12 +25,13 @@ class Sprite : public Component {
         int frameCount;
         float frameTime;
         float timeElapsed;
-
+        float secondToSelfDestruct;
+        Timer selfDestructCount;
         Vec2 scale;
 
     public:
-        Sprite(GameObject& associated, int frameCount = DEFAULT, float frameTime = DEFAULT);
-        Sprite(GameObject& associated,std::string file,int frameCount = DEFAULT, float frameTime = DEFAULT);
+        Sprite(GameObject& associated, int frameCount = DEFAULT, float frameTime = DEFAULT, float secondToSelfDestruct = NOT_SELF_DESTRUCTIBLE);
+        Sprite(GameObject& associated,std::string file,int frameCount = DEFAULT, float frameTime = DEFAULT, float secondToSelfDestruct = NOT_SELF_DESTRUCTIBLE);
         ~Sprite();
         void Start();
         void Open(std::string file);

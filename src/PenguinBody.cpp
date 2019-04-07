@@ -1,7 +1,10 @@
 #include "PenguinBody.hpp"
 
 #define SPRITE_PENGUINBODY "assets/img/penguin.png"
+#define SPRITE_PENGUIN_DEATH "assets/img/penguindeath.png"
+#define SOUND_PENGUIN_DEATH "assets/audio/boom.wav"
 
+#include "Sound.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "Bullet.hpp"
@@ -13,7 +16,7 @@
 #include <cmath>
 
 PenguinBody* PenguinBody::player;
-GameObject* PenguinBody::go;
+Rect PenguinBody::penguin_box;
 
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
@@ -22,7 +25,7 @@ PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({
     associated.AddComponent(pbody_sprite);
     
     player = this;
-    PenguinBody::go = &associated;
+    PenguinBody::penguin_box = associated.box;
 }
 
 PenguinBody::~PenguinBody() {
@@ -61,12 +64,26 @@ void PenguinBody::Update(float dt) {
         associated.RequestDelete();
         (*pcannon.lock()).RequestDelete();
 
+        GameObject* penguin_death = new GameObject();
+
+        penguin_death->box = associated.box;
+
+        Sprite* death_sprite = new Sprite(*penguin_death,SPRITE_PENGUIN_DEATH,5,0.1,0.5);
+        Sound* death_sound = new Sound(*penguin_death,SOUND_PENGUIN_DEATH);
+
+        penguin_death->AddComponent(death_sprite);
+        penguin_death->AddComponent(death_sound);
+
+        Game::GetInstance().GetState().AddObject(penguin_death);
+
+        death_sound->Play(0);
+
     }
     associated.angleDeg = angle;
     speed = Vec2(linearSpeed * dt,0).RotateDeg(angle);
     associated.box += speed;
-    /*(*pcannon.lock()).box.x = associated.box.x;
-    (*pcannon.lock()).box.y = associated.box.y;*/
+
+    penguin_box = associated.box;
 
 }
 

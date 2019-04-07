@@ -21,8 +21,8 @@ void PenguinCannon::Update(float dt) {
     InputManager &im = InputManager::GetInstance(); 
 
     if(PenguinBody::player != nullptr) {
-        associated.box.x = PenguinBody::go->box.x + (PenguinBody::go->box.CenterOffset().x - associated.box.CenterOffset().x);
-        associated.box.y = PenguinBody::go->box.y + (PenguinBody::go->box.CenterOffset().y - associated.box.CenterOffset().y);
+        associated.box.x = PenguinBody::penguin_box.x + (PenguinBody::penguin_box.CenterOffset().x - associated.box.CenterOffset().x);
+        associated.box.y = PenguinBody::penguin_box.y + (PenguinBody::penguin_box.CenterOffset().y - associated.box.CenterOffset().y);
 
         Vec2 mousePos(im.GetMouseX() + Camera::pos.x, im.GetMouseY() + Camera::pos.y);
         Vec2 cannonCenter = associated.box.Center();
@@ -31,22 +31,28 @@ void PenguinCannon::Update(float dt) {
         this->angle = angle;
         associated.angleDeg = angle*180/M_PI;
 
+        cooldown.Update(dt);
         if(im.MousePress(LEFT_MOUSE_BUTTON)) Shoot();
+
     }
     else associated.RequestDelete();
 }
 
 void PenguinCannon::Shoot() {
-    GameObject* snowball_go = new GameObject();
-    Bullet* bullet = new Bullet(*snowball_go,angle,200,10,500,SPRITE_SNOWBALL,4,0.3,false);
-    Vec2 offset = Vec2(associated.box.w/2.0 + snowball_go->box.w/2,0).GetRotated(angle);
-    snowball_go->AddComponent(bullet);
 
-    snowball_go->box.SetSameCenterAs(associated.box);
-    snowball_go->box.x += offset.x;
-    snowball_go->box.y += offset.y;
-    
-    Game::GetInstance().GetState().AddObject(snowball_go);
+    if(cooldown.Get() > 0.3) {
+        GameObject* snowball_go = new GameObject();
+        Bullet* bullet = new Bullet(*snowball_go,angle,200,10,500,SPRITE_SNOWBALL,4,0.3,false);
+        Vec2 offset = Vec2(associated.box.w/2.0 + snowball_go->box.w/2,0).GetRotated(angle);
+        snowball_go->AddComponent(bullet);
+
+        snowball_go->box.SetSameCenterAs(associated.box);
+        snowball_go->box.x += offset.x;
+        snowball_go->box.y += offset.y;
+        
+        Game::GetInstance().GetState().AddObject(snowball_go);
+        cooldown.Restart();
+    }
 }
 
 bool PenguinCannon::Is(std::string type) {

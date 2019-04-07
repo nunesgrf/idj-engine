@@ -5,9 +5,9 @@
 #include "../include/Game.hpp"
 #include <iostream>
 
-Sprite::Sprite(GameObject& associated, int frameCount, float frameTime): Component(associated), texture(nullptr), scale({1,1}), frameCount(frameCount), frameTime(frameTime), timeElapsed(0), currentFrame(0) {}
+Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float stsd): Component(associated), texture(nullptr), scale({1,1}), frameCount(frameCount), frameTime(frameTime), timeElapsed(0), currentFrame(0), secondToSelfDestruct(stsd) {}
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime): Sprite(associated, frameCount, frameTime) {
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime, float stsd): Sprite(associated, frameCount, frameTime,stsd) {
     Open(file);
 }
 
@@ -84,6 +84,11 @@ void Sprite::Update(float dt) {
         currentFrame++;
         SetFrame(currentFrame);
         timeElapsed = 0;
+    }
+
+    if(secondToSelfDestruct > 0) {
+        selfDestructCount.Update(dt);
+        if(selfDestructCount.Get() >= secondToSelfDestruct) associated.RequestDelete();
     }
 }
 

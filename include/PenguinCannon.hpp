@@ -1,6 +1,7 @@
 #ifndef PENGUINCANNON_H
 #define PENGUINCANNON_H
 
+#include "Timer.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include <memory>
@@ -8,6 +9,7 @@
 
 class PenguinCannon : public Component {
     private:
+        Timer cooldown;
         std::weak_ptr<GameObject> pbody;
         float angle;
     

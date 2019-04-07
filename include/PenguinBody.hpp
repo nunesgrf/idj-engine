@@ -22,7 +22,7 @@ class PenguinBody : public Component {
     
     public:
         static PenguinBody* player;
-        static GameObject* go;
+        static Rect penguin_box;
 
         PenguinBody(GameObject& associated);
         ~PenguinBody();

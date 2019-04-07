@@ -4,8 +4,11 @@
 #define SPRITE_BULLET_1 "assets/img/minionbullet1.png"
 #define SPRITE_BULLET_2 "assets/img/minionbullet2.png"
 #define TEST "assets/img/penguinbullet.png"
+#define SPRITE_MINION_DEATH "assets/img/miniondeath.png"
+#define SOUND_MINION_DEATH "assets/audio/boom.wav"
 #define MINION_ROTATION -400
 
+#include "Sound.hpp"
 #include "Alien.hpp"
 #include "Collider.hpp"
 #include "Sprite.hpp"
@@ -33,6 +36,21 @@ void Minion::Update(float dt) {
 
     if(aCenterPtr.lock() == nullptr) {
         associated.RequestDelete();
+
+        GameObject* minion_death = new GameObject();
+
+        minion_death->box = associated.box;
+
+        Sprite* death_sprite = new Sprite(*minion_death,SPRITE_MINION_DEATH,4,0.3,1.2);
+        Sound* death_sound = new Sound(*minion_death,SOUND_MINION_DEATH);
+
+        minion_death->AddComponent(death_sprite);
+        minion_death->AddComponent(death_sound);
+
+        Game::GetInstance().GetState().AddObject(minion_death);
+
+        death_sound->Play(0);
+        
     }
     arc += ANGULAR_SPEED*dt;
     Vec2 move = {200,0};
@@ -55,7 +73,7 @@ void Minion::Shoot(Vec2 target) {
     
     Vec2 minionCenter = associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),200,10,2000,SPRITE_BULLET_2,3,0.03, true);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),1000,5,1500,SPRITE_BULLET_2,3,0.03, true);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 
