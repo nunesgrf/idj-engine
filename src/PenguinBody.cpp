@@ -4,6 +4,7 @@
 
 #include "Camera.hpp"
 #include "Game.hpp"
+#include "Bullet.hpp"
 #include "InputManager.hpp"
 #include "PenguinCannon.hpp"
 #include "Sprite.hpp"
@@ -52,8 +53,8 @@ void PenguinBody::Update(float dt) {
         angle += ANGULAR_SPEED*dt;
     }
     
-    //if(linearSpeed > 2) linearSpeed -= FRICTION * dt;
-    //else if(linearSpeed < 2) linearSpeed += FRICTION * dt;
+    if(linearSpeed > 2) linearSpeed -= FRICTION * dt;
+    else if(linearSpeed < 2) linearSpeed += FRICTION * dt;
     
     if(hp <= 0) {
         Camera::Unfollow();
@@ -74,7 +75,8 @@ bool PenguinBody::Is(std::string type) {
 }
 
 void PenguinBody::NotifyCollision(GameObject& that) {
-    
+    Bullet* bl = (Bullet*)that.GetComponent("Bullet");
+    if(bl != nullptr and bl->targetsPlayer) hp -= bl->GetDamage();
 }
 
 void PenguinBody::Render() {}

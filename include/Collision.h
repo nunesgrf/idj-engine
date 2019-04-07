@@ -74,7 +74,6 @@ class Collision {
 			return Vec2 ( p.x * cs - p.y * sn, p.x * sn + p.y * cs );
 		}
 };
-
 #endif
 // Aqui estão três operadores que sua classe Vec2 deve precisar, se já não tiver. 
 // Se sua classe tiver métodos para Mag, Norm, Dot e/ou Rotate, você pode substituir

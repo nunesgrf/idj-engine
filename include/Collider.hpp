@@ -21,6 +21,5 @@ class Collider : public Component {
         bool Is(std::string type);
         void SetScale(Vec2 scale);
         void SetOffset(Vec2 offset);
-        void NotifyCollision(GameObject& that);
 };
 #endif

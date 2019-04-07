@@ -83,26 +83,31 @@ void State::Update(float dt) {
 	int mouseY = inputManager.GetMouseY();
 	
 	int limit = objectArray.size();
-	for(int i = 0; i < limit; i++) {
-		objectArray[i]->Update(dt);
-	}
 
 	for(int i = 0; i < objectArray.size(); i++) {
+		for(int j = i+1; j < objectArray.size(); j++) {
+			auto &objA = objectArray[i];
+            auto &objB = objectArray[j];
 
-			for(int j = i+1; j < objectArray.size(); j++) {
+            Collider *colliderA = (Collider*) objA->GetComponent("Collider");
+            Collider *colliderB = (Collider*) objB->GetComponent("Collider");
+            if(i != j and colliderA != nullptr && colliderB != nullptr){
+                auto boxA = colliderA->box;
+                auto boxB = colliderB->box;
 
-				Collider* cA = (Collider*) objectArray[i]->GetComponent("Collider");
-				Collider* cB = (Collider*) objectArray[j]->GetComponent("Collider");
+                auto angleOfA = (float)(objA->angleDeg)*(M_PI/180.0f);
+                auto angleOfB = (float)(objB->angleDeg)*(M_PI/180.0f);
 
-				if(cA and cB) {
-					if(Collision::IsColliding(cA->box,cB->box,objectArray[i]->angleDeg*(M_PI/180.0f),objectArray[j]->angleDeg*(M_PI/180.0f))) {
-						objectArray[i]->NotifyCollision(*objectArray[j]);
-						objectArray[j]->NotifyCollision(*objectArray[i]);
-					}
-					
-				}
+                if (Collision::IsColliding(boxA, boxB, angleOfA, angleOfB)) {
+                    objA->NotifyCollision(*objB);
+                    objB->NotifyCollision(*objA);
+                }
 			}
+		}
+	}
 
+	for(int i = 0; i < limit; i++) {
+		objectArray[i]->Update(dt);
 	}
 
 	for(int i = 0; i < objectArray.size(); i++) {
@@ -110,6 +115,8 @@ void State::Update(float dt) {
 			objectArray.erase(objectArray.begin()+i);
 		}
 	}
+
+	
 }
 
 bool State::QuitRequested() {

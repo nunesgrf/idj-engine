@@ -19,9 +19,6 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
     float scl = random_float_in_range(1.1,1.5);
     sprite->SetScale(scl,scl);
 
-    Collider* col = new Collider(associated,sprite->GetScale());
-    associated.AddComponent(col);
-
     associated.AddComponent(sprite);
 
     Vec2 initial = Vec2(200,0).GetRotated(arc);
@@ -66,11 +63,6 @@ void Minion::Shoot(Vec2 target) {
 } 
 float Minion::random_float_in_range(float a, float b) {
     return a + (b - a)*(rand()/(float)RAND_MAX);
-}
-
-void Minion::NotifyCollision(GameObject& that) {
-    auto a = (Bullet*)that.GetComponent("Bullet");
-    if(a) std::cout << "alien" << std::endl;
 }
 
 void Minion::Render() {}

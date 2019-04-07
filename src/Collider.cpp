@@ -33,10 +33,6 @@ bool Collider::Is(std::string type) {
     return type == std::string("Collider");
 }
 
-void Collider::NotifyCollision(GameObject& that) {
-    
-}
-
 void Collider::Render() {
     #ifdef DEBUG
 	Vec2 center( box.Center() );
@@ -61,5 +57,5 @@ void Collider::Render() {
 
 	SDL_SetRenderDrawColor(Game::GetInstance().GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance().GetRenderer(), points, 5);
-    #endif // DEBUG
+	#endif // DEBUG
 }

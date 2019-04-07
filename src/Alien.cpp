@@ -13,6 +13,7 @@
 #include "GameObject.hpp"
 #include "Minion.hpp"
 #include <cstdlib>
+#include <iostream>
 
 Alien::Alien(GameObject& associated, int nMinions):Component(associated), Enemy(100), speed({100,100})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
@@ -108,8 +109,8 @@ int Alien::ClosestMinion(Vec2 target) {
 }
 
 void Alien::NotifyCollision(GameObject& that) {
-    Bullet* bullet = (Bullet*)that.GetComponent("Bullet");
-    if(bullet) hp -= bullet->GetDamage(); 
+    Bullet* bl = (Bullet*)that.GetComponent("Bullet");
+    if(bl != nullptr and not bl->targetsPlayer) hp -= bl->GetDamage();
 }
 
 Alien::~Alien() {

@@ -45,6 +45,5 @@ class Sprite : public Component {
         void SetFrame(int frame);
         void SetFrameCount(int frameCount);
         void SetFrameTime(float frameTime);
-        void NotifyCollision(GameObject& that);
 };
 #endif 

@@ -10,11 +10,15 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Update(float dt) {
-    std::reverse(components.begin(), components.end());
+
+    for(auto iter = components.rbegin(); iter != components.rend(); iter++) {
+        iter->get()->Update(dt);
+    }
+    /*std::reverse(components.begin(), components.end());
     for(auto &a : components) {
         a->Update(dt);
     }
-    std::reverse(components.begin(), components.end());
+    std::reverse(components.begin(), components.end());*/
 }
 
 void GameObject::Render() {
@@ -58,7 +62,9 @@ void GameObject::Start() {
 
 Component* GameObject::GetComponent(std::string type) {
     for(int i = 0; i < components.size(); i++) {
-        if(components[i]->Is(type)) return components[i].get();      
+        if(components[i]->Is(type)) {
+            return components[i].get();   
+        }   
     }
     return nullptr;
 }

@@ -1,6 +1,8 @@
 #include "CameraFollower.hpp"
 
 #include "Camera.hpp"
+#include <iostream>
+
 CameraFollower::CameraFollower(GameObject& associated): Component(associated) {}
 
 void CameraFollower::Update(float dt) {
@@ -10,10 +12,6 @@ void CameraFollower::Update(float dt) {
 
 bool CameraFollower::Is(std::string type) {
     return type == std::string("CameraFollower");
-}
-
-void CameraFollower::NotifyCollision(GameObject& that) {
-    
 }
 
 void CameraFollower::Render() {}

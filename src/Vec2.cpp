@@ -15,6 +15,7 @@ Vec2 Vec2::GetRotated(float theta) {
 float Vec2::Mag() {
     return std::sqrt((float)std::pow(x,2) + (float)std::pow(y,2));
 }
+
 Vec2 Vec2::operator+(Vec2 other) const {
     return Vec2(x+other.x,y+other.y);
 }
