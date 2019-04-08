@@ -8,8 +8,8 @@
 
 Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetsPlayer): Component(associated), distanceLeft(maxDistance), targetsPlayer(targetsPlayer), damage(damage) {
     Sprite* bullet_sprite = new Sprite(associated,sprite,frameCount,frameTime);
-    Collider* col = new Collider(associated);
-
+    Collider* col = new Collider(associated,{1.1,1.1});
+    bullet_sprite->SetScale(1.1,1.1);
     associated.AddComponent(col);
     associated.AddComponent(bullet_sprite);
     associated.angleDeg = angle*(180.0/M_PI);

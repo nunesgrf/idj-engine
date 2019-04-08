@@ -27,15 +27,21 @@ void Sprite::Open(std::string file) {
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    clipRect = {x,y,w,h};
+    clipRect.x = x;
+    clipRect.y = y;
+    clipRect.w = w;
+    clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y) {
     SDL_Rect dstrect;
-    Game * aux = &Game::GetInstance();
+    Game &aux = Game::GetInstance();
 
-    dstrect = {x, y, clipRect.w*scale.x, clipRect.h*scale.y};
-    SDL_RenderCopyEx(aux->GetRenderer(),texture,&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    dstrect.x = x;
+    dstrect.y = y;
+    dstrect.w = clipRect.w*scale.x;
+    dstrect.h = clipRect.h*scale.y;
+    SDL_RenderCopyEx(aux.GetRenderer(),texture,&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
 }
 
 void Sprite::Render() {
@@ -80,7 +86,7 @@ Vec2 Sprite::GetScale() {
 
 void Sprite::Update(float dt) {
     timeElapsed += dt;
-    if(timeElapsed >= frameTime) {
+    if(timeElapsed > frameTime) {
         currentFrame++;
         SetFrame(currentFrame);
         timeElapsed = 0;
@@ -95,6 +101,7 @@ void Sprite::Update(float dt) {
 void Sprite::SetFrame(int frame) {
     currentFrame = frame < frameCount? frame : 0;
     SetClip(currentFrame*width/frameCount,0, width/frameCount, clipRect.h);
+    
 }
 
 void Sprite::SetFrameCount(int frameCount) {

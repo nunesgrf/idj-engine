@@ -52,14 +52,16 @@ void Minion::Update(float dt) {
         death_sound->Play(0);
         
     }
-    arc += ANGULAR_SPEED*dt;
-    Vec2 move = {200,0};
-    move = move.GetRotated(arc);
-    
-    associated.box = move + alienCenter.box.Center();
-    associated.box -= associated.box.CenterOffset();
+    else {
+        arc += ANGULAR_SPEED*dt;
+        Vec2 move = {200,0};
+        move = move.GetRotated(arc);
+        
+        associated.box = move + alienCenter.box.Center();
+        associated.box -= associated.box.CenterOffset();
 
-    associated.angleDeg = arc*(180.0f/M_PI);
+        associated.angleDeg = arc*(180.0f/M_PI);
+    }
 }
 
 bool Minion::Is(std::string type) {
@@ -73,7 +75,7 @@ void Minion::Shoot(Vec2 target) {
     
     Vec2 minionCenter = associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),1000,5,1500,SPRITE_BULLET_2,3,0.03, true);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),1500,5,2000,SPRITE_BULLET_2,3,0.03, true);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 

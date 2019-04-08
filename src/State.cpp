@@ -84,6 +84,16 @@ void State::Update(float dt) {
 	
 	int limit = objectArray.size();
 
+	for(int i = 0; i < limit; i++) {
+		objectArray[i]->Update(dt);
+	}
+
+	for(int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i]->IsDead()) {
+			objectArray.erase(objectArray.begin()+i);
+		}
+	}
+
 	for(int i = 0; i < objectArray.size(); i++) {
 		for(int j = i+1; j < objectArray.size(); j++) {
 			auto &objA = objectArray[i];
@@ -103,16 +113,6 @@ void State::Update(float dt) {
                     objB->NotifyCollision(*objA);
                 }
 			}
-		}
-	}
-
-	for(int i = 0; i < limit; i++) {
-		objectArray[i]->Update(dt);
-	}
-
-	for(int i = 0; i < objectArray.size(); i++) {
-		if(objectArray[i]->IsDead()) {
-			objectArray.erase(objectArray.begin()+i);
 		}
 	}
 
