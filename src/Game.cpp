@@ -4,11 +4,12 @@
 #include "../include/SDL_include.h"
 #include "../include/Game.hpp"
 #include "../include/InputManager.hpp"
+#include "Resources.hpp"
 #include <iostream>
 
 Game* Game::instance;
 
-Game::Game(std::string title, int width, int height): dt(0), frameStart(0), width(width), height(height) {
+Game::Game(std::string title, int width, int height): dt(0), frameStart(0), width(width), height(height), storedState(nullptr) {
     if(this->instance == nullptr) {
         this->instance = this;
         
@@ -35,8 +36,7 @@ Game::Game(std::string title, int width, int height): dt(0), frameStart(0), widt
         if(window == nullptr || renderer == nullptr) {
             std::cout << "SDL_CreateWindow_Renderer_ERROR: " << SDL_GetError() << std::endl;
             exit(-1);
-        }
-        this->state = new State();
+        }    
     }
     else {
         std::cout << "Nullpointer exception." << std::endl << "Impossible to initialize." << std::endl << "Execution aborted." << std::endl;
@@ -50,7 +50,11 @@ Game& Game::GetInstance() {
 }
 
 State& Game::GetState() {
-    return *(this->state);
+    return *stateStack.top();
+}
+
+void Game::Push(State* state) {
+    storedState = state;
 }
 
 SDL_Renderer* Game::GetRenderer() {
@@ -58,17 +62,57 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
-    InputManager * inputManager = &InputManager::GetInstance();
-    this->state->Start();
+    /*InputManager * inputManager = &InputManager::GetInstance();
+    this->storedState->Start();
 
-    while(!this->state->QuitRequested()) { 
+    while(!this->storedState->QuitRequested()) { 
         this->CalculateDeltaTime();    
-        this->state->Render();
+        this->storedState->Render();
         inputManager->Update();
-        this->state->Update(GetDeltaTime());
+        this->storedState->Update(GetDeltaTime());
         SDL_RenderPresent(this->renderer);  
         //SDL_Delay(15);
-    } 
+    } */
+
+    if(not storedState) {
+        std::cout << "FATAL ERROR: impossible to initialize a game instance" << std::endl;
+        exit(-1);
+    }
+    stateStack.emplace(storedState);
+    storedState = nullptr;
+
+    GetState().Start();
+
+    while(not stateStack.empty() and not GetState().QuitRequested()){
+        State& state = GetState();
+
+        if(state.PopRequested()) {
+            stateStack.pop();
+            if(not stateStack.empty()) {
+                state = GetState();
+                state.Resume();
+            }
+        }
+
+        if(storedState) {
+            state.Pause();
+            stateStack.emplace(storedState);
+            state = GetState();
+            state.Start();
+            storedState = nullptr;
+        }
+
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        state.Update(dt);
+        state.Render();
+        SDL_RenderPresent(renderer);
+
+        
+    }
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
 }
 
 float Game::GetDeltaTime() {
@@ -90,7 +134,9 @@ int Game::GetWidth() {
 }
 
 Game::~Game() {
-    delete this->state;
+    if(storedState != nullptr) {
+        delete this->storedState;
+    }
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();

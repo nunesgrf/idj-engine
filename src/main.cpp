@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Game.hpp"
-#include "State.hpp"
+#include "StageState.hpp"
 int main(int argc, char** argv) {
 
-    Game aux = Game::GetInstance();
-    aux.Run();
+    Game &exe = Game::GetInstance();
+    exe.Push(new StageState());
+    exe.Run();
 
 }

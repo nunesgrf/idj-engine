@@ -10,6 +10,7 @@
 #include "SDL_include.h"
 #include "State.hpp"
 #include <string>
+#include <stack>
 
 class Game {
     
@@ -17,11 +18,13 @@ class Game {
         static Game* instance;
         SDL_Window*  window;
         SDL_Renderer* renderer;
-        State* state;
+        State* storedState;
         int frameStart;
         float dt;
         int width;
         int height;
+        std::stack<std::unique_ptr<State>> stateStack;
+
         void CalculateDeltaTime();
         Game(std::string name = DEFAULT_NAME, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT);
 
@@ -33,6 +36,7 @@ class Game {
         SDL_Renderer* GetRenderer();
         State& GetState();
         void Run();
+        void Push(State* state);
         ~Game();
 };
 #endif 
