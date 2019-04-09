@@ -13,7 +13,7 @@ class EndState : public State {
         ~EndState();
 
         void LoadAssets();
-        void Update();
+        void Update(float dt);
         void Render();
 
         void Start();

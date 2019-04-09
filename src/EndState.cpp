@@ -5,6 +5,10 @@
 #define DEFEAT_AUDIO "assets/audio/endStateLose.ogg"
 #define DEFEAT_SPRITE "assets/img/lose.jpg"
 
+#include "StageState.hpp"
+#include "Game.hpp"
+#include "Camera.hpp"
+#include "InputManager.hpp"
 #include "GameData.hpp"
 #include "Music.hpp"
 #include "Sprite.hpp"
@@ -31,15 +35,29 @@ EndState::EndState() {
     objectArray.emplace_back(end_go);
     Music* end_audio = new Music(end.audio);
     end_audio->Play();
+
+    Camera::pos = {0,0};
 }
 
-void EndState::Update() {
-
+void EndState::Update(float dt) {
+    InputManager& im = InputManager::GetInstance();
+    if(im.KeyPress(SPACE_KEY)) {
+        Game::GetInstance().Push(new StageState());
+    }
+    quitRequested = im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 }
 
 void EndState::LoadAssets() {}
-void EndState::Render() {}
-void EndState::Start() {}
+void EndState::Render() {
+    RenderArray();
+}
+void EndState::Start() {
+    StartArray();
+}
 void EndState::Pause() {}
-void EndState::Resume() {}
+void EndState::Resume() {
+    Camera::pos = {0,0};
+}
 EndState::~EndState() {}
+
+

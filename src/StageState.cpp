@@ -15,6 +15,10 @@
 #include "Sprite.hpp"
 #include "Sound.hpp"
 #include "PenguinBody.hpp"
+#include "GameData.hpp"
+#include "EndState.hpp"
+#include "Alien.hpp"
+#include "Game.hpp"
 #include <iostream>
 
 
@@ -42,7 +46,7 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 	GameObject* alien_go = new GameObject();
 	alien_go->box.x = 512;
 	alien_go->box.y = 300;
-	Alien* alien = new Alien(*alien_go,6);
+	Alien* alien = new Alien(*alien_go,4);
 	alien_go->AddComponent(alien);
 
 	objectArray.emplace_back(alien_go);
@@ -118,6 +122,12 @@ void StageState::Update(float dt) {
 		}
 	}
 
+	
+	if(PenguinBody::player == nullptr || Alien::alienCount == 0) {
+		
+		GameData::playerVictory = (PenguinBody::player != nullptr);
+		Game::GetInstance().Push(new EndState());
+	} 
 	
 }
 

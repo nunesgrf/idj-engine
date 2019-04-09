@@ -27,6 +27,7 @@ void TitleState::Update(float dt) {
         State * toPush = new StageState();
         Game::GetInstance().Push(toPush);
     }
+    this->quitRequested = im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 }
 
 void TitleState::Start() {
