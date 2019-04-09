@@ -1,7 +1,5 @@
-#include "../include/Component.hpp"
+#include "Component.hpp"
 
-Component::Component(GameObject& associated): associated(associated) {
-}
+Component::Component(GameObject& associated): associated(associated) {}
 
-Component::~Component() {
-}
+Component::~Component() {}

@@ -1,15 +1,15 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
-#include "../include/SDL_include.h"
-#include "../include/Game.hpp"
+#include "SDL_include.h"
+#include "Game.hpp"
 #include <iostream>
 
 Game* Game::instance;
 
-Game::Game(std::string title, uint32_t width, uint32_t height) {
-    if(this->instance == nullptr) {
-        this->instance = this;
+Game::Game(std::string title, int width, int height) {
+    if(instance == nullptr) {
+        instance = this;
         
         if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
             std::cout << "SDL_Init_ERROR: " <<  SDL_GetError() << std::endl;
@@ -29,13 +29,13 @@ Game::Game(std::string title, uint32_t width, uint32_t height) {
         }
         Mix_AllocateChannels(32);
 
-        this->window   = SDL_CreateWindow(title.c_str(),SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,0);
-        this->renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_SOFTWARE);
+        window   = SDL_CreateWindow(title.c_str(),SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,0);
+        renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_SOFTWARE);
         if(window == nullptr || renderer == nullptr) {
             std::cout << "SDL_CreateWindow_Renderer_ERROR: " << SDL_GetError() << std::endl;
             exit(-1);
         }
-        this->state = new State();
+        state = new State();
     }
     else {
         std::cout << "Nullpointer exception." << std::endl << "Impossible to initialize." << std::endl << "Execution aborted." << std::endl;
@@ -49,26 +49,26 @@ Game& Game::GetInstance() {
 }
 
 State& Game::GetState() {
-    return *(this->state);
+    return *(state);
 }
 
 SDL_Renderer* Game::GetRenderer() {
-    return this->renderer;
+    return renderer;
 }
 
 void Game::Run() {
-    while(!this->state->QuitRequested()) {     
-        this->state->Render();
-        this->state->Update(0.0);
-        SDL_RenderPresent(this->renderer);  
+    while(not state->QuitRequested()) {     
+        state->Render();
+        state->Update(0.0);
+        SDL_RenderPresent(renderer);  
         SDL_Delay(33);
     } 
 }
 
 Game::~Game() {
-    delete this->state;
-    SDL_DestroyRenderer(this->renderer);
-    SDL_DestroyWindow(this->window);
+    delete state;
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     Mix_CloseAudio();
     Mix_Quit();
     IMG_Quit();

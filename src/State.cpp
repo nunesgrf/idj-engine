@@ -1,7 +1,5 @@
 #define INCLUDE_SDL
 
-#define PI 3.14159265359
-
 #include "SDL_include.h"
 #include "TileMap.hpp"
 #include "TileSet.hpp"
@@ -23,48 +21,44 @@ State::State() : quitRequested(false), music("assets/audio/stageState.ogg") {
 
 	go->AddComponent(sprite);
 	
-	this->objectArray.emplace_back(go);
+	objectArray.emplace_back(go);
 
 	GameObject * tile_go = new GameObject();
-	this->tileSet = new TileSet(*tile_go,64,64,"assets/img/tileset.png");
+	tileSet = new TileSet(*tile_go,64,64,"assets/img/tileset.png");
 	TileMap * tilemap = new TileMap(*tile_go,"assets/map/tileMap.txt",tileSet);
 
 	tile_go->AddComponent(tilemap);
 	
-	this->objectArray.emplace_back(tile_go);
+	objectArray.emplace_back(tile_go);
 
 	music.Play();
 
 }
 
 State::~State() {
-    this->objectArray.clear();
-}
-
-void State::LoadAssets() {
+    objectArray.clear();
 }
 
 void State::Render() {
-	for(auto &a : this->objectArray) {
+	for(auto &a : objectArray) {
 		a->Render();
 	}
 }
 
 void State::Update(float dt) {
-    //this->quitRequested = SDL_QuitRequested();
-	this->Input();
-	for(int i = 0; i < this->objectArray.size(); i++) {
-		this->objectArray[i]->Update(dt);
+	Input();
+	for(int i = 0; i < objectArray.size(); i++) {
+		objectArray[i]->Update(dt);
 	}
-	for(int i = 0; i < this->objectArray.size(); i++) {
-		if(this->objectArray[i]->IsDead()) {
-			this->objectArray.erase(this->objectArray.begin()+i);
+	for(int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i]->IsDead()) {
+			objectArray.erase(objectArray.begin()+i);
 		}
 	}
 }
 
 bool State::QuitRequested() {
-    return this->quitRequested;
+    return quitRequested;
 }
 
 void State::AddObject(int mouseX, int mouseY) {
@@ -76,8 +70,8 @@ void State::AddObject(int mouseX, int mouseY) {
 	Sound* sound = new Sound(*go,snd);
 	Face* face = new Face(*go);
 
-	go->box.x = mouseX;
-	go->box.y = mouseY;
+	go->box.x = mouseX - sprite->GetWidth()/2;
+	go->box.y = mouseY - sprite->GetHeight()/2;
 	go->box.w = sprite->GetWidth();
 	go->box.h = sprite->GetHeight();
 
@@ -85,7 +79,7 @@ void State::AddObject(int mouseX, int mouseY) {
 	go->AddComponent(sound);
 	go->AddComponent(face);
 
-    this->objectArray.emplace_back(go);
+    objectArray.emplace_back(go);
 }
 
 void State::Input() {
@@ -135,9 +129,11 @@ void State::Input() {
 			}
 			// Se não, crie um objeto
 			else {
-				Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
+				Vec2 objPos = Vec2( 200, 0 ).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
 				AddObject((int)objPos.x, (int)objPos.y);
 			}
 		}
 	}
 }
+
+void State::LoadAssets() {}

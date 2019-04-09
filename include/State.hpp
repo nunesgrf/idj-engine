@@ -17,7 +17,7 @@ class State {
         std::vector<std::unique_ptr<GameObject>> objectArray;
 
         void Input();
-        void AddObject(int,int);
+        void AddObject(int x,int y);
 
     public:
         State();

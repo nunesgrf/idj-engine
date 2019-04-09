@@ -1,39 +1,32 @@
-#include "../include/Sound.hpp"
+#include "Sound.hpp"
 
-#include "../include/Resources.hpp"
+#include "Resources.hpp"
 #include <iostream>
 
-Sound::Sound(GameObject& associated): Component(associated), channel(-1) {
-    this->chunk = nullptr;  
-}
+Sound::Sound(GameObject& associated): Component(associated), channel(-1), chunk(nullptr) {}
 
-Sound::Sound(GameObject& associated, std::string file): Component(associated), channel(-1), chunk(nullptr) {
-    this->Open(file);
+Sound::Sound(GameObject& associated, std::string file): Sound(associated) {
+    Open(file);
 }
 
 void Sound::Play(int times) {
-    this->channel = Mix_PlayChannel(-1,this->chunk,times);
+    channel = Mix_PlayChannel(-1,chunk,times);
 }
 
 void Sound::Stop() {
-    if((this->chunk != nullptr) && (this->channel = -1))  {
-        Mix_HaltChannel(this->channel);
+    if((chunk != nullptr) && (channel = -1))  {
+        Mix_HaltChannel(channel);
     }
 }
 
 void Sound::Open(std::string file) {
-    this->chunk = Resources::GetSound(file); 
-}
-
-Sound::~Sound() {
-}
-
-void Sound::Update(float dt) {
-}
-
-void Sound::Render() {
+    chunk = Resources::GetSound(file); 
 }
 
 bool Sound::Is(std::string type) {
     return type == std::string("Sound");
 }
+
+void Sound::Update(float dt) {}
+void Sound::Render() {}
+Sound::~Sound() {}

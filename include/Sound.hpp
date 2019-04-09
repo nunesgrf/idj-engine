@@ -14,15 +14,15 @@ class Sound : public Component {
         int channel;
     
     public:
-        Sound(GameObject&);
-        Sound(GameObject&,std::string);
+        Sound(GameObject& associated);
+        Sound(GameObject& associated,std::string type);
         ~Sound();
-        void Play(int = 1);
+        void Play(int times = 1);
         void Stop();
-        void Open(std::string);
+        void Open(std::string file);
         bool IsOpen();
-        void Update(float);
+        void Update(float dt);
         void Render();
-        bool Is(std::string); // Is this right?
+        bool Is(std::string type); // Is this right?
 };
 #endif 

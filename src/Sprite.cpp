@@ -1,77 +1,68 @@
-#include "../include/Sprite.hpp"
+#include "Sprite.hpp"
 
-#include "../include/Resources.hpp"
-#include "../include/Game.hpp"
+#include "Resources.hpp"
+#include "Game.hpp"
 #include <iostream>
 
-Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
-}
+Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {}
 
-Sprite::Sprite(GameObject& associated, std::string file): Component(associated), texture(nullptr) {
-    
-    this->texture = nullptr;
-    this->Open(file);
-}
-
-Sprite::~Sprite() {
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    // think about it
+Sprite::Sprite(GameObject& associated, std::string file): Sprite(associated) {
+    Open(file);
 }
 
 void Sprite::Open(std::string file) {
-    //Game * aux = &Game::GetInstance();
-
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    //this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
-    this->texture = Resources::GetImage(file);
-    if(this->texture == nullptr) {
+    texture = Resources::GetImage(file);
+    if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
         exit(-2);
     }
 
-    SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
+    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
 
-    this->SetClip(0,0,this->width,this->height);
+    associated.box.w = GetWidth();
+    associated.box.h = GetWidth();
+      
+    SetClip(0,0,width,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    this->clipRect.x = x;
-    this->clipRect.y = y;
-    this->clipRect.w = w;
-    this->clipRect.h = h;
+    clipRect.x = x;
+    clipRect.y = y;
+    clipRect.w = w;
+    clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y) {
     SDL_Rect dstrect;
-    Game * aux = &Game::GetInstance();
+    Game &aux = Game::GetInstance();
 
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = this->clipRect.w;
-    dstrect.h = this->clipRect.h;
+    dstrect.w = clipRect.w;
+    dstrect.h = clipRect.h;
 
-    SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
+    SDL_RenderCopy(aux.GetRenderer(),texture,&clipRect,&dstrect);
 }
 
 void Sprite::Render() {
-    this->Render(this->associated.box.x,this->associated.box.y);
+    Render(associated.box.x,associated.box.y);
 }
 
 int Sprite::GetWidth() {
-    return this->width;
+    return width;
 }
 
 int Sprite::GetHeight() {
-    return this->height;
+    return height;
 }
 
 bool Sprite::IsOpen() {
-    return this->texture != nullptr;
+    return texture != nullptr;
 }
 
 bool Sprite::Is(std::string type) {
     return type == std::string("Sprite");
 }
 
-void Sprite::Update(float dt) {
-}
+void Sprite::Update(float dt) {}
+Sprite::~Sprite() {}

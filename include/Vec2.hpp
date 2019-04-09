@@ -6,7 +6,7 @@ class Vec2 {
         float x, y;
         Vec2();
         Vec2(int,int);
-        Vec2 GetRotated(float);
+        Vec2 GetRotated(float rads);
         Vec2 operator+(const Vec2);
 };
 #endif

@@ -12,11 +12,11 @@ class Music {
 
     public:
         Music();
-        Music(std::string);
+        Music(std::string file);
         ~Music();
-        void Play(int = -1);
-        void Stop(int = 1500);
-        void Open(std::string);
+        void Play(int repeats = -1);
+        void Stop(int fadeout = 1500);
+        void Open(std::string file);
         bool IsOpen();
 
 };

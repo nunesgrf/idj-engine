@@ -14,7 +14,7 @@ class Game {
         SDL_Window*  window;
         SDL_Renderer* renderer;
         State* state;
-        Game(std::string, uint32_t, uint32_t);
+        Game(std::string, int width, int height);
 
     public:
         static Game& GetInstance();

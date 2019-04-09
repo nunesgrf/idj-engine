@@ -3,11 +3,10 @@
 Rect::Rect(): x(0), y(0), w(0), h(0) {
 }
 
-bool Rect::Contains(std::list<float> clebinho) {
-    // mudar!
-    float x1 = clebinho.front();
-    float y1 = clebinho.back();
+bool Rect::Contains(std::vector<float> pair) {
+    float x1 = pair.front();
+    float y1 = pair.back();
 
-    if(x > x1 or this->w+x < x1) return false;
-    return y <= y1 and this->h+y >= y1;
+    if(x > x1 or w+x < x1) return false;
+    return y <= y1 and h+y >= y1;
 } 
