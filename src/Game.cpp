@@ -84,28 +84,30 @@ void Game::Run() {
     GetState().Start();
 
     while(not stateStack.empty() and not GetState().QuitRequested()){
-        State& state = GetState();
+        State* state = &GetState();
 
-        if(state.PopRequested()) {
+        if(state->PopRequested()) {
             stateStack.pop();
             if(not stateStack.empty()) {
-                state = GetState();
-                state.Resume();
+                state = &GetState();
+                state->Resume();
             }
         }
 
         if(storedState) {
-            state.Pause();
-            stateStack.emplace(storedState);
-            state = GetState();
-            state.Start();
+            if(not stateStack.empty()) {
+                state->Pause();
+                stateStack.emplace(storedState);
+                state = &GetState();
+                state->Start();
+            }
             storedState = nullptr;
         }
 
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        state.Update(dt);
-        state.Render();
+        state->Update(dt);
+        state->Render();
         SDL_RenderPresent(renderer);
 
         

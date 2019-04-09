@@ -78,7 +78,9 @@ void StageState::Update(float dt) {
 	InputManager& inputManager = InputManager::GetInstance();
 
 	Camera::Update(dt);
-	quitRequested = inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY);
+	quitRequested = inputManager.QuitRequested();
+	popRequested = inputManager.KeyPress(ESCAPE_KEY);
+
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
 	
@@ -128,7 +130,7 @@ void StageState::Start() {
 }
 
 void StageState::Pause() {
-
+	music.Stop();
 }
 
 void StageState::Resume() {
