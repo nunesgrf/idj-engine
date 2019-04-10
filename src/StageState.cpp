@@ -46,7 +46,7 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 	GameObject* alien_go = new GameObject();
 	alien_go->box.x = 512;
 	alien_go->box.y = 300;
-	Alien* alien = new Alien(*alien_go,4);
+	Alien* alien = new Alien(*alien_go,1);
 	alien_go->AddComponent(alien);
 
 	objectArray.emplace_back(alien_go);
@@ -126,6 +126,8 @@ void StageState::Update(float dt) {
 	if(PenguinBody::player == nullptr || Alien::alienCount == 0) {
 		
 		GameData::playerVictory = (PenguinBody::player != nullptr);
+		popRequested = true;
+		music.Stop(0);
 		Game::GetInstance().Push(new EndState());
 	} 
 	
@@ -140,7 +142,8 @@ void StageState::Start() {
 }
 
 void StageState::Pause() {
-	music.Stop();
+	std::cout << "StageState::Pause" << std::endl;
+	music.Stop(0);
 }
 
 void StageState::Resume() {

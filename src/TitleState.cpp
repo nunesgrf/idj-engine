@@ -50,5 +50,4 @@ void TitleState::Resume() {
 }
 TitleState::~TitleState() {
     objectArray.clear();
-    std::cout << "I'm here" << std::endl;
 }

@@ -33,7 +33,7 @@ void InputManager::Update() {
         }
         else if(event.type == SDL_KEYDOWN or (event.type == SDL_KEYUP) and (bool)not event.key.repeat)  {
             keyState[event.key.keysym.sym] = event.type == SDL_KEYDOWN;
-            this->keyUpdate[event.key.keysym.sym] = updateCounter;
+            keyUpdate[event.key.keysym.sym] = updateCounter;
         }
     }
 }

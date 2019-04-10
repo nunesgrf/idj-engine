@@ -9,17 +9,6 @@
 Collider::Collider(GameObject& associated, Vec2 scale, Vec2 offset): Component(associated), scale(scale), offset(offset) {}
 
 void Collider::Update(float dt) {
-    /*Rect copy;
-    Rect &aux = associated.box;
-	std::cout << scale.x << " " << scale.y << std::endl;
-    copy.w = aux.w * scale.x;
-    copy.h = aux.h * scale.y;
-
-    copy.x = aux.Center().x - copy.w/2;
-    copy.y = aux.Center().y - copy.h/2;
-
-    box = aux + offset.RotateDeg(associated.angleDeg);*/
-
 	box.w = associated.box.w * scale.x;
 	box.h = associated.box.h * scale.y;
 	box.SetSameCenterAs(associated.box);

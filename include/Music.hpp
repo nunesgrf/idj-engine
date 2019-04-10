@@ -3,7 +3,7 @@
 
 #define INCLUDE_SDL_MIXER
 
-#define DEFAULT_FADEOUT 1500
+#define DEFAULT_FADEOUT 0
 #define INFINITE_REPEATS -1
 
 #include "SDL_include.h"

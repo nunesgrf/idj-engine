@@ -62,18 +62,6 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
-    /*InputManager * inputManager = &InputManager::GetInstance();
-    this->storedState->Start();
-
-    while(!this->storedState->QuitRequested()) { 
-        this->CalculateDeltaTime();    
-        this->storedState->Render();
-        inputManager->Update();
-        this->storedState->Update(GetDeltaTime());
-        SDL_RenderPresent(this->renderer);  
-        //SDL_Delay(15);
-    } */
-
     if(not storedState) {
         std::cout << "FATAL ERROR: impossible to initialize a game instance" << std::endl;
         exit(-1);

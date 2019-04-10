@@ -1,6 +1,6 @@
 #include "EndState.hpp"
 
-#define VICTORY_AUDIO "assets/audio/endStateLose.ogg"
+#define VICTORY_AUDIO "assets/audio/endStateWin.ogg"
 #define VICTORY_SPRITE "assets/img/win.jpg"
 #define DEFEAT_AUDIO "assets/audio/endStateLose.ogg"
 #define DEFEAT_SPRITE "assets/img/lose.jpg"
@@ -14,27 +14,17 @@
 #include "Sprite.hpp"
 
 EndState::EndState() {
-    struct {
-        std::string sprite;
-        std::string audio;
-    } end;
-
-    if(GameData::playerVictory) {
-        end.audio = VICTORY_AUDIO;
-        end.sprite = VICTORY_SPRITE;
-    }
-    else {
-        end.audio = DEFEAT_AUDIO;
-        end.sprite = DEFEAT_SPRITE;
-    }
-
+    
+    std::string sprite = GameData::playerVictory? VICTORY_SPRITE : DEFEAT_SPRITE;
+    std::string audio  = GameData::playerVictory? VICTORY_AUDIO  : DEFEAT_AUDIO;
+    
     GameObject* end_go = new GameObject();
-    Sprite* end_sprite = new Sprite(*end_go,end.sprite);
+    Sprite* end_sprite = new Sprite(*end_go,sprite);
     
     end_go->AddComponent(end_sprite);
     objectArray.emplace_back(end_go);
-    Music* end_audio = new Music(end.audio);
-    end_audio->Play();
+
+    backgroundMusic.Open(audio);    
 
     Camera::pos = {0,0};
 }
@@ -42,6 +32,7 @@ EndState::EndState() {
 void EndState::Update(float dt) {
     InputManager& im = InputManager::GetInstance();
     if(im.KeyPress(SPACE_KEY)) {
+        popRequested = true;
         Game::GetInstance().Push(new StageState());
     }
     quitRequested = im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
@@ -53,11 +44,18 @@ void EndState::Render() {
 }
 void EndState::Start() {
     StartArray();
+    backgroundMusic.Play();
+
 }
-void EndState::Pause() {}
+void EndState::Pause() {
+    backgroundMusic.Stop();
+}
 void EndState::Resume() {
     Camera::pos = {0,0};
+    backgroundMusic.Play();
 }
-EndState::~EndState() {}
+EndState::~EndState() {
+    objectArray.clear();
+}
 
 
