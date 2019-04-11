@@ -75,7 +75,7 @@ void Minion::Shoot(Vec2 target) {
     
     Vec2 minionCenter = associated.box.Center();
 
-    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),1500,5,2000,SPRITE_BULLET_2,3,0.03, true);
+    Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),1000,1,500,SPRITE_BULLET_2,3,0.03, true);
     go->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(go);
 

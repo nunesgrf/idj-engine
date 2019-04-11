@@ -1,5 +1,7 @@
 #define INCLUDE_SDL
 
+#define NUM_ALIENS 4
+
 #include "SDL_include.h"
 #include "Collider.hpp"
 #include "Collision.h"
@@ -43,13 +45,14 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 	tile_go->AddComponent(tilemap);
 	objectArray.emplace_back(tile_go);
 
-	GameObject* alien_go = new GameObject();
-	alien_go->box.x = 512;
-	alien_go->box.y = 300;
-	Alien* alien = new Alien(*alien_go,4);
-	alien_go->AddComponent(alien);
-
-	objectArray.emplace_back(alien_go);
+	for(int i = 0; i < NUM_ALIENS; i++) {
+		GameObject* alien_go = new GameObject();
+		alien_go->box.x = rand() % 1408;
+		alien_go->box.y = rand() % 1280;
+		Alien* alien = new Alien(*alien_go,(rand()%3+3),(rand()%10)/10.0f);
+		alien_go->AddComponent(alien);
+		objectArray.emplace_back(alien_go);
+	}
 
 	GameObject* penguin_go = new GameObject();
 	penguin_go->box.x = 704;
@@ -102,21 +105,14 @@ void StageState::Update(float dt) {
 
 	for(int i = 0; i < objectArray.size(); i++) {
 		for(int j = i+1; j < objectArray.size(); j++) {
-			auto &objA = objectArray[i];
-            auto &objB = objectArray[j];
 
-            Collider *colliderA = (Collider*) objA->GetComponent("Collider");
-            Collider *colliderB = (Collider*) objB->GetComponent("Collider");
-            if(i != j and colliderA != nullptr && colliderB != nullptr){
-                auto boxA = colliderA->box;
-                auto boxB = colliderB->box;
+            Collider *cA = (Collider*) objectArray[i]->GetComponent("Collider");
+            Collider *cB = (Collider*) objectArray[j]->GetComponent("Collider");
 
-                auto angleOfA = (float)(objA->angleDeg)*(M_PI/180.0f);
-                auto angleOfB = (float)(objB->angleDeg)*(M_PI/180.0f);
-
-                if (Collision::IsColliding(boxA, boxB, angleOfA, angleOfB)) {
-                    objA->NotifyCollision(*objB);
-                    objB->NotifyCollision(*objA);
+            if(cA and cB){
+                if (Collision::IsColliding(cA->box, cB->box, (float)(objectArray[i]->angleDeg)*(M_PI/180.0f), (float)(objectArray[j]->angleDeg)*(M_PI/180.0f))) {
+                    objectArray[i]->NotifyCollision(*objectArray[j]);
+                    objectArray[j]->NotifyCollision(*objectArray[i]);
                 }
 			}
 		}

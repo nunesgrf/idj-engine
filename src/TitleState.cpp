@@ -1,7 +1,8 @@
 #include "TitleState.hpp"
 
 #define BACKGROUND_SPRITE "assets/img/title.jpg"
-#define BACKGROUND_FONT "assets/font/Call me maybe.ttf"
+#define CALL_ME_MAYBE "assets/font/Call me maybe.ttf"
+
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "Text.hpp"
@@ -19,7 +20,7 @@ TitleState::TitleState(): State() {
     background_go->box.y = 0;
     
     GameObject* text_go = new GameObject();
-    Text* text = new Text(*text_go,BACKGROUND_FONT,60,Text::BLENDED,"Aperta espaco ai!",{226,182,8,1});
+    Text* text = new Text(*text_go,CALL_ME_MAYBE,60,Text::BLENDED,"Aperta espaco ai!",{226,182,8,1},true);
     
     text_go->box.SetSameCenterAs(background_go->box);
     text_go->box.y += background_go->box.h/4;
@@ -30,10 +31,10 @@ TitleState::TitleState(): State() {
     objectArray.emplace_back(text_go);
 
 }
-
 void TitleState::Update(float dt) {
     InputManager& im = InputManager::GetInstance();
 
+    UpdateArray(dt);
     if(im.KeyPress(SPACE_KEY)) {
         State * toPush = new StageState();
         Game::GetInstance().Push(toPush);

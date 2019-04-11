@@ -4,23 +4,27 @@
 #include "Camera.hpp"
 #include "Resources.hpp"
 
-Text::Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color):
+Text::Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, bool blink):
     Component(associated),
     fontFile(fontFile),
     fontSize(fontSize),
     style(style),  
     text(text),
     color(color),
-    texture(texture) { RemakeTexture(); }
+    blink(blink),
+    render_text(true)
+    { RemakeTexture(); }
 
 void Text::Render() {
-    Game &aux = Game::GetInstance();
-    SDL_Rect clipRect = {0,0,(int)associated.box.w,(int)associated.box.h};
-    SDL_Rect dstrect = clipRect;
-    dstrect.x = (int)(associated.box + Camera::pos).x;
-    dstrect.y = (int)(associated.box + Camera::pos).y;
-    
-    SDL_RenderCopyEx(aux.GetRenderer(),texture.get(),&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    if(render_text) {
+        Game &aux = Game::GetInstance();
+        SDL_Rect clipRect = {0,0,(int)associated.box.w,(int)associated.box.h};
+        SDL_Rect dstrect = clipRect;
+        dstrect.x = (int)(associated.box + Camera::pos).x;
+        dstrect.y = (int)(associated.box + Camera::pos).y;
+        
+        SDL_RenderCopyEx(aux.GetRenderer(),texture.get(),&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    }
 }
 
 void Text::SetText(std::string text) {
@@ -39,15 +43,11 @@ void Text::SetStyle(TextStyle style) {
 }
 
 void Text::SetFontSize(int fontSize) {
-    this->fontSize= fontSize;
+    this->fontSize = fontSize;
     RemakeTexture();
 }
 
 void Text::RemakeTexture() {
-    if(texture.get() != nullptr) {
-        texture = nullptr;
-        Resources::ClearFonts();
-    }
 
     SDL_Surface* surf;
     font = Resources::GetFont(fontFile,fontSize);
@@ -81,6 +81,10 @@ bool Text::Is(std::string type) {
 }
 
 void Text::Update(float dt) {
-
+    timer.Update(dt);
+    if(blink and timer.Get() > 0.5) {
+        timer.Restart();
+        render_text = not render_text;
+    }
 }
 Text::~Text() {}

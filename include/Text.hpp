@@ -6,12 +6,13 @@
 #include "SDL_include.h"
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include "Timer.hpp"
 #include <string>
 
 class Text : public Component {
     public:
         enum TextStyle{SOLID, SHADED, BLENDED};
-        Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color);
+        Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, bool blink);
         ~Text();
 
         void Update(float dt);
@@ -33,6 +34,10 @@ class Text : public Component {
         std::string fontFile;
         int fontSize;
         SDL_Color color;
+
+        bool blink;
+        bool render_text;
+        Timer timer;
 
         void RemakeTexture();
 };

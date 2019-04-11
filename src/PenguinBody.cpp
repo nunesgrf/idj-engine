@@ -83,7 +83,20 @@ void PenguinBody::Update(float dt) {
     speed = Vec2(linearSpeed * dt,0).RotateDeg(angle);
     associated.box += speed;
 
+    if(associated.box.x > 1408 - associated.box.w) {
+        associated.box.x = 1408 - associated.box.w;
+    }
+    else if(associated.box.x < 0) {
+        associated.box.x = 0;
+    }
+    if(associated.box.y > 1280 - associated.box.h) {
+        associated.box.y = 1280 - associated.box.h;
+    }
+    else if(associated.box.y < 0) {
+        associated.box.y = 0;
+    }
     penguin_box = associated.box;
+
 
 }
 

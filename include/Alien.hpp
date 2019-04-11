@@ -12,25 +12,17 @@
 
 class Alien : public Component, public Enemy {
     private:
-        /*class Action {
-            public:
-                enum ActionType {MOVE, SHOOT};
-                Vec2 pos;
-                ActionType type;
-                Action(ActionType type, float x, float y): type(type), pos({(float)x,(float)y}) {}
-        };*/
         enum AlienState {MOVING, RESTING};
         AlienState state;
         Timer restTimer;
         Vec2 Destination;
 
         Vec2 speed;
-        //std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minionArray;
             
     public:
         static int alienCount;
-        Alien(GameObject& associated, int nMinions);
+        Alien(GameObject& associated, int nMinions, float timeOffSet);
         ~Alien();
         void Start();
         void Update(float dt);
