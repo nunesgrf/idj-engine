@@ -28,5 +28,7 @@ class Resources {
 
         static std::shared_ptr<TTF_Font> GetFont(std::string file, int ptsize);
         static void ClearFonts();
+
+        static void Clear();
 };
 #endif

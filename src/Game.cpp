@@ -80,10 +80,7 @@ void Game::Run() {
 
         if(state->PopRequested()) {
             stateStack.pop();
-            Resources::ClearImages();
-            Resources::ClearMusics();
-            Resources::ClearSounds();
-            Resources::ClearFonts();
+            Resources::Clear();
             if(not stateStack.empty()) {
                 state = &GetState();
                 state->Resume();
@@ -108,14 +105,12 @@ void Game::Run() {
 
         
     }
-
-    while(not stateStack.empty()) {
+    
+    while(stateStack.size() > 1) {
         stateStack.pop();
     }
-    Resources::ClearImages();
-    Resources::ClearMusics();
-    Resources::ClearSounds();
-    Resources::ClearFonts();
+    Resources::Clear();
+    
 }
 
 float Game::GetDeltaTime() {
