@@ -90,10 +90,10 @@ void Game::Run() {
         if(storedState) {
             if(not stateStack.empty()) {
                 state->Pause();
-                stateStack.emplace(storedState);
-                state = &GetState();
-                state->Start();
             }
+            stateStack.emplace(storedState);
+            state = &GetState();
+            state->Start();
             storedState = nullptr;
         }
 

@@ -60,8 +60,6 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 	objectArray.emplace_back(penguin_go);
 
 	Camera::Follow(penguin_go);
-	music.Play();
-
 }
 
 StageState::~StageState() {
@@ -84,6 +82,8 @@ void StageState::Update(float dt) {
 	Camera::Update(dt);
 	quitRequested = inputManager.QuitRequested();
 	popRequested = inputManager.KeyPress(ESCAPE_KEY);
+
+	if(popRequested) music.Stop(0);
 
 	int mouseX = inputManager.GetMouseX();
 	int mouseY = inputManager.GetMouseY();
@@ -134,6 +134,7 @@ void StageState::Update(float dt) {
 }
 
 void StageState::Start() {
+	music.Play();
 	LoadAssets();
 	for(int i = 0; i < objectArray.size(); i++) {
 		objectArray[i]->Start();

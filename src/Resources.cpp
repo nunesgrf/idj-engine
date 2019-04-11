@@ -28,7 +28,7 @@ std::shared_ptr<Mix_Chunk> Resources::GetSound(std::string file) {
 
 void Resources::ClearSounds() {
     for(auto a : soundTable) {
-        if(a.second.unique()) {
+        if(a.second.unique() or a.second.get() == nullptr) {
             soundTable.erase(a.first);
         }
     }
@@ -54,7 +54,7 @@ std::shared_ptr<Mix_Music> Resources::GetMusic(std::string file) {
 
 void Resources::ClearMusics() {
     for(auto a: musicTable) {
-        if(a.second.unique()) {
+        if(a.second.unique() or a.second.get() == nullptr) {
             musicTable.erase(a.first);
         }
     }
@@ -80,7 +80,7 @@ std::shared_ptr<SDL_Texture> Resources::GetImage(std::string file) {
 
 void Resources::ClearImages() {
     for(auto a : imageTable) {
-       if(a.second.unique()) {
+       if(a.second.unique() or a.second.get() == nullptr) {
            imageTable.erase(a.first);
        }
     }
@@ -91,7 +91,6 @@ std::shared_ptr<TTF_Font> Resources::GetFont(std::string file, int ptsize) {
         try {
             TTF_Font* loaded = TTF_OpenFont(file.c_str(),ptsize);
             void (*destructor)(TTF_Font*) = [](TTF_Font* loaded)->void {
-                std::cout << "Olá" << std::endl;
                 TTF_CloseFont(loaded);
             };
             std::shared_ptr<TTF_Font> smart_ptr = std::shared_ptr<TTF_Font>(loaded,destructor);
@@ -107,7 +106,7 @@ std::shared_ptr<TTF_Font> Resources::GetFont(std::string file, int ptsize) {
 
 void Resources::ClearFonts() {
     for(auto a : fontTable) {
-        if(a.second.unique()) {
+        if(a.second.unique() or a.second.get() == nullptr) {
             fontTable.erase(a.first);
         }
     }
