@@ -10,11 +10,11 @@ Music::Music(std::string file): Music() {
 }
 
 void Music::Play(int times) {
-    if(music == nullptr) {
+    if(music.get() == nullptr) {
         std::cout << "NullPointer_Music_Error: " << SDL_GetError() << std::endl;
         exit(-30);
     }
-    Mix_PlayMusic(music, times);
+    Mix_PlayMusic(music.get(), times);
 }
 
 void Music::Stop(int msToStop) {
@@ -27,7 +27,7 @@ void Music::Stop(int msToStop) {
 
 void Music::Open(std::string file) {
     music = Resources::GetMusic(file);
-    if(music == nullptr) {
+    if(music.get() == nullptr) {
         std::cout << "NullPointer_Music_Error: " << SDL_GetError() << std::endl;
         exit(-32);
     }

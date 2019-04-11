@@ -1,5 +1,6 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 
 #include "../include/SDL_include.h"
 #include "../include/Game.hpp"
@@ -13,6 +14,9 @@ Game::Game(std::string title, int width, int height): dt(0), frameStart(0), widt
     if(this->instance == nullptr) {
         this->instance = this;
         
+        if(TTF_Init() != 0) {
+            std::cout << "TTF_Init_ERROR: " << SDL_GetError() << std::endl;
+        }
         if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
             std::cout << "SDL_Init_ERROR: " <<  SDL_GetError() << std::endl;
             exit(-1);
@@ -76,6 +80,10 @@ void Game::Run() {
 
         if(state->PopRequested()) {
             stateStack.pop();
+            Resources::ClearImages();
+            Resources::ClearMusics();
+            Resources::ClearSounds();
+            Resources::ClearFonts();
             if(not stateStack.empty()) {
                 state = &GetState();
                 state->Resume();
@@ -100,9 +108,14 @@ void Game::Run() {
 
         
     }
+
+    while(not stateStack.empty()) {
+        stateStack.pop();
+    }
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+    Resources::ClearFonts();
 }
 
 float Game::GetDeltaTime() {
@@ -133,6 +146,7 @@ Game::~Game() {
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();
+    TTF_Quit();
 }
 
 

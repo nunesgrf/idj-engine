@@ -9,10 +9,11 @@
 #include "Component.hpp"
 #include "GameObject.hpp"
 #include <string>
+#include <memory>
 
 class Sound : public Component {
     private:
-        Mix_Chunk* chunk;
+        std::shared_ptr<Mix_Chunk> chunk;
         int channel;
     
     public:

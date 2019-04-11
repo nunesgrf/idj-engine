@@ -1,8 +1,8 @@
-#include "../include/Sprite.hpp"
+#include "Sprite.hpp"
 
 #include "Camera.hpp"
-#include "../include/Resources.hpp"
-#include "../include/Game.hpp"
+#include "Resources.hpp"
+#include "Game.hpp"
 #include <iostream>
 
 Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float stsd): Component(associated), texture(nullptr), scale({1,1}), frameCount(frameCount), frameTime(frameTime), timeElapsed(0), currentFrame(0), secondToSelfDestruct(stsd) {}
@@ -20,7 +20,7 @@ void Sprite::Open(std::string file) {
         exit(-2);
     }
 
-    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
+    SDL_QueryTexture(texture.get(),nullptr,nullptr,&width,&height);
     associated.box.w = GetWidth();
     associated.box.h = GetHeight();
     SetClip(currentFrame,0,GetWidth(),GetHeight());
@@ -41,7 +41,7 @@ void Sprite::Render(int x, int y) {
     dstrect.y = y;
     dstrect.w = clipRect.w*scale.x;
     dstrect.h = clipRect.h*scale.y;
-    SDL_RenderCopyEx(aux.GetRenderer(),texture,&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
+    SDL_RenderCopyEx(aux.GetRenderer(),texture.get(),&clipRect,&dstrect,associated.angleDeg,nullptr,SDL_FLIP_NONE);
 }
 
 void Sprite::Render() {

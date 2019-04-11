@@ -46,7 +46,7 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 	GameObject* alien_go = new GameObject();
 	alien_go->box.x = 512;
 	alien_go->box.y = 300;
-	Alien* alien = new Alien(*alien_go,1);
+	Alien* alien = new Alien(*alien_go,4);
 	alien_go->AddComponent(alien);
 
 	objectArray.emplace_back(alien_go);

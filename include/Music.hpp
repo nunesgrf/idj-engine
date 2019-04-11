@@ -8,10 +8,11 @@
 
 #include "SDL_include.h"
 #include <string>
+#include <memory>
 
 class Music {
     private:
-        Mix_Music* music;
+        std::shared_ptr<Mix_Music> music;
 
     public:
         Music();
