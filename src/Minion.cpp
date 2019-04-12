@@ -10,7 +10,6 @@
 
 #include "Sound.hpp"
 #include "Alien.hpp"
-#include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
@@ -31,10 +30,7 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
 
 void Minion::Update(float dt) {
     
-    auto aCenterPtr = Game::GetInstance().GetState().GetObjectPtr(&alienCenter);
-
-
-    if(aCenterPtr.lock() == nullptr) {
+    if(alienCenter.IsDead()) {
         associated.RequestDelete();
 
         GameObject* minion_death = new GameObject();

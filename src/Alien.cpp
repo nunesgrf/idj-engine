@@ -8,7 +8,6 @@
 #include "PenguinBody.hpp"
 #include "Sound.hpp"
 #include "Bullet.hpp"
-#include "Collider.hpp"
 #include "Sprite.hpp"
 #include "Rect.hpp"
 #include "InputManager.hpp"
@@ -17,20 +16,22 @@
 #include "GameObject.hpp"
 #include "Minion.hpp"
 #include <cstdlib>
+#include "Collider.hpp"
 #include <iostream>
 
 int Alien::alienCount = 0;
 
 Alien::Alien(GameObject& associated, int nMinions):Component(associated), Enemy(100), speed({200,0})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
-
-    Collider* col = new Collider(associated,alien_sprite->GetScale());
-    associated.AddComponent(col);
-
     associated.AddComponent(alien_sprite);
+
+    Collider* c = new Collider(associated);
+    associated.AddComponent(c);
+    
     minionArray.resize(nMinions);
     alienCount++;
 
+    
     state = RESTING;
 }
 
@@ -49,7 +50,7 @@ void Alien::Start() {
 
 void Alien::Update(float dt) {
     
-    if(state == RESTING) {
+    /*if(state == RESTING) {
         restTimer.Update(dt);
         speed = {200,0};
         if(restTimer.Get() > 0.25) {
@@ -93,7 +94,7 @@ void Alien::Update(float dt) {
         else {
             associated.box += speed;
         }
-    }
+    }*/
     
     associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) {

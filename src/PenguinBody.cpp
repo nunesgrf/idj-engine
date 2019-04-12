@@ -11,7 +11,6 @@
 #include "InputManager.hpp"
 #include "PenguinCannon.hpp"
 #include "Sprite.hpp"
-#include "Collider.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -20,8 +19,6 @@ Rect PenguinBody::penguin_box;
 
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
-    Collider* col = new Collider(associated);
-    associated.AddComponent(col);
     associated.AddComponent(pbody_sprite);
     
     player = this;

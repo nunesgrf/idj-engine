@@ -9,7 +9,6 @@
 #include "Game.hpp"
 #include "Sprite.hpp"
 #include "PenguinBody.hpp"
-#include "Collider.hpp"
 #include <iostream>
 
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody): Component(associated), angle(0), pbody(penguinBody) {
@@ -40,7 +39,7 @@ void PenguinCannon::Update(float dt) {
 
 void PenguinCannon::Shoot() {
 
-    if(cooldown.Get() > 0.4) {
+    if(cooldown.Get() > 0.2) {
         GameObject* snowball_go = new GameObject();
         Bullet* bullet = new Bullet(*snowball_go,angle,800,10,640,SPRITE_SNOWBALL,4,0.2,false);
         Vec2 offset = Vec2(associated.box.w/2.0 + snowball_go->box.w/2.0).GetRotated(angle);

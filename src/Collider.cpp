@@ -1,44 +1,26 @@
 #include "Collider.hpp"
-#include "iostream"
+
 #ifdef DEBUG
-#include "Game.hpp"
-#include <SDL2/SDL.h>
 #include "Camera.hpp"
-#endif
+#include "Game.hpp"
+
+#include <SDL2/SDL.h>
+#endif // DEBUG
+
+#include "Sprite.hpp"
+#include "Game.hpp"
 
 Collider::Collider(GameObject& associated, Vec2 scale, Vec2 offset): Component(associated), scale(scale), offset(offset) {}
 
 void Collider::Update(float dt) {
-    /*Rect copy;
-    Rect &aux = associated.box;
-	std::cout << scale.x << " " << scale.y << std::endl;
-    copy.w = aux.w * scale.x;
-    copy.h = aux.h * scale.y;
-
-    copy.x = aux.Center().x - copy.w/2;
-    copy.y = aux.Center().y - copy.h/2;
-
-    box = aux + offset.RotateDeg(associated.angleDeg);*/
-
-	box.w = associated.box.w * scale.x;
-	box.h = associated.box.h * scale.y;
-	box.SetSameCenterAs(associated.box);
-}	
-
-void Collider::SetScale(Vec2 scale) {
-    this->scale = scale;
-}
-
-void Collider::SetOffset(Vec2 offset) {
-    this->offset = offset;
-}
-
-bool Collider::Is(std::string type) {
-    return type == std::string("Collider");
+    this->box = associated.box;
+    box.w *= scale.x;
+    box.h *= scale.y;
+    box.SetSameCenterAs(associated.box);
 }
 
 void Collider::Render() {
-    #ifdef DEBUG
+#ifdef DEBUG
 	Vec2 center( box.Center() );
 	SDL_Point points[5];
 
@@ -61,5 +43,17 @@ void Collider::Render() {
 
 	SDL_SetRenderDrawColor(Game::GetInstance().GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance().GetRenderer(), points, 5);
-	#endif // DEBUG
+#endif // DEBUG
+}
+
+bool Collider::Is(std::string type) {
+    return type == std::string("Collider");
+}
+
+void Collider::SetScale(Vec2 scale) {
+    this->scale = scale;
+}
+
+void Collider::SetOffset(Vec2 offset) {
+    this->offset = offset;
 }

@@ -1,7 +1,6 @@
 #define INCLUDE_SDL
 
 #include "SDL_include.h"
-#include "Collider.hpp"
 #include "Collision.h"
 #include "CameraFollower.hpp"
 #include "Camera.hpp"
@@ -15,6 +14,7 @@
 #include "Sprite.hpp"
 #include "Sound.hpp"
 #include "PenguinBody.hpp"
+#include "Collider.hpp"
 #include <iostream>
 
 
@@ -92,31 +92,25 @@ void State::Update(float dt) {
 		if(objectArray[i]->IsDead()) {
 			objectArray.erase(objectArray.begin()+i);
 		}
-	}
+	}	
 
-	for(int i = 0; i < objectArray.size(); i++) {
-		for(int j = i+1; j < objectArray.size(); j++) {
-			auto &objA = objectArray[i];
-            auto &objB = objectArray[j];
+	for(int i = 0; i < objectArray.size() - 1; i++) {
+		for(int j = i+1; j < objectArray.size() - 1; j++) {
+			Collider* cA = (Collider*) objectArray[i]->GetComponent("Collider");
+			Collider* cB = (Collider*) objectArray[j]->GetComponent("Collider");
 
-            Collider *colliderA = (Collider*) objA->GetComponent("Collider");
-            Collider *colliderB = (Collider*) objB->GetComponent("Collider");
-            if(i != j and colliderA != nullptr && colliderB != nullptr){
-                auto boxA = colliderA->box;
-                auto boxB = colliderB->box;
+			if(cA and cB) {
+				
+				float radA = (float) objectArray[i]->angleDeg*(180/M_PI);
+				float radB = (float) objectArray[j]->angleDeg*(180/M_PI);
 
-                auto angleOfA = (float)(objA->angleDeg)*(M_PI/180.0f);
-                auto angleOfB = (float)(objB->angleDeg)*(M_PI/180.0f);
-
-                if (Collision::IsColliding(boxA, boxB, angleOfA, angleOfB)) {
-                    objA->NotifyCollision(*objB);
-                    objB->NotifyCollision(*objA);
-                }
+				if(Collision::IsColliding(cA->box, cB->box, radA, radB)) {
+					objectArray[i]->NotifyCollision(*objectArray[j]);
+					objectArray[j]->NotifyCollision(*objectArray[i]);
+				} 
 			}
 		}
 	}
-
-	
 }
 
 bool State::QuitRequested() {

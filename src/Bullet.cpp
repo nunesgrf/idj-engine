@@ -1,19 +1,20 @@
 #include "Bullet.hpp"
-#include "Collider.hpp"
 #include "Alien.hpp"
 #include "PenguinBody.hpp"
+#include "Collider.hpp"
 #include <iostream>
 
 #define NO_DISTANCE_LEFT 0
 
 Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetsPlayer): Component(associated), distanceLeft(maxDistance), targetsPlayer(targetsPlayer), damage(damage) {
     Sprite* bullet_sprite = new Sprite(associated,sprite,frameCount,frameTime);
-    Collider* col = new Collider(associated,{1.1,1.1});
     bullet_sprite->SetScale(1.1,1.1);
-    associated.AddComponent(col);
     associated.AddComponent(bullet_sprite);
     associated.angleDeg = angle*(180.0/M_PI);
     speed = Vec2(velocidade,0).GetRotated(angle);
+
+    Collider* c = new Collider(associated,{1.1,1.1});
+    associated.AddComponent(c);
 }
 
 void Bullet::Update(float dt) {
@@ -39,7 +40,11 @@ void Bullet::NotifyCollision(GameObject& that) {
     }
     else {
         Alien* al = (Alien*)that.GetComponent("Alien");
-        if(al != nullptr) associated.RequestDelete();
+        if(al != nullptr) {
+            associated.RequestDelete();
+            std::cout << "Atingiu alien" << std::endl;
+        }
+
     }
 }
 
