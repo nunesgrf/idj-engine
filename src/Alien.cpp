@@ -21,7 +21,7 @@
 
 int Alien::alienCount = 0;
 
-Alien::Alien(GameObject& associated, int nMinions, float timeOffSet):Component(associated), Enemy(100), speed({200,0})  {
+Alien::Alien(GameObject& associated, int nMinions, float timeOffSet):Component(associated), Enemy(100), speed({350,0})  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
 
     Collider* col = new Collider(associated,alien_sprite->GetScale());
@@ -52,7 +52,7 @@ void Alien::Update(float dt) {
     
     if(state == RESTING) {
         restTimer.Update(dt);
-        speed = {200,0};
+        speed = {350,0};
         if(restTimer.Get() > 0.30) {
             speed *= dt;
             Destination = PenguinBody::penguin_box.Center();
