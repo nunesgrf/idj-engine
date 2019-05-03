@@ -6,8 +6,8 @@ CameraFollower::CameraFollower(GameObject& go): Component(go) {
 }
 
 void CameraFollower::Update(float dt) {
-    this->associated.box.x = Camera::pos.x;
-    this->associated.box.y = Camera::pos.y;
+    associated.box.x = Camera::pos.x;
+    associated.box.y = Camera::pos.y;
 }
 
 bool CameraFollower::Is(std::string type) {

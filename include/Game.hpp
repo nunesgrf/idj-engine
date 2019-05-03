@@ -19,7 +19,7 @@ class Game {
         int width;
         int height;
         void CalculateDeltaTime();
-        Game(std::string, uint32_t, uint32_t);
+        Game(std::string, int width, int height);
 
     public:
         int GetWidth();

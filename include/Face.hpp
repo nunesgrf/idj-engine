@@ -10,10 +10,10 @@ class Face : public Component {
         int hitpoints;
 
     public:
-        Face(GameObject&);
+        Face(GameObject& associated);
         void Damage(int);
         void Update(float);
         void Render();
-        bool Is(std::string); 
+        bool Is(std::string type); 
 };
 #endif 

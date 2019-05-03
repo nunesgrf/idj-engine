@@ -16,15 +16,14 @@ class State {
         bool quitRequested;
         std::vector<std::unique_ptr<GameObject>> objectArray;
 
-        void Input();
-        void AddObject(int,int);
+        void AddObject(int x,int y);
 
     public:
         State();
         ~State();
         bool QuitRequested();
         void LoadAssets();
-        void Update(float);
+        void Update(float dt);
         void Render();
 };
 #endif

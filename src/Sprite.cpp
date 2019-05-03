@@ -5,41 +5,31 @@
 #include "../include/Game.hpp"
 #include <iostream>
 
-Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
+Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {}
+
+Sprite::Sprite(GameObject& associated, std::string file): Sprite(associated) {
+    Open(file);
 }
 
-Sprite::Sprite(GameObject& associated, std::string file): Component(associated), texture(nullptr) {
-    
-    this->texture = nullptr;
-    this->Open(file);
-}
-
-Sprite::~Sprite() {
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    // think about it
-}
+Sprite::~Sprite() {}
 
 void Sprite::Open(std::string file) {
-    //Game * aux = &Game::GetInstance();
-
-    //if(this->texture != nullptr) SDL_DestroyTexture(this->texture);
-    //this->texture = IMG_LoadTexture(aux->GetRenderer(),file.c_str());
-    this->texture = Resources::GetImage(file);
-    if(this->texture == nullptr) {
+    texture = Resources::GetImage(file);
+    if(texture == nullptr) {
         std::cout << "Nullpointer_Texture_ERROR: " << SDL_GetError() << std::endl;
         exit(-2);
     }
 
-    SDL_QueryTexture(this->texture,nullptr,nullptr,&this->width,&this->height);
+    SDL_QueryTexture(texture,nullptr,nullptr,&width,&height);
 
-    this->SetClip(0,0,this->width,this->height);
+    SetClip(0,0,width,height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-    this->clipRect.x = x;
-    this->clipRect.y = y;
-    this->clipRect.w = w;
-    this->clipRect.h = h;
+    clipRect.x = x;
+    clipRect.y = y;
+    clipRect.w = w;
+    clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y) {
@@ -48,31 +38,30 @@ void Sprite::Render(int x, int y) {
 
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = this->clipRect.w;
-    dstrect.h = this->clipRect.h;
+    dstrect.w = clipRect.w;
+    dstrect.h = clipRect.h;
 
-    SDL_RenderCopy(aux->GetRenderer(),this->texture,&this->clipRect,&dstrect);
+    SDL_RenderCopy(aux->GetRenderer(),texture,&clipRect,&dstrect);
 }
 
 void Sprite::Render() {
-    this->Render(this->associated.box.x-Camera::pos.x,this->associated.box.y-Camera::pos.y);
+    Render(associated.box.x-Camera::pos.x,associated.box.y-Camera::pos.y);
 }
 
 int Sprite::GetWidth() {
-    return this->width;
+    return width;
 }
 
 int Sprite::GetHeight() {
-    return this->height;
+    return height;
 }
 
 bool Sprite::IsOpen() {
-    return this->texture != nullptr;
+    return texture != nullptr;
 }
 
 bool Sprite::Is(std::string type) {
     return type == std::string("Sprite");
 }
 
-void Sprite::Update(float dt) {
-}
+void Sprite::Update(float dt) {}

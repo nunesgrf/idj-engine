@@ -13,8 +13,8 @@ class Component {
     public:
         Component(GameObject&);
         virtual ~Component();
-        void virtual Update(float) = 0;
+        void virtual Update(float dt) = 0;
         void virtual Render() = 0;
-        bool virtual Is(std::string) = 0;
+        bool virtual Is(std::string type) = 0;
 };
 #endif 

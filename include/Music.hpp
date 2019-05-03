@@ -14,10 +14,10 @@ class Music {
         Music();
         Music(std::string);
         ~Music();
-        void Play(int = -1);
-        void Stop(int = 1500);
-        void Open(std::string);
-        bool IsOpen();
+        void Play(int repeats = -1);
+        void Stop(int default_fade = 1500);
+        void Open(std::string file);
+        bool IsOpen(); 
 
 };
 

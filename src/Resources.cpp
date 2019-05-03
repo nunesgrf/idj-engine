@@ -1,6 +1,6 @@
-#include "../include/Resources.hpp"
+#include "Resources.hpp"
 
-#include "../include/Game.hpp"
+#include "Game.hpp"
 #include <iostream>
 
 std::unordered_map<std::string,Mix_Chunk*> Resources::soundTable;

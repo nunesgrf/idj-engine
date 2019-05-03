@@ -1,8 +1,8 @@
-#include "../include/Camera.hpp"
+#include "Camera.hpp"
 
 #define INCLUDE_SDL 
 
-#include "../include/SDL_include.h"
+#include "SDL_include.h"
 #include "Game.hpp"
 #include "InputManager.hpp"
 #include <iostream>
