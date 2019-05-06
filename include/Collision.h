@@ -24,6 +24,11 @@ class Collision {
 						  Vec2( b.x + b.w, b.y ),
 						  Vec2( b.x, b.y )
 						};
+			
+			/*for(auto &bb : B) {
+				if(a.Contains({bb.x,bb.y})) return true;
+			}			
+			return false;*/
 
 			for (auto& v : A) {
 				v = Rotate(v - a.Center(), angleOfA) + a.Center();
@@ -48,7 +53,7 @@ class Collision {
 				float minB = *std::min_element(P, P + 4);
 				float maxB = *std::max_element(P, P + 4);
 
-				if (maxA < minB || minA > maxB)
+				if (maxA <= minB || minA >= maxB)
 					return false;
 			}
 
@@ -62,7 +67,7 @@ class Collision {
 		}
 
 		static inline Vec2 Norm(const Vec2& p) {
-			return p * (1.f / Mag(p));
+			return p.escalar (1.f / Mag(p));
 		}
 
 		static inline float Dot(const Vec2& a, const Vec2& b) {
@@ -70,7 +75,7 @@ class Collision {
 		}
 
 		static inline Vec2 Rotate(const Vec2& p, float angle) {
-			float cs = std::cos(angle), sn = std::sin(angle);
+			float cs = cosf(angle), sn = sinf(angle);
 			return Vec2 ( p.x * cs - p.y * sn, p.x * sn + p.y * cs );
 		}
 };

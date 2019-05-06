@@ -32,11 +32,6 @@ Vec2 Vec2::operator/(Vec2 that) const {
     return Vec2(x/that.x,y/that.y);
 }
 
-void Vec2::operator=(Vec2 other) {
-    x = other.x;
-    y = other.y;
-}
-
 Vec2 Vec2::operator*(float a) {
     return escalar(a);
 }
@@ -68,7 +63,7 @@ float Vec2::InclX() {
     return atan2(y, x);
 }
 
-Vec2 Vec2::escalar(float a) {
+Vec2 Vec2::escalar(float a) const {
     return Vec2(x*a,y*a);
 }
 

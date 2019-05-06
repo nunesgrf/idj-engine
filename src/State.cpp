@@ -95,16 +95,16 @@ void State::Update(float dt) {
 	}	
 
 	for(int i = 0; i < objectArray.size() - 1; i++) {
-		for(int j = i+1; j < objectArray.size() - 1; j++) {
+		for(int j = i+1; j < objectArray.size(); j++) {
 			Collider* cA = (Collider*) objectArray[i]->GetComponent("Collider");
 			Collider* cB = (Collider*) objectArray[j]->GetComponent("Collider");
 
-			if(cA and cB) {
+			if(cA != nullptr and cB != nullptr) {
 				
-				float radA = (float) objectArray[i]->angleDeg*(180/M_PI);
-				float radB = (float) objectArray[j]->angleDeg*(180/M_PI);
+				float radA = (float) objectArray[i]->angleDeg*(M_PI/180.0f);
+				float radB = (float) objectArray[j]->angleDeg*(M_PI/180.0f);
 
-				if(Collision::IsColliding(cA->box, cB->box, radA, radB)) {
+				if(Collision::IsColliding(cA->box,cB->box, radA, radB)) {
 					objectArray[i]->NotifyCollision(*objectArray[j]);
 					objectArray[j]->NotifyCollision(*objectArray[i]);
 				} 

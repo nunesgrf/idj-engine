@@ -50,7 +50,7 @@ void Alien::Start() {
 
 void Alien::Update(float dt) {
     
-    /*if(state == RESTING) {
+    if(state == RESTING) {
         restTimer.Update(dt);
         speed = {200,0};
         if(restTimer.Get() > 0.25) {
@@ -94,7 +94,7 @@ void Alien::Update(float dt) {
         else {
             associated.box += speed;
         }
-    }*/
+    }
     
     associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) {

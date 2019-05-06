@@ -8,9 +8,10 @@
 
 Bullet::Bullet(GameObject& associated, float angle, float velocidade, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetsPlayer): Component(associated), distanceLeft(maxDistance), targetsPlayer(targetsPlayer), damage(damage) {
     Sprite* bullet_sprite = new Sprite(associated,sprite,frameCount,frameTime);
-    bullet_sprite->SetScale(1.1,1.1);
     associated.AddComponent(bullet_sprite);
-    associated.angleDeg = angle*(180.0/M_PI);
+
+    bullet_sprite->SetScale(1.1,1.1);
+    associated.angleDeg = angle*(180.0/acos(-1));
     speed = Vec2(velocidade,0).GetRotated(angle);
 
     Collider* c = new Collider(associated,{1.1,1.1});
@@ -42,7 +43,6 @@ void Bullet::NotifyCollision(GameObject& that) {
         Alien* al = (Alien*)that.GetComponent("Alien");
         if(al != nullptr) {
             associated.RequestDelete();
-            std::cout << "Atingiu alien" << std::endl;
         }
 
     }

@@ -4,6 +4,7 @@
 #define SPRITE_PENGUIN_DEATH "assets/img/penguindeath.png"
 #define SOUND_PENGUIN_DEATH "assets/audio/boom.wav"
 
+#include "Collider.hpp"
 #include "Sound.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
@@ -19,7 +20,11 @@ Rect PenguinBody::penguin_box;
 
 PenguinBody::PenguinBody(GameObject& associated): Component(associated), speed({0,0}), linearSpeed(0), angle(0), hp(200) {
     Sprite * pbody_sprite = new Sprite(associated,SPRITE_PENGUINBODY);
+    Collider* pbody_col = new Collider(associated);
+
     associated.AddComponent(pbody_sprite);
+    associated.AddComponent(pbody_col);
+
     
     player = this;
     PenguinBody::penguin_box = associated.box;

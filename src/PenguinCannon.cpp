@@ -32,7 +32,7 @@ void PenguinCannon::Update(float dt) {
 
         cooldown.Update(dt);
         if(im.MousePress(LEFT_MOUSE_BUTTON)) Shoot();
-
+    
     }
     else associated.RequestDelete();
 }

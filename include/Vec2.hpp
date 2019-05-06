@@ -8,7 +8,7 @@ class Vec2 {
     public:
         float x, y;
         Vec2(float x = 0,float y = 0);
-        Vec2 escalar(float a);
+        Vec2 escalar(float a) const;
         Vec2 GetRotated(float angle);
         Vec2 AngleX(Vec2 that);
         float Mag();
@@ -19,7 +19,6 @@ class Vec2 {
         Vec2 operator-(Vec2 that) const;
         Vec2 operator*(Vec2 that) const;
         Vec2 operator/(Vec2 that) const;
-        void operator=(Vec2 that);
         void operator+=(Vec2 that);
         void operator-=(Vec2 that);
         void operator*=(Vec2 that);
