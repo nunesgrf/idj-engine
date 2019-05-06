@@ -95,7 +95,7 @@ void Alien::Update(float dt) {
             associated.box += speed;
         }
     }
-    
+
     associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) {
 

@@ -23,7 +23,7 @@ class Vec2 {
         void operator-=(Vec2 that);
         void operator*=(Vec2 that);
         void operator/=(Vec2 that);
-        Vec2 operator*(float a);
+        Vec2 operator*(float a) const;
         float distance(Vec2 that);
 
 };

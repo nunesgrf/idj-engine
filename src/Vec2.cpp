@@ -32,7 +32,7 @@ Vec2 Vec2::operator/(Vec2 that) const {
     return Vec2(x/that.x,y/that.y);
 }
 
-Vec2 Vec2::operator*(float a) {
+Vec2 Vec2::operator*(float a) const{
     return escalar(a);
 }
 

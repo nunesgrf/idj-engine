@@ -67,7 +67,7 @@ class Collision {
 		}
 
 		static inline Vec2 Norm(const Vec2& p) {
-			return p.escalar (1.f / Mag(p));
+			return p * (1.f / Mag(p));
 		}
 
 		static inline float Dot(const Vec2& a, const Vec2& b) {
