@@ -1,6 +1,10 @@
 #include "../include/Vec2.hpp"
 
 #include <cmath>
+#include <iostream>
+
+Vec2::Vec2(): x(0), y(0) {
+}
 
 Vec2::Vec2(float x, float y): x(x), y(y) {
 }
@@ -25,6 +29,8 @@ Vec2 Vec2::operator-(Vec2 other) const {
 }
 
 Vec2 Vec2::operator*(Vec2 other) const {
+    std::cout << "Estou aqui meu jovem" << std::endl;
+    std::cout << other.x << " " << other.y << std::endl;
     return Vec2(x*other.x,y*other.y);
 }
 
@@ -32,7 +38,7 @@ Vec2 Vec2::operator/(Vec2 that) const {
     return Vec2(x/that.x,y/that.y);
 }
 
-Vec2 Vec2::operator*(float a) const{
+Vec2 Vec2::operator*(float a) const {
     return escalar(a);
 }
 

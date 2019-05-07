@@ -42,7 +42,7 @@ void PenguinCannon::Shoot() {
     if(cooldown.Get() > 0.2) {
         GameObject* snowball_go = new GameObject();
         Bullet* bullet = new Bullet(*snowball_go,angle,800,10,640,SPRITE_SNOWBALL,4,0.2,false);
-        Vec2 offset = Vec2(associated.box.w/2.0 + snowball_go->box.w/2.0).GetRotated(angle);
+        Vec2 offset = Vec2(associated.box.w/2.0 + snowball_go->box.w/2.0,0).GetRotated(angle);
         snowball_go->AddComponent(bullet);
 
         snowball_go->box.SetSameCenterAs(associated.box);

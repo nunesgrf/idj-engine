@@ -7,7 +7,8 @@ class Vec2 {
 
     public:
         float x, y;
-        Vec2(float x = 0,float y = 0);
+        Vec2();
+        Vec2(float x,float y);
         Vec2 escalar(float a) const;
         Vec2 GetRotated(float angle);
         Vec2 AngleX(Vec2 that);

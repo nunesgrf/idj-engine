@@ -49,7 +49,7 @@ void Minion::Update(float dt) {
         
     }
     else {
-        arc += ANGULAR_SPEED*dt;
+        arc += M_ANGULAR_SPEED*dt;
         Vec2 move = {200,0};
         move = move.GetRotated(arc);
         

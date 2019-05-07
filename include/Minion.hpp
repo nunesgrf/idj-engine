@@ -1,8 +1,7 @@
 #ifndef MINION_H
 #define MINION_H
 
-#define PI 3.14159265359
-#define ANGULAR_SPEED 1
+#define M_ANGULAR_SPEED 1
 
 #include "Enemy.hpp"
 #include "GameObject.hpp"

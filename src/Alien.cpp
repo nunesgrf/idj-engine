@@ -49,7 +49,7 @@ void Alien::Start() {
 }
 
 void Alien::Update(float dt) {
-    
+    /*
     if(state == RESTING) {
         restTimer.Update(dt);
         speed = {200,0};
@@ -95,7 +95,7 @@ void Alien::Update(float dt) {
             associated.box += speed;
         }
     }
-
+    */
     associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) {
 
@@ -125,8 +125,8 @@ bool Alien::Is(std::string type) {
 
 Vec2 Alien::ClosestAndFarthestMinions(Vec2 target) {
 
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
     auto closest = INFINITY;
     auto farthest = -INFINITY;
 
