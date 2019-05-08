@@ -17,8 +17,8 @@ class Music {
         Music();
         Music(std::string);
         ~Music();
-        void Play(int =  INFINITE_REPEATS);
-        void Stop(int = DEFAULT_FADEOUT);
+        void Play(int repeats =  INFINITE_REPEATS);
+        void Stop(int fadeout = DEFAULT_FADEOUT);
         void Open(std::string);
         bool IsOpen();
 

@@ -1,4 +1,4 @@
-#include "../include/TileSet.hpp"
+#include "TileSet.hpp"
 
 TileSet::TileSet(GameObject& go, int tileWidth, int tileHeight, std::string file): tileSet(go,file), tileWidth(tileWidth), tileHeight(tileHeight) {
     if(tileSet.IsOpen()) {

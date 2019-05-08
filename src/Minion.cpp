@@ -20,7 +20,7 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
 
 void Minion::Update(float dt) {
  
-    arc += ANGULAR_SPEED*0.033;
+    arc += ANGULAR_SPEED*dt;
     Vec2 move = {200,0};
     move = move.GetRotated(arc);
     
@@ -43,10 +43,9 @@ void Minion::Shoot(Vec2 target) {
 
     Bullet * bullet = new Bullet(*go,minionCenter.ToAngle(target),400,10,300,SPRITE_BULLET_1);
     go->AddComponent(bullet);
-    Game::GetInstance().GetState().AddObject(go);
-
-    
+    Game::GetInstance().GetState().AddObject(go);  
 } 
+
 float Minion::random_float_in_range(float a, float b) {
     return a + (b - a)*(rand()/(float)RAND_MAX);
 }

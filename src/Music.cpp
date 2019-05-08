@@ -26,7 +26,6 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(std::string file) {
-    //music = Mix_LoadMUS(file.c_str());
     music = Resources::GetMusic(file);
     if(music == nullptr) {
         std::cout << "NullPointer_Music_Error: " << SDL_GetError() << std::endl;
@@ -38,9 +37,4 @@ bool Music::IsOpen() {
     return music != nullptr;
 }
 
-Music::~Music() {
-    /*if(music != nullptr) {
-        Stop();
-        Mix_FreeMusic(music);
-    }*/
-}
+Music::~Music() {}

@@ -1,4 +1,4 @@
-#include "../include/TileMap.hpp"
+#include "TileMap.hpp"
 
 #include "Camera.hpp"
 #include <fstream>
@@ -70,7 +70,6 @@ bool TileMap::Is(std::string type) {
     return type == std::string("TileMap");
 }
 
-void TileMap::Update(float dt) {
-}
+void TileMap::Update(float dt) {}
 
 void TileMap::Start() {}

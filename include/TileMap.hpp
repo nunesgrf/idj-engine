@@ -18,7 +18,6 @@ class TileMap : public Component {
         
     public:
         TileMap(GameObject& associated, std::string file, TileSet* tileSet);
-        //~TileMap() {}
         void Start();
         void Load(std::string file);
         void SetTileSet(TileSet* tileSet);

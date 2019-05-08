@@ -1,12 +1,11 @@
-#include "../include/Sprite.hpp"
+#include "Sprite.hpp"
 
 #include "Camera.hpp"
-#include "../include/Resources.hpp"
-#include "../include/Game.hpp"
+#include "Resources.hpp"
+#include "Game.hpp"
 #include <iostream>
 
-Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {
-}
+Sprite::Sprite(GameObject& associated): Component(associated), texture(nullptr) {}
 
 Sprite::Sprite(GameObject& associated, std::string file): Sprite(associated) {
     Open(file);
@@ -76,5 +75,4 @@ void Sprite::SetScale(float scaleX, float scaleY) {
 Vec2 Sprite::GetScale() {
     return scale;
 }
-void Sprite::Update(float dt) {
-}
+void Sprite::Update(float dt) {}

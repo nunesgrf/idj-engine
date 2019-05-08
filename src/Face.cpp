@@ -1,4 +1,4 @@
-#include "../include/Face.hpp"
+#include "Face.hpp"
 
 #define INCLUDE_SDL
 
@@ -34,8 +34,7 @@ void Face::Update(float dt) {
     }
 }
 
-void Face::Render() {
-}
+void Face::Render() {}
 
 bool Face::Is(std::string type) {
     return type == std::string("Face");

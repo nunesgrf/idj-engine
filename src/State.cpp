@@ -1,7 +1,5 @@
 #define INCLUDE_SDL
 
-#define PI 3.14159265359
-
 #include "SDL_include.h"
 #include "CameraFollower.hpp"
 #include "Camera.hpp"
@@ -54,8 +52,7 @@ State::~State() {
     objectArray.clear();
 }
 
-void State::LoadAssets() {
-}
+void State::LoadAssets() {}
 
 void State::Render() {
 	for(auto &a : objectArray) {
