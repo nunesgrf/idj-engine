@@ -20,14 +20,14 @@ Minion::Minion(GameObject& associated,std::weak_ptr<GameObject> alienCenter,floa
 
 void Minion::Update(float dt) {
  
-    arc += ANGULAR_SPEED*dt;
+    arc += M_ANGULAR_SPEED*dt;
     Vec2 move = {200,0};
     move = move.GetRotated(arc);
-    
+        
     associated.box = move + alienCenter.box.Center();
     associated.box -= associated.box.CenterOffset();
 
-    associated.angleDeg += MINION_ROTATION;
+    associated.angleDeg = arc*(180.0f/M_PI);
 }
 
 bool Minion::Is(std::string type) {
