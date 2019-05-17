@@ -49,12 +49,12 @@ void Alien::Start() {
 }
 
 void Alien::Update(float dt) {
-    /*
+
     if(state == RESTING) {
         restTimer.Update(dt);
         speed = {200,0};
         if(restTimer.Get() > 0.25) {
-            speed *= dt;
+            speed = speed * dt;
             Destination = PenguinBody::penguin_box.Center();
             float angle = (Destination - associated.box.Center()).InclX();
             speed = speed.GetRotated(angle);
@@ -95,7 +95,7 @@ void Alien::Update(float dt) {
             associated.box += speed;
         }
     }
-    */
+    
     associated.angleDeg += ALIEN_ROTATION*dt;
     if(hp <= 0) {
 
