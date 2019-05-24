@@ -21,7 +21,7 @@ class Sound : public Component {
         Sound(GameObject& associated,std::string file);
         ~Sound();
         void Start();
-        void Play(int = ONE_REPEAT);
+        void Play(int repeats = ONE_REPEAT);
         void Stop();
         void Open(std::string file);
         bool IsOpen();

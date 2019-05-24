@@ -1,4 +1,4 @@
-#include "../include/Face.hpp"
+#include "Face.hpp"
 
 #define INCLUDE_SDL
 

@@ -2,8 +2,9 @@
 
 #include <cmath>
 
-Vec2::Vec2(float x, float y): x(x), y(y) {
-}
+Vec2::Vec2(): x(0), y(0) {}
+
+Vec2::Vec2(float x, float y): x(x), y(y) {}
 
 Vec2 Vec2::GetRotated(float theta) {
     float x1 = x*cos(theta) - y*sin(theta);
@@ -37,7 +38,7 @@ void Vec2::operator=(Vec2 other) {
     y = other.y;
 }
 
-Vec2 Vec2::operator*(float a) {
+Vec2 Vec2::operator*(float a) const {
     return escalar(a);
 }
 
@@ -68,7 +69,7 @@ float Vec2::InclX() {
     return atan2(y, x);
 }
 
-Vec2 Vec2::escalar(float a) {
+Vec2 Vec2::escalar(float a) const {
     return Vec2(x*a,y*a);
 }
 

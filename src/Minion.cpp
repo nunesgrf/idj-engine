@@ -63,7 +63,7 @@ void Minion::Update(float dt) {
         associated.angleDeg = arc*(180.0f/M_PI);
     }
 }
-
+ 
 bool Minion::Is(std::string type) {
     return type == std::string("Minion");
 }

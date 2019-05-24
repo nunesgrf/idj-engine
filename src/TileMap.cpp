@@ -1,4 +1,4 @@
-#include "../include/TileMap.hpp"
+#include "TileMap.hpp"
 
 #include "Camera.hpp"
 #include <fstream>

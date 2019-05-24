@@ -16,7 +16,7 @@ class Alien : public Component, public Enemy {
         AlienState state;
         Timer restTimer;
         Vec2 Destination;
-
+        float timeOffSet;
         Vec2 speed;
         std::vector<std::weak_ptr<GameObject>> minionArray;
             

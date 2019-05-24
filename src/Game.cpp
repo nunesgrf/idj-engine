@@ -2,9 +2,9 @@
 #define INCLUDE_SDL_MIXER
 #define INCLUDE_SDL_TTF
 
-#include "../include/SDL_include.h"
-#include "../include/Game.hpp"
-#include "../include/InputManager.hpp"
+#include "SDL_include.h"
+#include "Game.hpp"
+#include "InputManager.hpp"
 #include "Resources.hpp"
 #include <iostream>
 

@@ -21,7 +21,7 @@
 
 int Alien::alienCount = 0;
 
-Alien::Alien(GameObject& associated, int nMinions, float timeOffSet):Component(associated), Enemy(100), speed({350,0})  {
+Alien::Alien(GameObject& associated, int nMinions, float timeOffSet):Component(associated), Enemy(100), speed({350,0}), timeOffSet(timeOffSet)  {
     Sprite* alien_sprite = new Sprite(associated,SPRITE_ALIEN); 
 
     Collider* col = new Collider(associated,alien_sprite->GetScale());
@@ -31,7 +31,7 @@ Alien::Alien(GameObject& associated, int nMinions, float timeOffSet):Component(a
     minionArray.resize(nMinions);
     alienCount++;
 
-    restTimer.Update(timeOffSet);
+    restTimer.Restart();
     state = RESTING;
 }
 
@@ -53,8 +53,8 @@ void Alien::Update(float dt) {
     if(state == RESTING) {
         restTimer.Update(dt);
         speed = {350,0};
-        if(restTimer.Get() > 0.30) {
-            speed *= dt;
+        if(restTimer.Get() > timeOffSet) {
+            speed = speed*dt;
             Destination = PenguinBody::penguin_box.Center();
             float angle = (Destination - associated.box.Center()).InclX();
             speed = speed.GetRotated(angle);
@@ -96,7 +96,7 @@ void Alien::Update(float dt) {
         }
     }
     
-    associated.angleDeg += ALIEN_ROTATION*dt;
+    associated.angleDeg += std::max(timeOffSet*dt*ALIEN_ROTATION,dt*ALIEN_ROTATION);
     if(hp <= 0) {
 
         associated.RequestDelete();

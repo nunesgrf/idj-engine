@@ -49,7 +49,7 @@ StageState::StageState() : State(), music("assets/audio/stageState.ogg") {
 		GameObject* alien_go = new GameObject();
 		alien_go->box.x = rand() % 1408;
 		alien_go->box.y = rand() % 1280;
-		Alien* alien = new Alien(*alien_go,(rand()%3+3),(rand()%10)/10.0f);
+		Alien* alien = new Alien(*alien_go,(rand()%3+2),(rand()%30)/10.0f);
 		alien_go->AddComponent(alien);
 		objectArray.emplace_back(alien_go);
 	}
@@ -69,8 +69,7 @@ StageState::~StageState() {
     objectArray.clear();
 }
 
-void StageState::LoadAssets() {
-}
+void StageState::LoadAssets() {}
 
 void StageState::Render() {
 	for(auto &a : objectArray) {
@@ -139,10 +138,7 @@ void StageState::Start() {
 }
 
 void StageState::Pause() {
-	std::cout << "StageState::Pause" << std::endl;
 	music.Stop(0);
 }
 
-void StageState::Resume() {
-
-}
+void StageState::Resume() {}

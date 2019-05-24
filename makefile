@@ -6,7 +6,7 @@ LIBS	 =
 INCS	 = 
 CXXINCS  = -I"include/" -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer 
 BIN   = idj-engine
-CXXFLAGS = $(CXXINCS) -std=c++11 -g3 -ggdb3 -DDEBUG
+CXXFLAGS = $(CXXINCS) -std=c++11 -g3 -ggdb3
 CFLAGS   = $(INCS) -std=c11 -ggdb3
 RM	 = rm -f
 
