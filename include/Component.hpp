@@ -11,10 +11,12 @@ class Component {
         GameObject& associated;
 
     public:
-        Component(GameObject&);
+        Component(GameObject& associated);
         virtual ~Component();
-        void virtual Update(float) = 0;
+        void virtual Start();
+        void virtual NotifyCollision(GameObject& that);
+        void virtual Update(float dt) = 0;
         void virtual Render() = 0;
-        bool virtual Is(std::string) = 0;
+        bool virtual Is(std::string type) = 0;
 };
 #endif 

@@ -1,10 +1,11 @@
-#include "../include/TileMap.hpp"
+#include "TileMap.hpp"
 
+#include "Camera.hpp"
 #include <fstream>
 #include <iostream>
 
 TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet): Component(associated), tileSet(tileSet) {
-    this->Load(file);
+    Load(file);
 }
 
 void TileMap::Load(std::string file) {
@@ -15,51 +16,54 @@ void TileMap::Load(std::string file) {
         std::cout << "Open_File_Error: " << file << std::endl;
         exit(-5);
     }
-    if(fscanf(filepointer,"%d,%d,%d", &this->mapWidth, &this->mapHeight, &this->mapDepth) != 3) {
+    if(fscanf(filepointer,"%d,%d,%d", &mapWidth, &mapHeight, &mapDepth) != 3) {
         exit(-5);
     }
     fseek(filepointer,1,SEEK_CUR);
     while(!feof(filepointer)) {
         fscanf(filepointer," %d,", &toPush);
-        this->tileMatrix.push_back(toPush-1);
+        tileMatrix.push_back(toPush-1);
     }
     fclose(filepointer);
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
-    this->tileSet = tileSet;
+    tileSet = tileSet;
 }
 
 int& TileMap::At(int x, int y, int z) {
-    int index = x + (y * this->mapWidth) + (z * this->mapWidth * this->mapHeight);
-    return this->tileMatrix[index];
+    int index = x + (y * mapWidth) + (z * mapWidth * mapHeight);
+    return tileMatrix[index];
 }
 
 void TileMap::Render() {
-
-    for(int i = 0; i < this->mapDepth; i++) {
-        this->RenderLayer(i, this->associated.box.x,this->associated.box.y);
+    associated.box.x = Camera::pos.x;
+	associated.box.y = Camera::pos.y;
+    for(int i = 0; i < mapDepth; i++) {
+        RenderLayer(i, associated.box.x,associated.box.y);
     }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
-    for(int i = 0; i < this->mapWidth; i++) {
-        for(int j = 0; j < this->mapHeight; j++) {
-            this->tileSet->RenderTile((unsigned)this->At(i,j,layer),i*this->tileSet->GetTileWidth(), j*this->tileSet->GetTileHeight());
+    for(int i = 0; i < mapWidth; i++) {
+        for(int j = 0; j < mapHeight; j++) {
+            auto y = j*tileSet->GetTileHeight()-cameraY-Camera::pos.y*layer*PARALLAX;
+            auto x = i*tileSet->GetTileWidth()-cameraX-Camera::pos.x*layer*PARALLAX;
+            tileSet->RenderTile((unsigned)At(i,j,layer),x,y);
         }
     }
 }
 
 int TileMap::GetWidth() {
-    return this->mapWidth;
+    return mapWidth;
 }
 
 int TileMap::GetHeight() {
-    return this->mapHeight;
+    return mapHeight;
 }
 
 int TileMap::GetDepth() {
-    return this->mapDepth;
+    return mapDepth;
 }
 
 bool TileMap::Is(std::string type) {
@@ -68,3 +72,5 @@ bool TileMap::Is(std::string type) {
 
 void TileMap::Update(float dt) {
 }
+
+void TileMap::Start() {}

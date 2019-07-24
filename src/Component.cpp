@@ -1,7 +1,9 @@
-#include "../include/Component.hpp"
+#include "Component.hpp"
 
-Component::Component(GameObject& associated): associated(associated) {
-}
+Component::Component(GameObject& associated): associated(associated) {}
+Component::~Component() {}
+void Component::Start() {}
 
-Component::~Component() {
+void Component::NotifyCollision(GameObject& that) {
+    
 }

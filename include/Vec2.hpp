@@ -2,11 +2,31 @@
 #define VEC2_H
 
 class Vec2 {
+    private:
+        
+
     public:
         float x, y;
         Vec2();
-        Vec2(int,int);
-        Vec2 GetRotated(float);
-        Vec2 operator+(const Vec2);
+        Vec2(float x,float y);
+        Vec2 escalar(float a) const;
+        Vec2 GetRotated(float angle);
+        Vec2 AngleX(Vec2 that);
+        float Mag();
+        float ToAngle(Vec2 that);
+        float InclX();
+        Vec2 RotateDeg(float angle);
+        Vec2 operator+(Vec2 that) const;
+        Vec2 operator-(Vec2 that) const;
+        Vec2 operator*(Vec2 that) const;
+        Vec2 operator/(Vec2 that) const;
+        void operator=(Vec2 that);
+        void operator+=(Vec2 that);
+        void operator-=(Vec2 that);
+        void operator*=(Vec2 that);
+        void operator/=(Vec2 that);
+        Vec2 operator*(float a) const;
+        float distance(Vec2 that);
+
 };
 #endif

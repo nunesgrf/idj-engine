@@ -1,13 +1,67 @@
-#include "../include/Rect.hpp"
+#include "Rect.hpp"
 
-Rect::Rect(): x(0), y(0), w(0), h(0) {
+#include <iostream>
+Rect::Rect(float x,float y, float w,float h): x(x), y(y), w(w), h(h) {}
+
+bool Rect::Contains(std::vector<float> point) {
+    float x1 = point.front();
+    float y1 = point.back();
+
+    if(x > x1 or w+x < x1) return false;
+    return y <= y1 and h+y >= y1;
+} 
+
+Vec2 Rect::CenterOffset() {
+    return Vec2(w/2,h/2);
 }
 
-bool Rect::Contains(std::list<float> clebinho) {
-    // mudar!
-    float x1 = clebinho.front();
-    float y1 = clebinho.back();
+Vec2 Rect::Center() {
+    return Vec2(x+w/2,y+h/2);
+}
 
-    if(x > x1 or this->w+x < x1) return false;
-    return y <= y1 and this->h+y >= y1;
-} 
+void Rect::operator=(Vec2 that) {
+    x = that.x;
+    y = that.y;
+}
+
+Rect Rect::operator+(Vec2 that) {
+    return Rect(x+that.x,y+that.y,w,h);
+}
+
+Rect Rect::operator-(Vec2 that) {
+    return Rect(x-that.x,y-that.y,w,h);
+}
+
+Rect Rect::operator*(Vec2 that) {
+    return Rect(x*that.x,y*that.y,w,h);
+}
+
+Rect Rect::operator/(Vec2 that) {
+    return Rect(x/that.x,y/that.y,w,h);
+}
+
+void Rect::operator+=(Vec2 that) {
+    *this = *this + that;
+}
+
+void Rect::operator-=(Vec2 that) {
+    *this = *this - that;
+}
+
+void Rect::operator*=(Vec2 that) {
+    *this = *this * that;
+}
+
+void Rect::operator/=(Vec2 that) {
+    *this = *this / that;
+}
+
+void Rect::SetCenter(Vec2 pos) {
+    x = pos.x - w/2;
+    y = pos.y - h/2;
+}
+
+void Rect::SetSameCenterAs(Rect that) {
+    SetCenter({that.Center().x, that.Center().y});
+}
+

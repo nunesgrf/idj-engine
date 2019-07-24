@@ -47,6 +47,7 @@
         "utility": "cpp",
         "complex": "cpp",
         "list": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "numeric": "cpp"
     }
 }

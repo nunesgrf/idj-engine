@@ -2,3 +2,4 @@
 idj-engine
 *.json
 .vscode
+valgrind
